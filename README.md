@@ -40,3 +40,13 @@ Mechanics:
     of the scores it will replace them/slot in and shift down the list, removing the new 11th hihgest score.
     Any reppetitions of the scores will cause the names to be added together in a list style, e.g. YAN, BEN.
     This will not occur if the name is the same, if so no change will be made.
+
+Implementation:
+  This project will be made using the object-oriented programming language Python.
+  To make the GUI i will be using the package appJar.
+  Aliens:
+    There will be 3 types of aliens, but they will all have the same underlying behaviour.
+    This means the best way to impliment this is by having an 'Alien' super-class, containing the code that 
+    controls the behaviour that appears in all the alien (movement, shooting, death animation, etc...), and
+    then using this class to create all 3 subclasses wich will contain the type specific info (points awarded,
+    sprite images, etc...).
