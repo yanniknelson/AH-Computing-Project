@@ -32,3 +32,11 @@ Mechanics:
     There will be 3 types of projecties in total:
 		The 2 bomb types of the Aliens, mentioned earlier.
 		The last type is the type the player will be able to 'shoot'.
+  
+  Score:
+    Throughout the game the score will be kept track of and shown at the very top of the 'canvas'.
+    Once the game is over the user will be asked to input 3 letters to be their player name and once they
+    submit the name the score will be compared to a file containing the top 5 scores, if it is higher than any
+    of the scores it will replace them/slot in and shift down the list, removing the new 11th hihgest score.
+    Any reppetitions of the scores will cause the names to be added together in a list style, e.g. YAN, BEN.
+    This will not occur if the name is the same, if so no change will be made.
