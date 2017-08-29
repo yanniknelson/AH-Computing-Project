@@ -18,7 +18,7 @@ Mechanics:
     There will also be a bonus point 'mother ship' that will occationaly
     travel across the top of the screen, above all the aliens this will be worth 100pts.
       Bombs:
-        There will be 2 types of projectile, shot (fast) and bomb (slow).
+        There will be 2 types of projectile, bolt (fast) and arrow (slow).
 
   Player:
     The player will only be able to move right and left.
