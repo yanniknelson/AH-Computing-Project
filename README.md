@@ -43,7 +43,7 @@ Mechanics:
 
 Implementation:
   This project will be made using the object-oriented programming language Python.
-  To make the GUI I will be using the package appJar.
+  To make the GUI I will be using the package Pyganim.
 
   Aliens:
     There will be 3 types of aliens, but they will all have the same underlying behaviour.
