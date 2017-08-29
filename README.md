@@ -44,9 +44,26 @@ Mechanics:
 Implementation:
   This project will be made using the object-oriented programming language Python.
   To make the GUI I will be using the package appJar.
+
   Aliens:
     There will be 3 types of aliens, but they will all have the same underlying behaviour.
-    This means the best way to impliment this is by having an 'Alien' super-class, containing the code that
-    controls the behaviour that appears in all the alien (movement, shooting, death animation, etc...), and
+    This means the best way to implement this is by having an 'Alien' super-class, containing the code that
+    controls the behaviour that appears in all the alien (movement, shooting, hit detection, death animation, etc...), and
     then using this class to create all 3 subclasses which will contain the type specific info (points awarded,
     sprite images, etc...).
+
+  Player:
+    The player will have its own class that will be completely self contained.
+    The player will be able to move right and left using the arrow keys and shoot by pressing the spacebar.
+    The death animation will consist of 2 images switching back and forth a couple times before the sprite dissappears
+    and the respawn method is called.
+
+  Barricades:
+    The barricades will be part of the background image (coloured green), then when the projectile detect they're touching
+    the colour green 'above' the co-ordinates of the player, the image of the projectile will change to one of 2 black masks
+    and will stop moving, thus making part of the barricade black.
+
+  Projectiles:
+    There will be 3 types of projectile in total but they will all have the same underlying behaviour, therefore I will
+    make a super-class called Projectiles containing the code that controls movement, then I will have 3 sub classes containing the
+    code controlling the direction, speed, image, etc...
