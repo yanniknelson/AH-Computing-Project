@@ -51,6 +51,7 @@ Implementation:
     controls the behaviour that appears in all the alien (movement, shooting, hit detection, death animation, etc...), and
     then using this class to create all 3 subclasses which will contain the type specific info (points awarded,
     sprite images, etc...).
+    There will also be a 'mothership' sprite this will have its own class as its behaviour is different to the other aliens.
 
   Player:
     The player will have its own class that will be completely self contained.
