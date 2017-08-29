@@ -15,7 +15,7 @@ Mechanics:
       30pts:
         These constitute the top layer.
     There will be 11 aliens on each row.
-    There will also be a bonus point 'mother ship' that will occationaly
+    There will also be a bonus point 'mother ship' that will occasionally
     travel across the top of the screen, above all the aliens this will be worth 100pts.
       Bombs:
         There will be 2 types of projectile, bolt (fast) and arrow (slow).
@@ -67,3 +67,7 @@ Implementation:
     There will be 3 types of projectile in total but they will all have the same underlying behaviour, therefore I will
     make a super-class called Projectiles containing the code that controls movement, then I will have 3 sub classes containing the
     code controlling the direction, speed, image, etc...
+
+  Scoreboard:
+    The scores will be stored in a plain text file and will be sorted using a class and an array, the class will have the attributes name and score
+    and the array will contain objects of this class. To check scores the find minimum, search and a sort algorithms will be used.
