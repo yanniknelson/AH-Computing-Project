@@ -43,7 +43,7 @@ Mechanics:
 
 Implementation:
   This project will be made using the object-oriented programming language Python.
-  To make the GUI I will be using the package Pyganim.
+  To make the GUI I will be using the package Pyganim/Pygame.
 
   Aliens:
     There will be 3 types of aliens, but they will all have the same underlying behaviour.
@@ -72,3 +72,15 @@ Implementation:
   Scoreboard:
     The scores will be stored in a plain text file and will be sorted using a class and an array, the class will have the attributes name and score
     and the array will contain objects of this class. To check scores the find minimum, search and a sort algorithms will be used.
+
+Requirements Met?:
+  Validating inputs:
+    The player will only move on left and right arrow presses and shoot on spacebar presses.
+    The scoreboard will only allow alphabetical characters.
+  Interfacing with stored data:
+    The program will store the top 5 in a text file and will taking in that data and manipulate it when displaying the scoreboard
+    it will then also save the top 5 in the same file.
+  Binary search or sorting algorithms:
+    A Binary search and sorting algorithm will be used on the scores when considering adding a new score.
+  Recursion:
+    Recursion will be used when running the program.
