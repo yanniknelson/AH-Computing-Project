@@ -17,8 +17,11 @@ Mechanics:
     There will be 11 aliens on each row.
     There will also be a bonus point 'mother ship' that will occasionally
     travel across the top of the screen, above all the aliens this will be worth 100pts.
-      Bombs:
-        There will be 2 types of projectile, bolt (fast) and arrow (slow).
+    Bombs:
+      There will be 2 types of projectile, bolt (fast) and arrow (slow).
+    Movement:
+      The aliens will all move across the screen, then when they reach the end they will  
+      shift down a bit and their movement speed will increase.
 
   Player:
     The player will only be able to move right and left.
