@@ -25,7 +25,7 @@ Mechanics:
 
   Player:
     The player will only be able to move right and left.
-    Shots will only come from the center of the player character, this makes the game harder.
+    Shots will only come from the centre of the player character, this makes the game harder.
     The player will have 3 'lives' in total, each time the player 'dies' there will be a short explosion animation.
 
   Barricade:
