@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2017-09-23" view-index="0" gantt-divider-location="290" resource-divider-location="301" version="2.0">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2017-08-21" view-index="0" gantt-divider-location="137" resource-divider-location="301" version="2.0">
     <description/>
-    <view zooming-state="default:2" id="gantt-chart"/>
+    <view zooming-state="default:6" id="gantt-chart"/>
     <view id="resource-table">
         <field id="0" name="Name" width="55" order="0"/>
-        <field id="1" name="Default role" width="44" order="0"/>
+        <field id="1" name="Default role" width="44" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -30,18 +30,50 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" name="Planning" color="#00ffff" meeting="false" start="2017-08-28" duration="24" complete="0" priority="1" expand="true"/>
-        <task id="2" name="Requirements Specification" color="#8cb6ce" meeting="false" start="2017-09-26" duration="10" complete="0" priority="1" expand="true"/>
-        <task id="3" name="Producing Test Plan" color="#8cb6ce" meeting="false" start="2017-10-09" duration="6" complete="0" priority="1" expand="true"/>
-        <task id="4" name="Designing The Program" color="#8cb6ce" meeting="false" start="2017-09-25" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="0" name="Planning" color="#00ffff" meeting="false" start="2017-08-28" duration="31" complete="0" priority="1" expand="true">
+            <task id="9" name="Analyse problem" color="#99ffff" meeting="false" start="2017-08-28" duration="3" complete="0" priority="1" expand="true"/>
+            <task id="8" name="Prject proposal" color="#33ccff" meeting="false" start="2017-08-31" duration="3" complete="0" priority="1" expand="true"/>
+            <task id="10" name="Research" color="#8cb6ce" meeting="false" start="2017-09-04" duration="20" complete="0" priority="1" expand="true">
+                <task id="11" name="Feasibility Study" color="#3399ff" meeting="false" start="2017-09-04" duration="6" complete="0" priority="1" expand="true"/>
+                <task id="12" name="Survey" color="#8cb6ce" meeting="false" start="2017-09-08" duration="16" complete="0" priority="1" expand="true">
+                    <task id="18" name="Taking survey" color="#0066cc" meeting="false" start="2017-09-08" duration="8" complete="0" priority="1" expand="true"/>
+                    <task id="17" name="Analysis of Survey" color="#0033ff" meeting="false" start="2017-09-18" duration="10" complete="0" priority="1" expand="true"/>
+                </task>
+            </task>
+            <task id="13" name="Project Plan" color="#8cb6ce" meeting="false" start="2017-09-21" duration="13" complete="0" priority="1" expand="true">
+                <task id="14" name="Gantt Chart" color="#3300cc" meeting="false" start="2017-09-21" duration="13" complete="0" priority="1" expand="true"/>
+                <task id="15" name="Resource listing" color="#6600cc" meeting="false" start="2017-10-02" duration="6" complete="0" priority="1" expand="true"/>
+            </task>
+        </task>
+        <task id="2" name="Requirements Specification" color="#cc00ff" meeting="false" start="2017-09-26" duration="17" complete="0" priority="1" expand="true"/>
+        <task id="3" name="Producing Test Plan" color="#8cb6ce" meeting="false" start="2017-10-12" duration="14" complete="0" priority="1" expand="true">
+            <task id="20" name="Final testing Plan" color="#ff00ff" meeting="false" start="2017-10-12" duration="7" complete="0" priority="1" expand="true"/>
+            <task id="21" name="End User Testing Plan" color="#cc00cc" meeting="false" start="2017-10-20" duration="8" complete="0" priority="1" expand="true"/>
+        </task>
+        <task id="4" name="Designing The Program" color="#8cb6ce" meeting="false" start="2017-10-26" duration="27" complete="0" priority="1" expand="true">
+            <task id="22" name="Interface design" color="#8cb6ce" meeting="false" start="2017-10-26" duration="7" complete="0" priority="1" expand="true">
+                <task id="23" name="Design Interface" color="#cc0033" meeting="false" start="2017-10-26" duration="3" complete="0" priority="1" expand="true"/>
+                <task id="24" name="Evaluate Interface Design" color="#ff0000" meeting="false" start="2017-10-30" duration="5" complete="0" priority="1" expand="true"/>
+            </task>
+            <task id="25" name="Psuedocode design" color="#8cb6ce" meeting="false" start="2017-11-02" duration="22" complete="0" priority="1" expand="true">
+                <task id="26" name="Algorithm design" color="#ff3300" meeting="false" start="2017-11-02" duration="6" complete="0" priority="1" expand="true"/>
+                <task id="27" name="Algorithm break down" color="#ff9900" meeting="false" start="2017-11-10" duration="16" complete="0" priority="1" expand="true"/>
+            </task>
+        </task>
+        <task id="5" name="Implementaion" color="#ffff00" meeting="false" start="2017-12-01" duration="34" complete="0" priority="1" expand="true"/>
+        <task id="6" name="Testing" color="#8cb6ce" meeting="false" start="2017-12-08" duration="49" complete="0" priority="1" expand="true">
+            <task id="28" name="Alpha Testing" color="#33ff00" meeting="false" start="2017-12-08" duration="32" complete="0" priority="1" expand="true"/>
+            <task id="29" name="Beta Testing" color="#00ff66" meeting="false" start="2018-01-23" duration="17" complete="0" priority="1" expand="true"/>
+        </task>
+        <task id="7" name="Evaluation" color="#00ffcc" meeting="false" start="2017-08-28" duration="135" complete="0" priority="1" expand="true"/>
     </tasks>
     <resources/>
     <allocations/>
     <vacations/>
     <taskdisplaycolumns>
-        <displaycolumn property-id="tpd3" order="0" width="75"/>
-        <displaycolumn property-id="tpd4" order="1" width="75"/>
-        <displaycolumn property-id="tpd5" order="2" width="75"/>
+        <displaycolumn property-id="tpd3" order="0" width="129"/>
+        <displaycolumn property-id="tpd4" order="1" width="49"/>
+        <displaycolumn property-id="tpd5" order="2" width="47"/>
     </taskdisplaycolumns>
     <previous/>
     <roles roleset-name="Default"/>
