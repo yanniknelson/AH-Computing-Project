@@ -1,0 +1,111 @@
+1	CREATE WINDOW
+2	cosmic_Alien = NEW Font(cosmic_Alien.ttf)
+3	SETUP homepage
+4	CHECK SETTINGS
+5	DECLARE game_page AS BOOLEAN INITIALLY FALSE
+6	DECLARE instruc AS BOOLEAN INITIALLY FALSE
+7	DECLARE settings AS BOOLEAN INITIALLY FALSE
+8	DECLARE high_input AS BOOLEAN INITIALLY FALSE
+9	DECLARE high_display AS BOOLEAN INITIALLY FALSE
+10 	DECLARE exit AS BOOLEAN INITIALLY FALSE
+11	CHOOSE PAGE
+
+
+
+
+	1	CREATE WINDOW
+		1.1	Window = Display(960, 720)
+		1.2	Window.caption = "SPACE INVADERS"
+		
+		
+		
+		
+	2 SETUP homepage
+		2.1 DECLARE background AS IMAGE(background.png)
+		2.2 DECLARE home_title AS TEXT("SPACE INVADERS", cosmic_Alien, 72px)
+		2.3	SETUP Alien Description
+		2.4 SETUP Buttons
+		
+		2.3 SETUP Alien Description
+			2.3.1	DECLARE home_subtitle AS TEXT("These are the aliens you will face:", cosmic_Alien, 32px)
+			2.3.2	DECLARE home_Alien_mother_text AS TEXT("This can be worth 50, 100, 150 or 300 points", cosmic_Alien, 28px)
+			2.3.3	DECLARE home_Alien_3_text AS TEXT("This alien is worth 30 points", cosmic_Alien, 28px)
+			2.3.4	DECLARE home_Alien_2_text AS TEXT("This alien is worth 20 points", cosmic_Alien, 28px)
+			2.3.5	DECLARE home_Alien_1_text AS TEXT("This alien is worth 10 points", cosmic_Alien, 28px)
+			
+			//////////////////////////////////////
+			need to make a function for choosing graphics
+			//////////////////////////////////////
+
+		2.4 SETUP Buttons
+			2.4.1	DECLARE btn_Game AS NEW button("START GAME", game)
+			2.4.2	DECLARE btn_Instruc AS NEW button("INSTRUCTIONS", instruc)
+			2.4.3	DECLARE btn_Settings AS NEW button("SETTINGS", settings)
+			
+			
+			
+			
+	3	LOAD homepage
+		3.1	MOVE background TO (480,360)
+		3.2 MOVE home_title TO (330, 282)
+		3.3 MOVE Alien Description INTO POSITION
+		3.4	MOVE Buttons INTO POSITION
+		
+		3.3 MOVE Alien Description INTO POSITION
+			3.3.1	MOVE home_subtitle TO (342, 390)
+			3.3.2	MOVE home_Alien_mother_text TO (584, 488)
+			3.3.3	MOVE home_Alien_3_text To (584, 568)
+			3.3.4	MOVE home_Alien_2_text To (584, 647)
+			3.3.5	MOVE home_Alien_1_text To (584, 729)
+			
+		3.4 MOVE Buttons INTO POSITION
+			3.4.1 MOVE btn_Instruc TO (224, 831)
+			3.4.2 MOVE btn_Game TO (548, 831)
+			3.4.3 MOVE btn_Settings TO (889, 831)
+			
+			
+			
+		
+	4	CHECK SETTINGS
+		4.1 <take in settings file and map the values to the variables)
+		4.2	IF Origin_Graph == TRUE THEN
+		4.2 	<set graphics rescource file to original>
+		4.3	Else
+		4.4		<set graphics rescource file to modern>
+		4.5 END IF
+	
+	
+	
+	11	CHOOSE PAGE
+		11.1	While NOT(exit)
+		11.2		IF game_page THEN
+		11.3			game.run_game()
+		11.4		ELSE IF instruc THEN
+		11.5			game.run_instruc()
+		11.6		ELSE IF settings THEN
+		11.7			game.run_settings()
+		11.8		ELSE IF high_input THEN
+		11.9			game.run_high_input()
+		11.10		ELSE IF high_display THEN
+		11.11			game.run_high_display()
+		11.12		Else
+		11.13			game.run_home()
+		11.14		END IF
+		11.15	END WHILE
+
+		11.13	game.run_home()
+			11.13.1	LOAD homepage
+			11.13.2	btn_Instruc.hover_check()
+			11.13.3	btn_Settings.hover_check()
+			11.13.4	btn_Game.hover_check()
+			11.13.5	btn_Instruc.click_check()
+			11.13.6	btn_Settings.click_check()
+			11.13.7	btn_Game.click_check()
+		
+		
+////////////////////////////
+make a game class
+///////////////////////////
+
+
+	
