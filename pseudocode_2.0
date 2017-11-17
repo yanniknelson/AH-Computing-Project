@@ -1,0 +1,80 @@
+	FILE: START_GAME
+1	Create Window
+2	Declare space_Invaders AS NEW game()
+3	Record SETTINGS IS (Boolean graphics, Boolean sound_Effects, Boolean music, Integer music_Type)
+4	Call space_Invaders.run()
+
+	1	CREATE WINDOW
+		1.1	Declare Window AS NEW Display(960, 720)
+		1.2	Window.caption = "SPACE INVADERS"
+
+	FILE: PAGES
+
+1	CLASS game()
+2		INSTANCE VARIABLES:
+3			Declare Homepage AS New home_page(Settings_Page, Instructions_Page, Game_Page)
+4			Declare	Settings_Page AS New settings_page(Homepage)
+5			Declare Instructions_Page AS NEW instructions_page(Homepage)
+6			Declare Game_Page AS NEW game_page(Highscore_Input_Page, Highscore_Display_Page)
+7			Declare Highscore_Input_Page AS NEW highscore_input_page(Highscore_Display_Page)
+8			Declare Highscore_Display_Page AS NEW highscore_display_page(Homepage, Game_Page)
+9			Declare Settings As SETTINGS(False, True, True, 0)
+14			Declare cosmic_Aliens_Font AS NEW Font(Cosmic_Aliens.ttf)
+15
+16		METHODS:
+17			Procedure get_Settings()
+18				IF <settings file exists> Then
+19					<take in settings file and split into the settings variable>
+20				Else
+21					<create settings file and fill using the default values of the settings variable>
+22				END IF
+23			END Procedure	
+24
+25			Procedure run()
+26				Settings_Page.setup()
+27				Instructions_Page.setup()
+28				Game_Page.setup()
+29				Homepage.setup()
+30			END Procedure
+
+	CLASS button(STRING caption, ///////get help here/////////)
+	
+	CLASS home_button()
+
+	CLASS homepage(settings_page s_Page, instructions_page i_Page, game_page g_Page)
+		INSTANCE VARIABLES:
+			Declare Settings_Page AS settings_page INITIALLY s_Page
+			Declare Instructions_Page AS instructions_page INITIALLY i_Page
+			Declare Game_Page AS game_page INITIALLY g_Page
+	
+		METHODS:
+			Procedure setup()
+				Declare background AS IMAGE(background.png)
+				Declare home_title AS TEXT("SPACE INVADERS", cosmic_Alien, 72px)
+				''sets up alien description
+				Declare home_subtitle AS TEXT("These are the aliens you will face:", cosmic_Alien, 32px)
+				Declare home_Alien_mother_text AS TEXT("This can be worth 50, 100, 150 or 300 points", cosmic_Alien, 28px)
+				Declare home_Alien_3_text AS TEXT("This alien is worth 30 points", cosmic_Alien, 28px)
+				Declare home_Alien_2_text AS TEXT("This alien is worth 20 points", cosmic_Alien, 28px)
+				Declare home_Alien_1_text AS TEXT("This alien is worth 10 points", cosmic_Alien, 28px)
+				'' sets up buttons
+				Declare btn_Game AS NEW home_button("START GAME", self.Game_Page())
+				Declare btn_Instruc AS NEW home_button("INSTRUCTIONS", self.Instructions_Page())
+				Declare btn_Settings AS NEW home_button("SETTINGS", self.Settings_Page())
+			END Procedure
+			
+	CLASS settings_page(home_page H_page)
+		INSTANCE VARIABLES:
+			Declare Home_Page As home_page INITIALLY H_page
+	
+	CLASS instructions_page(home_page H_page)
+		INSTANCE VARIABLES:
+			Declare Home_Page As home_page INITIALLY H_page
+	
+	CLASS game_page(highscore_input_page hi_Page, highscore_display_page hd_Page)
+	
+	CLASS Highscore_Input_Page(highscore_display_page hd_Page)
+	
+	CLASS Highscore_Display_Page(home_page H_page, game_page g_Page)
+		INSTANCE VARIABLES:
+			Declare Home_Page As home_page INITIALLY H_page
