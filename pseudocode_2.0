@@ -11,7 +11,7 @@
 	FILE: PAGES
 
 1	CLASS game()
-2		INSTANCE VARIABLES:
+2		CONSTRUCTOR
 3			Declare Homepage AS New home_page(Settings_Page, Instructions_Page, Game_Page)
 4			Declare	Settings_Page AS New settings_page(Homepage)
 5			Declare Instructions_Page AS NEW instructions_page(Homepage)
@@ -39,10 +39,10 @@
 
 	CLASS button(STRING caption, ///////get help here/////////)
 	
-	CLASS home_button()
+	CLASS home_button() INHERITS button()
 
 	CLASS homepage(settings_page s_Page, instructions_page i_Page, game_page g_Page)
-		INSTANCE VARIABLES:
+		CONSTRUCTOR
 			Declare Settings_Page AS settings_page INITIALLY s_Page
 			Declare Instructions_Page AS instructions_page INITIALLY i_Page
 			Declare Game_Page AS game_page INITIALLY g_Page
@@ -61,14 +61,22 @@
 				Declare btn_Game AS NEW home_button("START GAME", self.Game_Page())
 				Declare btn_Instruc AS NEW home_button("INSTRUCTIONS", self.Instructions_Page())
 				Declare btn_Settings AS NEW home_button("SETTINGS", self.Settings_Page())
+				self.run()
+			END Procedure
+			
+			Procedure run()
+				Declare running As Boolean INITIALLY True
+				While running
+				
+				END While
 			END Procedure
 			
 	CLASS settings_page(home_page H_page)
-		INSTANCE VARIABLES:
+		CONSTRUCTOR
 			Declare Home_Page As home_page INITIALLY H_page
 	
 	CLASS instructions_page(home_page H_page)
-		INSTANCE VARIABLES:
+		CONSTRUCTOR
 			Declare Home_Page As home_page INITIALLY H_page
 	
 	CLASS game_page(highscore_input_page hi_Page, highscore_display_page hd_Page)
@@ -76,5 +84,5 @@
 	CLASS Highscore_Input_Page(highscore_display_page hd_Page)
 	
 	CLASS Highscore_Display_Page(home_page H_page, game_page g_Page)
-		INSTANCE VARIABLES:
+		CONSTRUCTOR
 			Declare Home_Page As home_page INITIALLY H_page
