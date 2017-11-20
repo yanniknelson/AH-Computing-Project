@@ -1,0 +1,70 @@
+1	Setup Game()
+2	Call Space_Invaders.run()
+
+	1 Setup Game()
+		1.1	Declare Space_Invaders as New Game
+		1.2	Import resources
+		1.3	Create Window
+		
+		1.2 Import resources
+			1.2.1	<Import all classes and records>
+			1.2.2	<Take in settings file>
+			1.2.3	<put settings file into the Space_Invaders' settings record>
+			1.2.4	Call Space_Invaders.Check_Graphics()
+			
+			1.2.4	Call Space_Invaders.Check_Graphics()
+				1.2.4.2	IF Space_Invaders.settings.graphics THEN
+				1.2.4.3		SET Space_Invaders.image_resource TO "classic"
+				1.2.4.4	ELSE
+				1.2.4.5		SET Space_Invaders.image_resource TO "modern"
+				1.2.4.6	END IF
+				
+		1.3	Create Window
+			1.3.1	Declare Window AS pygame.display.set_mode((960,720))
+			1.3.2	Window.caption = "SPACE INVADERS"
+			
+			
+			1.3.3	Call Draw_Background()
+			1.3.3	Declare Background AS IMAGE
+			1.3.4	Move Background TO (0,0)
+			
+	
+	Resources
+1	Settings Record
+2	Game Class
+3	Homepage Class
+4	Sett_page Class
+5	Instruc_page Class
+6	Game_page Class
+7	HSIn_page Class
+8	HSDis_page Class
+9	Player Class
+10	Alien Class
+	10.1	Alien_10pts Class
+	10.2	Alien_20pts Class
+	10.3	Alien_30pts Class
+11	Player Class
+12	Bunker Class
+13	Shot Class
+14	Bolt Class
+15	Arrow Class
+
+	1	Settings Record
+		1.1 Record SETTINGS IS (Boolean graphics, Boolean sound_Effects, Boolean music, Integer music_Type)
+	
+	2	Game Class
+		2.1	Class Game()
+		2.2		CONSTRUCTOR:
+		2.3		Declare settings AS SETTINGS
+		2.4		Declare image_resource AS STRING
+		2.5		Declare Background AS IMAGE
+		
+				METHODS:
+				Check_Graphics()
+				run()
+				Save_Settings()
+				
+				
+	3	Homepage Class
+		3.1	Class homepage()
+		

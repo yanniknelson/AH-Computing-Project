@@ -12,14 +12,18 @@
 
 1	CLASS game()
 2		CONSTRUCTOR
-3			Declare Homepage AS New home_page(Settings_Page, Instructions_Page, Game_Page)
-4			Declare	Settings_Page AS New settings_page(Homepage)
-5			Declare Instructions_Page AS NEW instructions_page(Homepage)
-6			Declare Game_Page AS NEW game_page(Highscore_Input_Page, Highscore_Display_Page)
-7			Declare Highscore_Input_Page AS NEW highscore_input_page(Highscore_Display_Page)
-8			Declare Highscore_Display_Page AS NEW highscore_display_page(Homepage, Game_Page)
-9			Declare Settings As SETTINGS(False, True, True, 0)
+			
+3			Declare Homepage AS New home_page(self.Settings_Page, self.Instructions_Page, self.Game_Page)
+4			Declare	Settings_Page AS New settings_page(self.Homepage)
+5			Declare Instructions_Page AS NEW instructions_page(self.Homepage)
+6			Declare Game_Page AS NEW game_page(self.Highscore_Input_Page, self.Highscore_Display_Page, self.image_source)
+7			Declare Highscore_Input_Page AS NEW highscore_input_page(self.Highscore_Display_Page)
+8			Declare Highscore_Display_Page AS NEW highscore_display_page(self.Homepage, self.Game_Page)
+9			Declare Settings AS SETTINGS(False, True, True, 0)
 14			Declare cosmic_Aliens_Font AS NEW Font(Cosmic_Aliens.ttf)
+
+					Declare image_source AS STRING INITIALLY "classic"
+					
 15
 16		METHODS:
 17			Procedure get_Settings()
@@ -37,11 +41,19 @@
 29				Homepage.setup()
 30			END Procedure
 
-	CLASS button(STRING caption, ///////get help here/////////)
+	CLASS button(STRING caption, ARRAY OF INTEGER position)
+		CONSTRUCTOR
+			Declare text AS TEXT(caption, cosmic_Alien, 13px)
+			Declare pos(2) AS INTEGER INITIALLY position
+			Declare s-Size(2) AS INTEGER INITIALLY (164, 62)
+			Declare b-Size(2) AS INTEGER INITIALLY (184, 78)
 	
+		METHODS
+			Procedure
+		
 	CLASS home_button() INHERITS button()
 
-	CLASS homepage(settings_page s_Page, instructions_page i_Page, game_page g_Page)
+	CLASS homepage(settings_page s_Page, instructions_page i_Page, game_page g_Page, STRING image_source)
 		CONSTRUCTOR
 			Declare Settings_Page AS settings_page INITIALLY s_Page
 			Declare Instructions_Page AS instructions_page INITIALLY i_Page
@@ -49,7 +61,7 @@
 	
 		METHODS:
 			Procedure setup()
-				Declare background AS IMAGE(background.png)
+				Declare background AS IMAGE(image_source & "/background.png")
 				Declare home_title AS TEXT("SPACE INVADERS", cosmic_Alien, 72px)
 				''sets up alien description
 				Declare home_subtitle AS TEXT("These are the aliens you will face:", cosmic_Alien, 32px)
@@ -64,25 +76,30 @@
 				self.run()
 			END Procedure
 			
-			Procedure run()
-				Declare running As Boolean INITIALLY True
-				While running
+			Procedure draw_All()
 				
+			END Procedure
+			
+			Procedure run()
+				Declare running AS Boolean INITIALLY True
+				While running
+					Call draw_All()
+					Call run_Checks()
 				END While
 			END Procedure
 			
 	CLASS settings_page(home_page H_page)
 		CONSTRUCTOR
-			Declare Home_Page As home_page INITIALLY H_page
+			Declare Home_Page AS home_page INITIALLY H_page
 	
 	CLASS instructions_page(home_page H_page)
 		CONSTRUCTOR
-			Declare Home_Page As home_page INITIALLY H_page
+			Declare Home_Page AS home_page INITIALLY H_page
 	
-	CLASS game_page(highscore_input_page hi_Page, highscore_display_page hd_Page)
+	CLASS game_page(highscore_input_page hi_Page, highscore_display_page hd_Page, STRING image_source)
 	
 	CLASS Highscore_Input_Page(highscore_display_page hd_Page)
 	
 	CLASS Highscore_Display_Page(home_page H_page, game_page g_Page)
 		CONSTRUCTOR
-			Declare Home_Page As home_page INITIALLY H_page
+			Declare Home_Page AS home_page INITIALLY H_page
