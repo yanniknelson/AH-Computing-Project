@@ -11,22 +11,11 @@
 			1.2.2	<Take in settings file>
 			1.2.3	<put settings file into the Space_Invaders' settings record>
 			1.2.4	Call Space_Invaders.Check_Graphics()
-			
-			1.2.4	Call Space_Invaders.Check_Graphics()
-				1.2.4.2	IF Space_Invaders.settings.graphics THEN
-				1.2.4.3		SET Space_Invaders.image_resource TO "classic"
-				1.2.4.4	ELSE
-				1.2.4.5		SET Space_Invaders.image_resource TO "modern"
-				1.2.4.6	END IF
+
 				
 		1.3	Create Window
 			1.3.1	Declare Window AS pygame.display.set_mode((960,720))
 			1.3.2	Window.caption = "SPACE INVADERS"
-			
-			
-			1.3.3	Call Draw_Background()
-			1.3.3	Declare Background AS IMAGE
-			1.3.4	Move Background TO (0,0)
 			
 	
 	Resources
@@ -38,16 +27,20 @@
 6	Game_page Class
 7	HSIn_page Class
 8	HSDis_page Class
-9	Player Class
-10	Alien Class
-	10.1	Alien_10pts Class
-	10.2	Alien_20pts Class
-	10.3	Alien_30pts Class
+9	Image Class
+10	Button Class
+	10.1 Home_Button Class
 11	Player Class
-12	Bunker Class
-13	Shot Class
-14	Bolt Class
-15	Arrow Class
+12	Alien Class
+	12.1	Alien_10pts Class
+	12.2	Alien_20pts Class
+	12.3	Alien_30pts Class
+13	Player Class
+14	Bunker Class
+15	Shot Class
+16	Bolt Class
+17	Arrow Class
+18	Libraries
 
 	1	Settings Record
 		1.1 Record SETTINGS IS (Boolean graphics, Boolean sound_Effects, Boolean music, Integer music_Type)
@@ -57,14 +50,100 @@
 		2.2		CONSTRUCTOR:
 		2.3		Declare settings AS SETTINGS
 		2.4		Declare image_resource AS STRING
-		2.5		Declare Background AS IMAGE
+		2.5		Declare font AS FONT INITIALLY Cosmic_Aliens.ttf
+		2.6		Declare H_Page AS Homepage(font)
 		
 				METHODS:
 				Check_Graphics()
 				run()
 				Save_Settings()
 				
+				Check_Graphics()
+					PROCEDURE Check_Graphics()
+						IF self.settings.graphics THEN
+							SET self.image_resource TO "classic"
+						ELSE
+							SET self.image_resource TO "modern"
+						END IF
+					END PROCEDURE
 				
 	3	Homepage Class
-		3.1	Class homepage()
+		3.1	Class homepage(FONT font, STRING img_res)
+		3.2		CONSTRUCTOR:
+		3.3		Declare Background AS IMAGE(img_res & "/background.png")
+		3.4		Declare I_Button AS Home_Button
+		3.5		Declare S_Button AS Home_Button
+		3.6		Declare G_Button AS Home_Button
+		3.7		Declare Title As TEXT INITIALLY ("SPACE INVADERS", font, 32px)
+		3.8		Declare Subtitle AS TEXT INITIALLY ("These are the aliens you will face:", font, 32px)
+		3.9		Declare Mother_Text AS TEXT INITIALLY ("This can be worth 50, 100, 150 or 300 points", font, 28px)
+		3.10	Declare 30pts_Text AS TEXT INITIALLY ("This alien is worth 30 points", font, 28px)
+		3.11	Declare 20pts_Text AS TEXT INITIALLY ("This alien is worth 20 points", font, 28px)
+		3.12	Declare 10pts_Text AS TEXT INITIALLY ("This alien is worth 10 points", font, 28px)
+		3.13	Declare	Mother_Img AS IMAGE(img_res & "/aliens/mother_ship.png")
+		3.14	Declare 30pts_Img AS Image(img_res & "/aliens/30pts_Closed.png")
+		3.15	Declare 20pts_Img AS Image(img_res & "/aliens/20pts_Closed.png")
+		3.16	Declare 10pts_Img AS Image(img_res & "/aliens/10pts_Closed.png")
+		3.17
+		3.18	METHODS:
+		3.19	Draw_Page()
+		3.20	Run_Checks()
+				
+		3.19	Draw_Page()
+			3.19.1	PROCEDURE Draw_Page()
+			3.19.2		MOVE self.background TO (0,0)
+			3.19.3		MOVE self.Title TO (330 - (self.title.width / 2), 282 - (self.title.hight / 2))
+			3.19.4		MOVE self.Subtitle TO (342 - (self.Subtitle.width / 2), 390 - (self.Subtitle.hight / 2))
+			3.19.5		MOVE self.Mother_Text TO (584 - (self.Mother_Text.width / 2), 488 - (self.Mother_Text.hight / 2))
+			3.19.6		MOVE self.30pts_Text TO (584 - (self.30pts_Text.width / 2), 568 - (self.30pts_Text.hight / 2))
+			3.19.7		MOVE self.20pts_Text TO (584 - (self.20pts_Text.width / 2), 647 - (self.20pts_Text.hight / 2))
+			3.19.8		MOVE self.10pts_Text TO (584 - (self.10pts_Text.width / 2), 729 - (self.10pts_Text.hight / 2))
+			3.19.9		MOVE self.Mother_Img TO (487 - (self.Mother_Img.width / 2), 468 - (self.Mother_Img.hight / 2))
+			3.19.10		MOVE self.30pts_Img TO (487 - (self.30pts_Img.width / 2), 548 - (self.30pts_Img.hight / 2))
+			3.19.11		MOVE self.20pts_Img TO (487 - (self.20pts_Img.width / 2), 628 - (self.20pts_Img.hight / 2))
+			3.19.12		MOVE self.10pts_Img TO (487 - (self.10pts_Img.width / 2), 707 - (self.10pts_Img.hight / 2))						
+			3.19.13		Call self.I_Button.Move_To((224, 831))
+			3.19.14		Call self.S_Button.Move_To((548, 831)
+			3.19.15		Call self.G_Button.Move_To((889, 831))
+			3.19.16		Call self.Run_Checks()
+			3.19.17	END PROCEDURE
+					
+		3.20	Run_Checks()
+			3.20.1	PROCEDURE Run_Checks()
+			3.20.2		While True
+			3.20.3			Call self.I_Button.Check_Hover()
+			3.20.4			Call self.G_Button.Check_Hover()
+			3.20.5			Call self.S_Button.Check_Hover()
+			3.20.6			Call self.I_Button.Check_Click()
+			3.20.7			Call self.G_Button.Check_Click()
+			3.20.8			Call self.S_Button.Check_Click()
+			3.20.9		END While
+			3.20.10	END PROCEDURE
+					
+	9	Image Class
+		9.1 Class Image(STRING path)
+		9.2		CONSTRUCTOR:
+		9.3		Declare path AS STRING INITIALLY path
+		9.4
+		9.5		METHODS:
+		9.6		Get_Image()
 		
+		9.6	Get_Image()
+			9.6.1	PROCEDURE Get_Image()
+			9.6.2		global _image_library
+			9.6.3		Declare image AS _image_library.get(path)
+			9.6.4		IF image == None THEN
+			9.6.5			canonicalized_path = path.replace('/', os.sep).replace('\\', os.sep)
+			9.6.6			image = pygame.image.load(canonicalized_path)
+			9.6.7			_image_library[path] = image
+			9.6.8		END IF				
+			9.6.9		return image
+		
+	10	Button Class
+		10.1	Class Button(STRING caption)
+		10.2		CONSTRUCTOR:
+		10.3		Declare Text AS TEXT INITIALLY (caption, font, 13px)
+		
+	18	Libraries
+		18.1	Pygame
+		18.2	os

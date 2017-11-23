@@ -66,8 +66,8 @@
 				''sets up alien description
 				Declare home_subtitle AS TEXT("These are the aliens you will face:", cosmic_Alien, 32px)
 				Declare home_Alien_mother_text AS TEXT("This can be worth 50, 100, 150 or 300 points", cosmic_Alien, 28px)
-				Declare home_Alien_3_text AS TEXT("This alien is worth 30 points", cosmic_Alien, 28px)
 				Declare home_Alien_2_text AS TEXT("This alien is worth 20 points", cosmic_Alien, 28px)
+				Declare home_Alien_3_text AS TEXT("This alien is worth 30 points", cosmic_Alien, 28px)
 				Declare home_Alien_1_text AS TEXT("This alien is worth 10 points", cosmic_Alien, 28px)
 				'' sets up buttons
 				Declare btn_Game AS NEW home_button("START GAME", self.Game_Page())
