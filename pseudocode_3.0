@@ -98,10 +98,10 @@
 			3.19.6		MOVE self.30pts_Text TO (584 - (self.30pts_Text.width / 2), 568 - (self.30pts_Text.hight / 2))
 			3.19.7		MOVE self.20pts_Text TO (584 - (self.20pts_Text.width / 2), 647 - (self.20pts_Text.hight / 2))
 			3.19.8		MOVE self.10pts_Text TO (584 - (self.10pts_Text.width / 2), 729 - (self.10pts_Text.hight / 2))
-			3.19.9		MOVE self.Mother_Img TO (487 - (self.Mother_Img.width / 2), 468 - (self.Mother_Img.hight / 2))
-			3.19.10		MOVE self.30pts_Img TO (487 - (self.30pts_Img.width / 2), 548 - (self.30pts_Img.hight / 2))
-			3.19.11		MOVE self.20pts_Img TO (487 - (self.20pts_Img.width / 2), 628 - (self.20pts_Img.hight / 2))
-			3.19.12		MOVE self.10pts_Img TO (487 - (self.10pts_Img.width / 2), 707 - (self.10pts_Img.hight / 2))						
+			3.19.9		MOVE self.Mother_Img.Get_Image TO (487 - (self.Mother_Img.width / 2), 468 - (self.Mother_Img.hight / 2))
+			3.19.10		MOVE self.30pts_Img.Get_Image TO (487 - (self.30pts_Img.width / 2), 548 - (self.30pts_Img.hight / 2))
+			3.19.11		MOVE self.20pts_Img.Get_Image TO (487 - (self.20pts_Img.width / 2), 628 - (self.20pts_Img.hight / 2))
+			3.19.12		MOVE self.10pts_Img.Get_Image TO (487 - (self.10pts_Img.width / 2), 707 - (self.10pts_Img.hight / 2))						
 			3.19.13		Call self.I_Button.Move_To((224, 831))
 			3.19.14		Call self.S_Button.Move_To((548, 831)
 			3.19.15		Call self.G_Button.Move_To((889, 831))
@@ -138,12 +138,66 @@
 			9.6.7			_image_library[path] = image
 			9.6.8		END IF				
 			9.6.9		return image
+			9.6.10	END PROCEDURE
 		
 	10	Button Class
 		10.1	Class Button(STRING caption)
 		10.2		CONSTRUCTOR:
 		10.3		Declare Text AS TEXT INITIALLY (caption, font, 13px)
-		
+		10.4		Declare S_Size AS ARRAY OF INTEGER INITIALLY (164, 62)
+		10.5		Declare L_Size AS ARRAY OF INTEGER INITIALLY (184, 78)
+		10.6		Declare S_Back AS RECTANGLE(164, 62)
+		10.7		Declare L_Back AS RECTANGLE(184, 78)
+		10.8		Declare Large AS BOOLEAN INITIALLY False
+		10.9		Declare x AS INTEGER
+		10.10		Declare y AS INTEGER
+		10.11
+		10.12			METHODS:
+		10.13			Move_To()
+		10.14			Check_Hover()
+		10.15			Check_Click()
+		10.16			Change_Page()
+					
+		10.13			Move_T0()
+			10.13.1				PROCEDURE Move_to(ARRAY OF INTEGER position)
+			10.13.2					IF Large THEN
+			10.13.3						SET self.x TO position(0) - (self.L_Size(0) / 2)
+			10.13.4						SET self.y TO position(1) - (self.L_Size(1) / 2)
+			10.13.5						MOVE self.L_Back TO (X, Y)
+			10.13.6					ELSE
+			10.13.7						SET self.x TO position(0) - (self.S_Size(0) / 2)
+			10.13.8						SET self.y TO position(1) - (self.S_Size(1) / 2)
+			10.13.9						MOVE self.S_Back TO (X, Y)
+			10.13.10				END IF
+			10.13.11				MOVE self.Text TO (position(0) - (self.Text.Width / 2), position(1) - (self.Text.Hight / 2))
+			10.13.12			END PROCEDURE
+						
+			10.14		Check_Hover	
+				10.14.1			PROCEDURE Check_Hover()
+				10.14.2				Declare temp_size AS ARRAY OF INTEGER
+				10.14.3				IF Large THEN
+				10.14.4					SET temp_size TO L_Size
+				10.14.5				ELSE
+				10.14.6					SET temp_size TO S_Size
+				10.14.7				END IF
+				10.14.8		
+				10.14.9				IF (mouse.x > self.x AND mouse.x < (self.x + temp_size(x)) AND (mouse.y > self.y AND mouse.y < (self.y + temp_size(1)) THEN
+				10.14.10				SET self.Large TO True 
+				10.14.11			ELSE
+				10.14.12				SET self.Large TO False
+				10.14.13			END IF
+				10.14.14		END PROCEDURE
+				
+				10.15	Check_Click()
+				10.15.1		PROCEDURE Check_Click()
+				10.15.2			IF Large AND mouse.Click THEN
+				10.15.3				self.Change_Page()
+				10.15.4			END IF
+				10.15.5		END PROCEDURE
+						
+				10.16	Change_Page()
+				
+				
 	18	Libraries
 		18.1	Pygame
 		18.2	os
