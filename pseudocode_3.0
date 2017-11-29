@@ -29,7 +29,10 @@
 8	HSDis_page Class
 9	Image Class
 10	Button Class
-	10.1 Home_Button Class
+	10.1	Home_Button Class
+	10.2	Settings_Button Class
+	10.3	Game_Button Class
+	10.4	Homepage_Button Class
 11	Player Class
 12	Alien Class
 	12.1	Alien_10pts Class
@@ -71,9 +74,9 @@
 		3.1	Class homepage(FONT font, STRING img_res)
 		3.2		CONSTRUCTOR:
 		3.3		Declare Background AS IMAGE(img_res & "/background.png")
-		3.4		Declare I_Button AS Home_Button
-		3.5		Declare S_Button AS Home_Button
-		3.6		Declare G_Button AS Home_Button
+		3.4		Declare I_Button AS Homepage_Button
+		3.5		Declare S_Button AS Homepage_Button
+		3.6		Declare G_Button AS Game_Button
 		3.7		Declare Title As TEXT INITIALLY ("SPACE INVADERS", font, 32px)
 		3.8		Declare Subtitle AS TEXT INITIALLY ("These are the aliens you will face:", font, 32px)
 		3.9		Declare Mother_Text AS TEXT INITIALLY ("This can be worth 50, 100, 150 or 300 points", font, 28px)
@@ -155,8 +158,7 @@
 		10.12			METHODS:
 		10.13			Move_To()
 		10.14			Check_Hover()
-		10.15			Check_Click()
-		10.16			Change_Page()
+		
 					
 		10.13			Move_T0()
 			10.13.1				PROCEDURE Move_to(ARRAY OF INTEGER position)
@@ -188,15 +190,22 @@
 				10.14.13			END IF
 				10.14.14		END PROCEDURE
 				
-				10.15	Check_Click()
-				10.15.1		PROCEDURE Check_Click()
-				10.15.2			IF Large AND mouse.Click THEN
-				10.15.3				self.Change_Page()
-				10.15.4			END IF
-				10.15.5		END PROCEDURE
-						
-				10.16	Change_Page()
+					
+	10.1	Home_Button Class
+		10.1.1	Class Home_Button INHERITS FROM Button
+		10.1.2		NEW METHODS:
+		10.1.3		Check_Click()
+		
+		10.1.3	Check_Click()
+			10.1.3.1	PROCEDURE Check_Click()
+			10.1.3.2		IF Large AND mouse.Click THEN
+			10.1.3.3			Start Homepage
+			10.1.3.4		END IF
+			10.1.3.5	END PROCEDURE
 				
+		10.1.3.3	Start Homepage
+			10.1.3.3.1	self.self.self.H_Page.Draw_Page()	
+			
 				
 	18	Libraries
 		18.1	Pygame
