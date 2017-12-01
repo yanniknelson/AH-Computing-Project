@@ -160,7 +160,7 @@
 		10.14			Check_Hover()
 		
 					
-		10.13			Move_T0()
+		10.13			Move_To()
 			10.13.1				PROCEDURE Move_to(ARRAY OF INTEGER position)
 			10.13.2					IF Large THEN
 			10.13.3						SET self.x TO position(0) - (self.L_Size(0) / 2)
