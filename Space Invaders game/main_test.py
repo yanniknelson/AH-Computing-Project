@@ -5,13 +5,29 @@ import os
 White = (255, 255, 255)
 Black = (0, 0, 0)
 
-pygame.font.init()
-ca = pygame.font.Font('resources/font/ca.ttf', 16)
+#Text Class
+class Text(pygame.sprite.Sprite):
+    def __init__(self, content, font_size, xpos, ypos):
+        pygame.sprite.Sprite.__init__(self)
+        #Initializes the font if needed
+        if  not pygame.font.get_init:
+            pygame.font.init()
+        #allows the class to refer to the current window surface
+        self.surface = pygame.display.get_surface()
+        #creates the font that will be used for the text
+        self.font = ca = pygame.font.Font('resources/font/ca.ttf', font_size)
+        #creastes the text
+        self.text = self.font.render(content, False, Black)
+        #creates array to store the position for the text
+        self.position = [xpos - (self.text.get_width() //2), ypos - (self.text.get_height() //2)]
 
-#required for pygame sprite
+    #procedure to display the text
+    def display_text(self):
+        self.surface.blit(self.text, self.position)
+
+#Button Class
 class Button(pygame.sprite.Sprite):
     def __init__(self, caption, xpos, ypos):
-        #required for pygame sprite
         pygame.sprite.Sprite.__init__(self)
         #array holds the small size of the button
         self.size = [164, 62]
@@ -23,20 +39,34 @@ class Button(pygame.sprite.Sprite):
         self.face = pygame.Rect(self.position, self.size)
         #moves the rectangle to the desired location
         self.face.center = self.position
-        #creates text that is displayed on the button
-        #this relies on the font being called ca
-        #if not this will crash the program
-        #(there is not catch all for this, bar passing it as a parameter in everything)
-        #font created like this:
-        #pygame.font.init()
-        #ca = pygame.font.Font('resources/font/ca.ttf', 16)s
-        self.text = ca.render(caption, False, Black)
+        #stores the state of the size
+        self.large = False
+        #creates a text variable of the text class
+        self.text = Text(caption, 16, xpos, ypos)
+        self.caption = caption
 
+    #checks if the cursor is over the button and changes the size accordingly
+    def hover_Check(self):
+        if self.face.collidepoint(pygame.mouse.get_pos()) and not self.large:
+            self.large = True
+            #size changes don't work yet
+            self.face = self.face.inflate(20, 16)
+            print(self.caption + " is large")
+            draw_page()
+        elif not self.face.collidepoint(pygame.mouse.get_pos()) and self.large:
+            self.large = False
+            #size changes don't work yet
+            self.face = self.face.inflate((-20, -16))
+            print(self.caption + " is small")
+            draw_page()
+
+    #procedure to display the button
     def display_Button(self):
         #draws the rectangle
         pygame.draw.rect(self.surface, White, self.face)
         #draws the text
-        self.surface.blit(self.text, self.position)
+        self.text.display_text()
+
 
 pygame.init()
 
@@ -45,13 +75,19 @@ pygame.display.set_caption("SPACE INADERS")
 
 done = False
 clock = pygame.time.Clock()
-test_button = Button("test", 224, 600)
+I_button = Button("Instructions", 156, 645)
+G_button = Button("New Game", 480, 645)
+S_button = Button("Settings", 821, 645)
 
-screen.fill(Black)
+def draw_page():
+    pygame.display.get_surface().fill(Black)
+    print("drawn")
+    I_button.display_Button()
+    G_button.display_Button()
+    S_button.display_Button()
+    pygame.display.flip()
 
-test_button.display_Button()
-
-pygame.display.flip()
+draw_page()
 
 clock.tick(60)
 
@@ -59,3 +95,6 @@ while not done:
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                         done = True
+        I_button.hover_Check()
+        G_button.hover_Check()
+        S_button.hover_Check()
