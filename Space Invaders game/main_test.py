@@ -5,9 +5,27 @@ import os
 White = (255, 255, 255)
 Black = (0, 0, 0)
 
+#Image Class
+class Image(pygame.sprite.Sprite):
+    def __init__(self, path, xpos, ypos):
+        pygame.sprite.Sprite.__init__(self)
+        #allows the class to refer to the current window surface
+        self.surface = pygame.display.get_surface()
+        #loads the image from the path passed in
+        self.image = pygame.image.load(path)
+        #resizes the image approreately
+        print((self.image.get_height() * 2))
+        self.image = pygame.transform.scale(self.image, ((self.image.get_width() * 2), (self.image.get_height() * 2)))
+        #creates an array to store the position for the image
+        self.position = (xpos - (self.image.get_width() // 2), ypos - (self.image.get_height() // 2))
+
+    #procedure to display the image
+    def display_Image(self):
+        self.surface.blit(self.image, self.position)
+
 #Text Class
 class Text(pygame.sprite.Sprite):
-    def __init__(self, content, font_size, xpos, ypos):
+    def __init__(self, content, font_size, xpos, ypos, colour):
         pygame.sprite.Sprite.__init__(self)
         #Initializes the font if needed
         if  not pygame.font.get_init:
@@ -15,11 +33,11 @@ class Text(pygame.sprite.Sprite):
         #allows the class to refer to the current window surface
         self.surface = pygame.display.get_surface()
         #creates the font that will be used for the text
-        self.font = ca = pygame.font.Font('resources/font/ca.ttf', font_size)
+        self.font = pygame.font.Font('resources/font/ca.ttf', font_size)
         #creastes the text
-        self.text = self.font.render(content, False, Black)
+        self.text = self.font.render(content, False, colour)
         #creates array to store the position for the text
-        self.position = [xpos - (self.text.get_width() //2), ypos - (self.text.get_height() //2)]
+        self.position = (xpos - (self.text.get_width() // 2), ypos - (self.text.get_height() // 2))
 
     #procedure to display the text
     def display_text(self):
@@ -27,20 +45,20 @@ class Text(pygame.sprite.Sprite):
 
 #Button Class
 class Button(pygame.sprite.Sprite):
-    def __init__(self, caption, xpos, ypos):
+    def __init__(self, caption, xpos, ypos, width, height):
         pygame.sprite.Sprite.__init__(self)
         #array hold the center position of the button
         self.position = [xpos, ypos]
         #allows the class to refer to the current window surface
         self.surface = pygame.display.get_surface()
         #creates rectangle that is the base of the button
-        self.face = pygame.Rect(self.position, (164, 62))
+        self.face = pygame.Rect(self.position, (width, height))
         #moves the rectangle to the desired location
         self.face.center = self.position
         #stores the state of the size
         self.large = False
         #creates a text variable of the text class
-        self.text = Text(caption, 16, xpos, ypos)
+        self.text = Text(caption, 16, xpos, ypos, Black)
         self.caption = caption
 
     #checks if the cursor is over the button and changes the size accordingly
@@ -71,16 +89,24 @@ pygame.display.set_caption("SPACE INADERS")
 
 done = False
 clock = pygame.time.Clock()
-I_button = Button("Instructions", 156, 645)
-G_button = Button("New Game", 480, 645)
-S_button = Button("Settings", 821, 645)
+I_button = Button("Instructions", 156, 645, 164, 62)
+G_button = Button("New Game", 480, 645, 164, 62)
+S_button = Button("Settings", 821, 645, 164, 62)
+Title = Text("SPACE INVADERS", 72, 480, 56, White)
+Sub_Title = Text("These are the aliens you'll encounter:", 32, 480, 128, White)
+mother_ship_img = Image('resources/sprite_Images/aliens/mother_Ship.png', 380, 238)
+
+
 
 def draw_page():
     pygame.display.get_surface().fill(Black)
     print("drawn")
+    Title.display_text()
+    Sub_Title.display_text()
     I_button.display_Button()
     G_button.display_Button()
     S_button.display_Button()
+    mother_ship_img.display_Image()
     pygame.display.flip()
 
 draw_page()
