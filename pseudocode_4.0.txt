@@ -1,0 +1,85 @@
+	Resources
+1	Settings Record (structure)
+2	Class Library
+	2.1	Game Class
+	2.2	Elements
+		2.2.1	Image Class
+		2.2.2	Text Class
+		2.2.3	Button Class
+			2.2.3.1	Home_Button Class
+			2.2.3.2	Settings_Button Class
+			2.2.3.3	Game_Button Class
+			2.2.3.4	Homepage_Button Class
+		2.2.4	Player Class
+		2.2.5	Alien Class
+			2.2.5.1	Alien_10pts Class
+			2.2.5.2	Alien_20pts Class
+			2.2.5.3	Alien_30pts Class
+		2.2.6	Player Class
+		2.2.7	Bunker Class
+		2.2.8	Shot Class
+		2.2.9	Bolt Class
+		2.2.10	Arrow Class
+	2.3	Pages
+		2.3.1	Homepage Class
+		2.3.2	Sett_page Class
+		2.3.3	Instruc_page Class
+		2.3.4	Game_page Class
+		2.3.5	HSIn_page Class
+		2.3.6	HSDis_page Class
+		
+		
+	1	Settings Record (structure)
+		1.1 Record SETTINGS IS (BOOLEAN graphics, BOOLEAN sound_Effects, BOOLEAN music, Integer music_Type)
+		
+	2.2.1	Image Class
+		2.2.1.1	class Image:
+		2.2.1.2		CONSTRUCTOR()
+		
+	2.2.2	Text Class
+		2.2.2.1	class Text:
+		2.2.2.2		CONSTRUCTOR(content, fontsize, xpos, ypos):
+		2.2.2.3		DECLARE surface AS SURFACE INITIALLY = GET CURRENT SURFACE
+		2.2.2.4		DECLARE font AS FONT INITIALLY =  GET FONT FROM "resources/font/ca.ttf" WITH SIZE fontsize
+		2.2.2.5		DECLARE text AS RENDERED BLACK font WITH VALUE content
+		2.2.2.6		DECLARE position AS ARRAY OF INTEGER INITIALLY = (xpos - (text.width / 2), ypos - (text.height / 2)
+		2.2.2.7
+		2.2.2.8		METHODS:
+		2.2.2.9		display_Text()
+		
+		2.2.2.9		display_Text()
+			2.2.2.9.1	PROCEDURE display_Text():
+			2.2.2.9.2		COPY self.text ONTO self.surface AT self.position
+			2.2.3.9.3	END PROCEDURE
+			
+	2.2.3	Button Class:
+		2.2.3.1	class Button:
+		2.2.3.2		CONSTRUCTOR(caption, xpos, ypos):
+		2.2.3.3		DECLARE position AS ARRAY OF INTEGER INTIALLY = (xpos, ypos)
+		2.2.3.4		DECLARE surface AS SURFACE INITIALLY = GET CURRENT SURFACE
+		2.2.3.5		DECLARE face AS RECTANGLE INITIALLY = RECTANGLE ON surface WITH SIZE (164, 62)
+		2.2.3.6		SET self.face.center TO self.position
+		2.2.3.7		DECLARE large AS BOOLEAN INITIALLY = FALSE
+		2.2.3.8		DECLARE text AS NEW TEXT(caption, 16, xpos, ypos)
+		2.2.3.9
+		2.2.3.10		MEHTODS:
+		2.2.3.11	hover_Check()
+		2.2.3.12	display_Button()
+		
+		2.2.3.11	hover_Check()
+			2.2.3.11.1	PROCEDURE hover_Check():
+			2.2.3.11.2		IF (MOUSEPOSITION IS IN self.face) AND NOT self.large THEN
+			2.2.3.11.3			SET self.large TO TRUE
+			2.2.3.11.4			SET self.face TO self.face INFLATED BY (20,16)
+			2.2.3.11.5			REDRAW THE CURRENT PAGE
+			2.2.3.11.6		ELSE IF NOT (MOUSEPOSITION IS IN self.face) AND self.large THEN
+			2.2.3.11.7			SET large TO FALSE
+			2.2.3.11.8			SET self.face TO self.face INFLATED BY (-20, -16)
+			2.2.3.11.9			REDRAW THE CURRENT PAGE
+			2.2.3.11.10		END IF
+			2.2.3.11.11	END PROCEDURE
+			
+		2.2.3.12	display_Button()
+			2.2.3.12.1	PROCEDURE display_Button():
+			2.2.3.12.2		DRAW WHITE self.face ON self.surface
+			2.2.3.12.3		CALL self.text.display_Text()

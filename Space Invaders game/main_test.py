@@ -29,14 +29,12 @@ class Text(pygame.sprite.Sprite):
 class Button(pygame.sprite.Sprite):
     def __init__(self, caption, xpos, ypos):
         pygame.sprite.Sprite.__init__(self)
-        #array holds the small size of the button
-        self.size = [164, 62]
         #array hold the center position of the button
         self.position = [xpos, ypos]
         #allows the class to refer to the current window surface
         self.surface = pygame.display.get_surface()
         #creates rectangle that is the base of the button
-        self.face = pygame.Rect(self.position, self.size)
+        self.face = pygame.Rect(self.position, (164, 62))
         #moves the rectangle to the desired location
         self.face.center = self.position
         #stores the state of the size
@@ -49,13 +47,11 @@ class Button(pygame.sprite.Sprite):
     def hover_Check(self):
         if self.face.collidepoint(pygame.mouse.get_pos()) and not self.large:
             self.large = True
-            #size changes don't work yet
             self.face = self.face.inflate(20, 16)
             print(self.caption + " is large")
             draw_page()
         elif not self.face.collidepoint(pygame.mouse.get_pos()) and self.large:
             self.large = False
-            #size changes don't work yet
             self.face = self.face.inflate((-20, -16))
             print(self.caption + " is small")
             draw_page()
