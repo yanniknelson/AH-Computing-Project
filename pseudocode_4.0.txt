@@ -50,7 +50,7 @@
 
 	2.2.2	Text Class
 		2.2.2.1	class Text:
-		2.2.2.2		CONSTRUCTOR(content, fontsize, xpos, ypos, colour):
+		2.2.2.2		CONSTRUCTOR(content, fontsize, xpos, ypos, colour(defaults to White if no input)):
 		2.2.2.3		DECLARE surface AS SURFACE INITIALLY = GET CURRENT SURFACE
 		2.2.2.4		DECLARE font AS FONT INITIALLY =  GET FONT FROM "resources/font/ca.ttf" WITH SIZE fontsize
 		2.2.2.5		DECLARE text AS RENDERED colour font WITH VALUE content
@@ -66,7 +66,7 @@
 
 	2.2.3	Button Class:
 		2.2.3.1	class Button:
-		2.2.3.2		CONSTRUCTOR(caption, xpos, ypos, width, height):
+		2.2.3.2		CONSTRUCTOR(caption, xpos, ypos, width(defaults to 113 if no input), height(defaults to 42 if no input)):
 		2.2.3.3		DECLARE position AS ARRAY OF INTEGER INTIALLY = (xpos, ypos)
 		2.2.3.4		DECLARE surface AS SURFACE INITIALLY = GET CURRENT SURFACE
 		2.2.3.5		DECLARE face AS RECTANGLE INITIALLY = RECTANGLE ON surface WITH SIZE (width, height)
@@ -100,4 +100,32 @@
 	2.3.1	Homepage Class
 		2.3.1.1	class Homepage:
 		2.3.1.2		CONSTRUCTOR:
-		2.3.1.3		DECLARE Title AS NEW Text("SPACE INVADERS", 72, 480, 56, White)
+		2.3.1.3		DECALRE Background AS NEW Image('PATH TO IMAGE', 480, 360)
+		2.3.1.3		DECLARE Title AS NEW Text("SPACE INVADERS", 72, 480, 106)
+		2.3.1.4		DECLARE Sub_Title AS NEW Text("These are the aliens you'll encounter:", 32, 480, 228)
+		2.3.1.5		DECLARE mother_ship_img AS NEW Image('resources/sprite_Images/aliens/mother_Ship.png', 250, 318)
+		2.3.1.6		DECLARE mother_text AS NEW Text("This can be worth 50, 100, 150 or 300 points", 16, 560, 318)
+		2.3.1.7		DECLARE thirty_img AS NEW Image('PATH TO IMAGE', 250, 368)
+		2.3.1.8		DECLARE thirty_text AS NEW Text("This alien is worth 30 points", 16, 472, 368)
+		2.3.1.9		DECLARE twenty_img AS NEW Image('PATH TO IMAGE', 250, 418)
+		2.3.1.10	DECLARE twenty_text AS NEW Text("This alien is worth 20 points", 16, 472, 418)
+		2.3.1.11	DECLARE ten_img AS NEW Image('PATH TO IMAGE', 250, 468)
+		2.3.1.12	DECLARE ten_text AS NEW Text("This alien is worth 10 points", 16, 472, 468)
+		2.3.1.13
+		2.3.1.14	METHODS:
+		2.3.1.15	display_Page()
+
+		2.3.1.15	display_Page()
+			2.3.1.15.1	PROCEDURE display_Page():
+			2.3.1.15.3		self.Background.display_Image()
+			2.3.1.15.4		self.Title.display_text()
+			2.3.1.15.5		self.Sub_Title.display_text()
+			2.3.1.15.6		self.mother_ship_img.display_Image()
+			2.3.1.15.7		self.mother_text.display_text()
+			2.3.1.15.8		self.thirty_img.display_Image()
+			2.3.1.15.9		self.thirty_text.display_text()
+			2.3.1.15.10		self.twenty_img.display_Image()
+			2.3.1.15.11		self.twenty_text.display_text()
+			2.3.1.15.12		self.ten_img.display_Image()
+			2.3.1.15.13		self.ten_text.display_text()
+			2.3.1.15.14		UPDATE SCREEN

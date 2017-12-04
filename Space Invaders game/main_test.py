@@ -1,5 +1,6 @@
 import pygame
 import os
+import time
 
 
 White = (255, 255, 255)
@@ -15,6 +16,7 @@ class Image(pygame.sprite.Sprite):
         self.image = pygame.image.load(path)
         #resizes the image approreately
         print((self.image.get_height() * 2))
+        print((self.image.get_height() * 2))
         self.image = pygame.transform.scale(self.image, ((self.image.get_width() * 2), (self.image.get_height() * 2)))
         #creates an array to store the position for the image
         self.position = (xpos - (self.image.get_width() // 2), ypos - (self.image.get_height() // 2))
@@ -25,7 +27,7 @@ class Image(pygame.sprite.Sprite):
 
 #Text Class
 class Text(pygame.sprite.Sprite):
-    def __init__(self, content, font_size, xpos, ypos, colour):
+    def __init__(self, content, font_size, xpos, ypos, colour = White):
         pygame.sprite.Sprite.__init__(self)
         #Initializes the font if needed
         if  not pygame.font.get_init:
@@ -38,6 +40,7 @@ class Text(pygame.sprite.Sprite):
         self.text = self.font.render(content, False, colour)
         #creates array to store the position for the text
         self.position = (xpos - (self.text.get_width() // 2), ypos - (self.text.get_height() // 2))
+        print((self.text.get_width(), self.text.get_height()))
 
     #procedure to display the text
     def display_text(self):
@@ -45,7 +48,7 @@ class Text(pygame.sprite.Sprite):
 
 #Button Class
 class Button(pygame.sprite.Sprite):
-    def __init__(self, caption, xpos, ypos, width, height):
+    def __init__(self, caption, xpos, ypos, width = 113, height = 41):
         pygame.sprite.Sprite.__init__(self)
         #array hold the center position of the button
         self.position = [xpos, ypos]
@@ -81,6 +84,21 @@ class Button(pygame.sprite.Sprite):
         #draws the text
         self.text.display_text()
 
+#homepage_Button class
+class homepage_Button(Button):
+    def __init__(self, caption, xpos, ypos):
+        #sets up the button
+        Button.__init__(self, caption, xpos, ypos, 164, 62)
+
+    #procedure to detect being clicked
+    def click_Check(self):
+        #the self.large variable is only true if the mouse is over the buttons
+        #checks if self.large is true and the mouse button 1 is pressed
+        if self.large and pygame.mouse.get_pressed()[0]:
+            print (self.caption + " has been clicked")
+            #sleeps to ensure it doesn't detect more than one click at a time
+            time.sleep(.1)
+
 
 pygame.init()
 
@@ -89,12 +107,19 @@ pygame.display.set_caption("SPACE INADERS")
 
 done = False
 clock = pygame.time.Clock()
-I_button = Button("Instructions", 156, 645, 164, 62)
-G_button = Button("New Game", 480, 645, 164, 62)
-S_button = Button("Settings", 821, 645, 164, 62)
-Title = Text("SPACE INVADERS", 72, 480, 56, White)
-Sub_Title = Text("These are the aliens you'll encounter:", 32, 480, 128, White)
-mother_ship_img = Image('resources/sprite_Images/aliens/mother_Ship.png', 380, 238)
+I_button = homepage_Button("Instructions", 156, 645)
+G_button = homepage_Button("New Game", 480, 645)
+S_button = homepage_Button("Settings", 821, 645)
+Title = Text("SPACE INVADERS", 72, 480, 106)
+Sub_Title = Text("These are the aliens you'll encounter:", 32, 480, 228)
+mother_ship_img = Image('resources/sprite_Images/aliens/mother_Ship.png', 250, 318)
+mother_text = Text("This can be worth 50, 100, 150 or 300 points", 16, 560, 318)
+thirty_img = Image('resources/sprite_Images/aliens/30pts_Open.png', 250, 368)
+thirty_text = Text("This alien is worth 30 points", 16, 472, 368)
+twenty_img = Image('resources/sprite_Images/aliens/20pts_Open.png', 250, 418)
+twenty_text = Text("This alien is worth 20 points", 16, 472, 418)
+ten_img = Image('resources/sprite_Images/aliens/10pts_Open.png', 250, 468)
+ten_text = Text("This alien is worth 10 points", 16, 472, 468)
 
 
 
@@ -107,6 +132,13 @@ def draw_page():
     G_button.display_Button()
     S_button.display_Button()
     mother_ship_img.display_Image()
+    mother_text.display_text()
+    thirty_img.display_Image()
+    thirty_text.display_text()
+    twenty_img.display_Image()
+    twenty_text.display_text()
+    ten_img.display_Image()
+    ten_text.display_text()
     pygame.display.flip()
 
 draw_page()
@@ -118,5 +150,6 @@ while not done:
                 if event.type == pygame.QUIT:
                         done = True
         I_button.hover_Check()
+        I_button.click_Check()
         G_button.hover_Check()
         S_button.hover_Check()

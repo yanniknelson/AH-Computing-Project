@@ -1,4 +1,6 @@
 import pygame
+#import the pages to refer to them(for homepage buttons and back buttons)
+
 pygame.init()
 
 #variables used to quickly refer to colours
@@ -24,7 +26,7 @@ class Image(pygame.sprite.Sprite):
 
 #Text Class
 class Text(pygame.sprite.Sprite):
-    def __init__(self, content, font_size, xpos, ypos, colour):
+    def __init__(self, content, font_size, xpos, ypos, colour = White):
         pygame.sprite.Sprite.__init__(self)
         #Initializes the font if needed
         if  not pygame.font.get_init:
@@ -45,7 +47,7 @@ class Text(pygame.sprite.Sprite):
 
 #required for pygame sprite
 class Button(pygame.sprite.Sprite):
-    def __init__(self, caption, xpos, ypos, width, height):
+    def __init__(self, caption, xpos, ypos, width = 113, height = 41s):
         pygame.sprite.Sprite.__init__(self)
         #array hold the center position of the button
         self.position = [xpos, ypos]
@@ -81,3 +83,18 @@ class Button(pygame.sprite.Sprite):
         pygame.draw.rect(self.surface, White, self.face)
         #draws the text
         self.text.display_text()
+
+#homepage_Button class
+class homepage_Button(Button):
+    def __init__(self, caption, xpos, ypos):
+        #sets up the button
+        Button.__init__(self, caption, xpos, ypos, 164, 62)
+
+    #procedure to detect being clicked
+    def click_Check(self):
+        #the self.large variable is only true if the mouse is over the buttons
+        #checks if self.large is true and the mouse button 1 is pressed
+        if self.large and pygame.mouse.get_pressed()[0]:
+            print (self.caption + " has been clicked")
+            #sleeps to ensure it doesn't detect more than one click at a time
+            time.sleep(.1)
