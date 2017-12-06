@@ -1,6 +1,7 @@
 import pygame
 import os
 import time
+#from import_test import *
 
 
 White = (255, 255, 255)
@@ -65,17 +66,17 @@ class Button(pygame.sprite.Sprite):
         self.caption = caption
 
     #checks if the cursor is over the button and changes the size accordingly
-    def hover_Check(self):
+    def hover_Check(self, drawmethod):
         if self.face.collidepoint(pygame.mouse.get_pos()) and not self.large:
             self.large = True
             self.face = self.face.inflate(20, 16)
             print(self.caption + " is large")
-            draw_page()
+            drawmethod()
         elif not self.face.collidepoint(pygame.mouse.get_pos()) and self.large:
             self.large = False
             self.face = self.face.inflate((-20, -16))
             print(self.caption + " is small")
-            draw_page()
+            drawmethod()
 
     #procedure to display the button
     def display_Button(self):
@@ -84,11 +85,12 @@ class Button(pygame.sprite.Sprite):
         #draws the text
         self.text.display_text()
 
-#homepage_Button class
-class homepage_Button(Button):
-    def __init__(self, caption, xpos, ypos):
+#Homepage_Button class
+class Homepage_Button(Button):
+    def __init__(self, caption, xpos, ypos, page):
         #sets up the button
         Button.__init__(self, caption, xpos, ypos, 164, 62)
+        self.page = page
 
     #procedure to detect being clicked
     def click_Check(self):
@@ -96,6 +98,12 @@ class homepage_Button(Button):
         #checks if self.large is true and the mouse button 1 is pressed
         if self.large and pygame.mouse.get_pressed()[0]:
             print (self.caption + " has been clicked")
+            if self.page == "I":
+                print("start instruction page")
+            elif self.page == "G":
+                print("start game page")
+            elif self.page == "S":
+                print("start settings page")
             #sleeps to ensure it doesn't detect more than one click at a time
             time.sleep(.1)
 
@@ -107,9 +115,9 @@ pygame.display.set_caption("SPACE INADERS")
 
 done = False
 clock = pygame.time.Clock()
-I_button = homepage_Button("Instructions", 156, 645)
-G_button = homepage_Button("New Game", 480, 645)
-S_button = homepage_Button("Settings", 821, 645)
+I_button = Homepage_Button("Instructions", 156, 645, 'I')
+G_button = Homepage_Button("New Game", 480, 645, 'G')
+S_button = Homepage_Button("Settings", 821, 645, 'S')
 Title = Text("SPACE INVADERS", 72, 480, 106)
 Sub_Title = Text("These are the aliens you'll encounter:", 32, 480, 228)
 mother_ship_img = Image('resources/sprite_Images/aliens/mother_Ship.png', 250, 318)
@@ -141,15 +149,18 @@ def draw_page():
     ten_text.display_text()
     pygame.display.flip()
 
+def main():
+    while not done:
+            for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                            done = True
+            I_button.hover_Check(draw_page)
+            I_button.click_Check()
+            G_button.hover_Check(draw_page)
+            G_button.click_Check()
+            S_button.hover_Check(draw_page)
+            S_button.click_Check()
+
 draw_page()
-
 clock.tick(60)
-
-while not done:
-        for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                        done = True
-        I_button.hover_Check()
-        I_button.click_Check()
-        G_button.hover_Check()
-        S_button.hover_Check()
+main()
