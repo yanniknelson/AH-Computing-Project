@@ -1,7 +1,7 @@
 import pygame
 import os
 import time
-from button_classes import *
+from button_class import *
 from basic_Resources import *
 
 
@@ -12,9 +12,9 @@ pygame.display.set_caption("SPACE INADERS")
 
 
 clock = pygame.time.Clock()
-I_button = Homepage_Button("Instructions", 156, 645, 'I')
-G_button = Homepage_Button("New Game", 480, 645, 'G')
-S_button = Homepage_Button("Settings", 821, 645, 'S')
+I_button = Button("Instructions", 156, 645, 164, 62)
+G_button = Button("New Game", 480, 645, 164, 62)
+S_button = Button("Settings", 821, 645, 164, 62)
 Title = Text("SPACE INVADERS", 72, 480, 106)
 Sub_Title = Text("These are the aliens you'll encounter:", 32, 480, 228)
 mother_ship_img = Image('resources/sprite_Images/aliens/mother_Ship.png', 250, 318)
@@ -44,6 +44,9 @@ def draw_page():
     ten_text.display_text()
     pygame.display.flip()
 
+def test():
+    print("worked")
+
 def run_page():
     done = False
     while not done:
@@ -51,12 +54,9 @@ def run_page():
                     if event.type == pygame.QUIT:
                             done = True
 
-            I_button.hover_Check(draw_page)
-            I_button.click_Check()
-            G_button.hover_Check(draw_page)
-            G_button.click_Check()
-            S_button.hover_Check(draw_page)
-            S_button.click_Check()
+            I_button.hover_Check(draw_page, test)
+            G_button.hover_Check(draw_page, test)
+            S_button.hover_Check(draw_page, test)
 
 draw_page()
 run_page()

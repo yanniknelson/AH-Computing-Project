@@ -76,32 +76,35 @@
 		2.2.3.13	display_Button()
 		2.2.3.14	click_Check()
 
-		2.2.3.12	hover_Check(drawmethod)
+		2.2.3.12	hover_Check(drawmethod, clickmethod)
 			2.2.3.12.1	PROCEDURE hover_Check():
-			2.2.3.12.2		IF (MOUSEPOSITION IS IN self.face) AND NOT self.large THEN
-			2.2.3.12.3			SET self.large TO TRUE
-			2.2.3.12.4			SET self.face TO self.face INFLATED BY (20,16)
-			2.2.3.12.5			CALL drawmethod()
-			2.2.3.12.6			CALL self.click_Check(self.method)
-			2.2.3.12.6		ELSE IF NOT (MOUSEPOSITION IS IN self.face) AND self.large THEN
-			2.2.3.12.7			SET large TO FALSE
-			2.2.3.12.8			SET self.face TO self.face INFLATED BY (-20, -16)
-			2.2.3.12.9			CALL drawmethod()
-			2.2.3.12.10		END IF
-			2.2.3.12.11	END PROCEDURE
+			2.2.3.12.2		IF (MOUSEPOSITION IS IN self.face) THEN
+			2.2.3.12.3			IF NOT self.large THEN
+			2.2.3.12.4				SET self.large TO TRUE
+			2.2.3.12.5				SET self.face TO self.face INFLATED BY (20,16)
+			2.2.3.12.6				CALL drawmethod()
+			2.2.3.12.7			ELSE
+			2.2.3.12.8				CALL self.click_Check(clickmethod)
+			2.2.3.12.9		ELSE IF NOT (MOUSEPOSITION IS IN self.face) AND self.large THEN
+			2.2.3.12.10			SET large TO FALSE
+			2.2.3.12.11			SET self.face TO self.face INFLATED BY (-20, -16)
+			2.2.3.12.12			CALL drawmethod()
+			2.2.3.12.13		END IF
+			2.2.3.12.14	END PROCEDURE
 
 		2.2.3.13	display_Button()
 			2.2.3.13.1	PROCEDURE display_Button():
 			2.2.3.13.2		DRAW WHITE self.face ON self.surface
 			2.2.3.13.3		CALL self.text.display_Text()
 			2.2.3.13.4	END PROCEDURE
-			
-		2.2.3.14	click_Check()
+
+		2.2.3.14	click_Check(clickmethod)
 			2.2.3.14.1	PROCEDURE click_Check(method):
 			2.2.3.14.2		IF MOUSE BUTTON ONE CLICKED THEN
-			2.2.3.14.2			CALL method()
-			2.2.3.14.3		END IF
-			2.2.3.14.4	END PROCEDURE
+			2.2.3.14.2			CALL clickmethod()
+			2.2.3.14.3			WAIT 0.1 SECONDS
+			2.2.3.14.4		END IF
+			2.2.3.14.5	END PROCEDURE
 
 	2.3.1	Homepage Class
 		2.3.1.1	class Homepage:

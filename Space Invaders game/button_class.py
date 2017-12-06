@@ -10,7 +10,7 @@ Black = (0, 0, 0)
 
 #Button Class
 class Button(pygame.sprite.Sprite):
-    def __init__(self, caption, xpos, ypos, method, width = 113, height = 41):
+    def __init__(self, caption, xpos, ypos, width = 113, height = 41):
         pygame.sprite.Sprite.__init__(self)
         #array hold the center position of the button
         self.position = [xpos, ypos]
@@ -25,22 +25,38 @@ class Button(pygame.sprite.Sprite):
         #creates a text variable of the text class
         self.text = Text(caption, 16, xpos, ypos, Black)
         self.caption = caption
-		#this is the method that the button will carry out when clicked
-		self.method = method
 
-    #checks if the cursor is over the button and changes the size accordingly
-    def hover_Check(self, drawmethod):
-        if self.face.collidepoint(pygame.mouse.get_pos()) and not self.large:
-            self.large = True
-            self.face = self.face.inflate(20, 16)
-            print(self.caption + " is large")
-            drawmethod()
-			self.click_Check(self.method)
+    #procedure to detect the mouse hovering over the button
+    def hover_Check(self, drawmethod, clickmethod):
+        #if the mouse is over the button
+        if self.face.collidepoint(pygame.mouse.get_pos()):
+            #and the button is not large
+            if not self.large:
+                #make the button larger
+                self.large = True
+                self.face = self.face.inflate(20, 16)
+                print(self.caption + " is large")
+                drawmethod()
+            #if already large
+            else:
+                #run the click check
+                self.click_Check(clickmethod)
+        #if the mouse is not over the button and the button is large
         elif not self.face.collidepoint(pygame.mouse.get_pos()) and self.large:
+            #make the button small
             self.large = False
             self.face = self.face.inflate((-20, -16))
             print(self.caption + " is small")
             drawmethod()
+
+    #procedure to detect being clicked
+    def click_Check(self, clickmethod):
+        #checks if mouse button 1 is pressed
+        if pygame.mouse.get_pressed()[0]:
+            #runs the passed in method
+            clickmethod()
+            #sleeps to ensure it doesn't detect more than one click at a time
+            time.sleep(.1)
 
     #procedure to display the button
     def display_Button(self):
@@ -48,15 +64,3 @@ class Button(pygame.sprite.Sprite):
         pygame.draw.rect(self.surface, White, self.face)
         #draws the text
         self.text.display_text()
-		
-	#procedure to detect being clicked
-    def click_Check(self, method):
-        #the self.large variable is only true if the mouse is over the buttons
-        #checks if self.large is true and the mouse button 1 is pressed
-        if pygame.mouse.get_pressed()[0]:
-            print (self.caption + " has been clicked")
-            method()
-            #sleeps to ensure it doesn't detect more than one click at a time
-            time.sleep(.1)
-
-
