@@ -6,10 +6,6 @@
 		2.2.1	Image Class
 		2.2.2	Text Class
 		2.2.3	Button Class
-			2.2.3.1	Homepage_Button Class
-			2.2.3.2	Home_Button Class
-			2.2.3.3	Settings_Button Class
-			2.2.3.4	Game_Button Class
 		2.2.4	Player Class
 		2.2.5	Alien Class
 			2.2.5.1	Alien_10pts Class
@@ -66,52 +62,46 @@
 
 	2.2.3	Button Class:
 		2.2.3.1	class Button:
-		2.2.3.2		CONSTRUCTOR(caption, xpos, ypos, width(defaults to 113 if no input), height(defaults to 42 if no input)):
+		2.2.3.2		CONSTRUCTOR(caption, xpos, ypos, method, width(defaults to 113 if no input), height(defaults to 42 if no input)):
 		2.2.3.3		DECLARE position AS ARRAY OF INTEGER INTIALLY = (xpos, ypos)
 		2.2.3.4		DECLARE surface AS SURFACE INITIALLY = GET CURRENT SURFACE
 		2.2.3.5		DECLARE face AS RECTANGLE INITIALLY = RECTANGLE ON surface WITH SIZE (width, height)
 		2.2.3.6		SET self.face.center TO self.position
 		2.2.3.7		DECLARE large AS BOOLEAN INITIALLY = FALSE
 		2.2.3.8		DECLARE text AS NEW TEXT(caption, 16, xpos, ypos, Black)
-		2.2.3.9
-		2.2.3.10		MEHTODS:
-		2.2.3.11	hover_Check()
-		2.2.3.12	display_Button()
+		2.2.3.9		DECLARE method AS method (THIS ALLOWS A METHOD TO BE PASSED IN, HAS NO TYPE)
+		2.2.3.10
+		2.2.3.11		MEHTODS:
+		2.2.3.12	hover_Check()
+		2.2.3.13	display_Button()
+		2.2.3.14	click_Check()
 
-		2.2.3.11	hover_Check(drawmethod)
-			2.2.3.11.1	PROCEDURE hover_Check():
-			2.2.3.11.2		IF (MOUSEPOSITION IS IN self.face) AND NOT self.large THEN
-			2.2.3.11.3			SET self.large TO TRUE
-			2.2.3.11.4			SET self.face TO self.face INFLATED BY (20,16)
-			2.2.3.11.5			CALL drawmethod()
-			2.2.3.11.6		ELSE IF NOT (MOUSEPOSITION IS IN self.face) AND self.large THEN
-			2.2.3.11.7			SET large TO FALSE
-			2.2.3.11.8			SET self.face TO self.face INFLATED BY (-20, -16)
-			2.2.3.11.9			CALL drawmethod()
-			2.2.3.11.10		END IF
-			2.2.3.11.11	END PROCEDURE
+		2.2.3.12	hover_Check(drawmethod)
+			2.2.3.12.1	PROCEDURE hover_Check():
+			2.2.3.12.2		IF (MOUSEPOSITION IS IN self.face) AND NOT self.large THEN
+			2.2.3.12.3			SET self.large TO TRUE
+			2.2.3.12.4			SET self.face TO self.face INFLATED BY (20,16)
+			2.2.3.12.5			CALL drawmethod()
+			2.2.3.12.6			CALL self.click_Check(self.method)
+			2.2.3.12.6		ELSE IF NOT (MOUSEPOSITION IS IN self.face) AND self.large THEN
+			2.2.3.12.7			SET large TO FALSE
+			2.2.3.12.8			SET self.face TO self.face INFLATED BY (-20, -16)
+			2.2.3.12.9			CALL drawmethod()
+			2.2.3.12.10		END IF
+			2.2.3.12.11	END PROCEDURE
 
-		2.2.3.12	display_Button()
-			2.2.3.12.1	PROCEDURE display_Button():
-			2.2.3.12.2		DRAW WHITE self.face ON self.surface
-			2.2.3.12.3		CALL self.text.display_Text()
-			2.2.3.12.4	END PROCEDURE
-
-	2.2.3.1 Homepage_Button Class
-		2.2.3.1.1	Class Homepage_Button(INHERITS FROM Button):
-		2.2.3.1.2		CONSTRUCTOR(caption, xpos, ypos, to_do):
-		2.2.3.1.3		INITIALIZE Button(caption, xpos, ypos, 164, 62)
-		2.2.3.1.4		DECLARE method AS to_do
-		2.2.3.1.4
-		2.2.3.1.5		METHODS:
-		2.2.3.1.6		click_Check()
-
-		2.2.3.12	click_Check()
-			2.2.3.12.1	PROCEDURE click_Check(changepage):
-			2.2.3.12.2		IF self.large AND MOUSE BUTTON ONE CLICKED THEN
-			2.2.3.12.2			CALL self.method()
-			2.2.3.12.3		END IF
-			2.2.3.12.4	END PROCEDURE
+		2.2.3.13	display_Button()
+			2.2.3.13.1	PROCEDURE display_Button():
+			2.2.3.13.2		DRAW WHITE self.face ON self.surface
+			2.2.3.13.3		CALL self.text.display_Text()
+			2.2.3.13.4	END PROCEDURE
+			
+		2.2.3.14	click_Check()
+			2.2.3.14.1	PROCEDURE click_Check(method):
+			2.2.3.14.2		IF MOUSE BUTTON ONE CLICKED THEN
+			2.2.3.14.2			CALL method()
+			2.2.3.14.3		END IF
+			2.2.3.14.4	END PROCEDURE
 
 	2.3.1	Homepage Class
 		2.3.1.1	class Homepage:
@@ -127,9 +117,9 @@
 		2.3.1.10	DECLARE twenty_text AS NEW Text("This alien is worth 20 points", 16, 472, 418)
 		2.3.1.11	DECLARE ten_img AS NEW Image('PATH TO IMAGE', 250, 468)
 		2.3.1.12	DECLARE ten_text AS NEW Text("This alien is worth 10 points", 16, 472, 468)
-		2.3.1.13	DECLARE I_button AS NEW Homepage_Button("Instructions", 156, 645, LOAD INSTRUCTIONS PAGE)
-		2.3.1.14	DECLARE G_button AS NEW Homepage_Button("New Game", 480, 645, LOAD GAME PAGE)
-		2.3.1.14	DECLARE S_button AS NEW Homepage_Button("Settings", 821, 645, LOAD SETTINGS PAGE)
+		2.3.1.13	DECLARE I_button AS NEW Button("Instructions", 156, 645, LOAD INSTRUCTIONS PAGE, 164, 62)
+		2.3.1.14	DECLARE G_button AS NEW Button("New Game", 480, 645, LOAD GAME PAGE, 164, 62)
+		2.3.1.14	DECLARE S_button AS NEW Button("Settings", 821, 645, LOAD SETTINGS PAGE, 164, 62)
 		2.3.1.13
 		2.3.1.14	METHODS:
 		2.3.1.15	draw_page()
@@ -148,8 +138,10 @@
 			2.3.1.15.11		self.twenty_text.display_text()
 			2.3.1.15.12		self.ten_img.display_Image()
 			2.3.1.15.13		self.ten_text.display_text()
-
-			2.3.1.15.14		UPDATE SCREEN
+			2.3.1.15.14		self.I_button.display_Button()
+			2.3.1.15.15		self.G_button.display_Button()
+			2.3.1.15.16		self.S_button.display_Button()
+			2.3.1.15.17		UPDATE SCREEN
 
 		2.3.1.16	run_page()
 			2.3.1.16.1	PROCEDURE run_page()
@@ -159,9 +151,6 @@
 			2.3.1.16.4				SET done TO TRUE
 			2.3.1.16.5			END IF
 			2.3.1.16.6			self.I_button.hover_Check(draw_page)
-      2.3.1.16.7			self.I_button.click_Check()
-      2.3.1.16.8			self.G_button.hover_Check(draw_page)
-      2.3.1.16.9			self.G_button.click_Check()
-      2.3.1.16.10			self.S_button.hover_Check(draw_page)
-      2.3.1.16.11			self.S_button.click_Check()
-			2.3.1.16.12		END WHILE
+			2.3.1.16.7			self.G_button.hover_Check(draw_page)
+			2.3.1.16.9			self.S_button.hover_Check(draw_page)
+			2.3.1.16.10		END WHILE
