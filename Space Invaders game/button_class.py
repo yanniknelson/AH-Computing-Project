@@ -99,6 +99,5 @@ class Back_Button(Button):
             #runs the passed in method
             print("back clicked")
             time.sleep(.1)
-            hp.draw_page()
             hp.run_page()
             return True

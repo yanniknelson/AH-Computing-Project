@@ -6,5 +6,5 @@ pygame.display.set_caption("SPACE INADERS")
 import home_Page
 import messy_test as mt
 
-mt.draw_page()
+
 mt.run_page()

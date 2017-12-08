@@ -54,6 +54,7 @@ def test():
 
 
 def run_page():
+    draw_page()
     done = False
     while not done:
             for event in pygame.event.get():
