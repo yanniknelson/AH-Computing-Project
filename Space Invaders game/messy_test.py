@@ -57,12 +57,11 @@ def run_page():
     draw_page()
     done = False
     while not done:
-            for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                            done = True
-
             I_button.hover_Check(draw_page, test)
             G_button.hover_Check(draw_page, test)
             S_button.hover_Check(draw_page, test)
             done = test_button.hover_Check(draw_page)
+            for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                            done = True
     print("closing homepage")
