@@ -7,14 +7,15 @@ from basic_Resources import *
 
 pygame.init()
 
-screen = pygame.display.set_mode((960, 720))
-pygame.display.set_caption("SPACE INADERS")
+#screen = pygame.display.set_mode((960, 720))
+#pygame.display.set_caption("SPACE INADERS")
 
 
 clock = pygame.time.Clock()
 I_button = Button("Instructions", 156, 645, 164, 62)
 G_button = Button("New Game", 480, 645, 164, 62)
 S_button = Button("Settings", 821, 645, 164, 62)
+test_button = Back_Button(300, 600)
 Title = Text("SPACE INVADERS", 72, 480, 106)
 Sub_Title = Text("These are the aliens you'll encounter:", 32, 480, 228)
 mother_ship_img = Image('resources/sprite_Images/aliens/mother_Ship.png', 250, 318)
@@ -42,10 +43,14 @@ def draw_page():
     twenty_text.display_text()
     ten_img.display_Image()
     ten_text.display_text()
+    test_button.display_Button()
     pygame.display.flip()
+
 
 def test():
     print("worked")
+
+
 
 def run_page():
     done = False
@@ -57,6 +62,5 @@ def run_page():
             I_button.hover_Check(draw_page, test)
             G_button.hover_Check(draw_page, test)
             S_button.hover_Check(draw_page, test)
-
-draw_page()
-run_page()
+            #done = test_button.hover_Check(draw_page)
+    print("closing homepage")

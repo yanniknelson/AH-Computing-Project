@@ -16,13 +16,14 @@
 		2.2.8	Shot Class
 		2.2.9	Bolt Class
 		2.2.10	Arrow Class
+	#these are stand alone files that are imported into each other where needed and whose functions are called when needed
 	2.3	Pages
-		2.3.1	Homepage Class
-		2.3.2	Sett_page Class
-		2.3.3	Instruc_page Class
-		2.3.4	Game_page Class
-		2.3.5	HSIn_page Class
-		2.3.6	HSDis_page Class
+		2.3.1	Homepage
+		2.3.2	Sett_page
+		2.3.3	Instruc_page
+		2.3.4	Game_page
+		2.3.5	HSIn_page
+		2.3.6	HSDis_page
 
 
 	1	Settings Record (structure)
@@ -106,54 +107,51 @@
 			2.2.3.14.4		END IF
 			2.2.3.14.5	END PROCEDURE
 
-	2.3.1	Homepage Class
-		2.3.1.1	class Homepage:
-		2.3.1.2		CONSTRUCTOR:
-		2.3.1.3		DECALRE Background AS NEW Image('PATH TO IMAGE', 480, 360)
-		2.3.1.3		DECLARE Title AS NEW Text("SPACE INVADERS", 72, 480, 106)
-		2.3.1.4		DECLARE Sub_Title AS NEW Text("These are the aliens you'll encounter:", 32, 480, 228)
-		2.3.1.5		DECLARE mother_ship_img AS NEW Image('resources/sprite_Images/aliens/mother_Ship.png', 250, 318)
-		2.3.1.6		DECLARE mother_text AS NEW Text("This can be worth 50, 100, 150 or 300 points", 16, 560, 318)
-		2.3.1.7		DECLARE thirty_img AS NEW Image('PATH TO IMAGE', 250, 368)
-		2.3.1.8		DECLARE thirty_text AS NEW Text("This alien is worth 30 points", 16, 472, 368)
-		2.3.1.9		DECLARE twenty_img AS NEW Image('PATH TO IMAGE', 250, 418)
-		2.3.1.10	DECLARE twenty_text AS NEW Text("This alien is worth 20 points", 16, 472, 418)
-		2.3.1.11	DECLARE ten_img AS NEW Image('PATH TO IMAGE', 250, 468)
-		2.3.1.12	DECLARE ten_text AS NEW Text("This alien is worth 10 points", 16, 472, 468)
-		2.3.1.13	DECLARE I_button AS NEW Button("Instructions", 156, 645, LOAD INSTRUCTIONS PAGE, 164, 62)
-		2.3.1.14	DECLARE G_button AS NEW Button("New Game", 480, 645, LOAD GAME PAGE, 164, 62)
+	2.3.1	Homepage
+		2.3.1.1		Background AS NEW Image('PATH TO IMAGE', 480, 360)
+		2.3.1.2		DECLARE Title AS NEW Text("SPACE INVADERS", 72, 480, 106)
+		2.3.1.3		DECLARE Sub_Title AS NEW Text("These are the aliens you'll encounter:", 32, 480, 228)
+		2.3.1.4		DECLARE mother_ship_img AS NEW Image('resources/sprite_Images/aliens/mother_Ship.png', 250, 318)
+		2.3.1.5		DECLARE mother_text AS NEW Text("This can be worth 50, 100, 150 or 300 points", 16, 560, 318)
+		2.3.1.6		DECLARE thirty_img AS NEW Image('PATH TO IMAGE', 250, 368)
+		2.3.1.7		DECLARE thirty_text AS NEW Text("This alien is worth 30 points", 16, 472, 368)
+		2.3.1.8		DECLARE twenty_img AS NEW Image('PATH TO IMAGE', 250, 418)
+		2.3.1.9		DECLARE twenty_text AS NEW Text("This alien is worth 20 points", 16, 472, 418)
+		2.3.1.10	DECLARE ten_img AS NEW Image('PATH TO IMAGE', 250, 468)
+		2.3.1.11	DECLARE ten_text AS NEW Text("This alien is worth 10 points", 16, 472, 468)
+		2.3.1.12	DECLARE I_button AS NEW Button("Instructions", 156, 645, LOAD INSTRUCTIONS PAGE, 164, 62)
+		2.3.1.13	DECLARE G_button AS NEW Button("New Game", 480, 645, LOAD GAME PAGE, 164, 62)
 		2.3.1.14	DECLARE S_button AS NEW Button("Settings", 821, 645, LOAD SETTINGS PAGE, 164, 62)
-		2.3.1.13
-		2.3.1.14	METHODS:
-		2.3.1.15	draw_page()
-		2.3.1.16	run_page()
+		2.3.1.15
+		2.3.1.16	DEFINE draw_page()
+		2.3.1.17	DEFINE run_page()
 
-		2.3.1.15	draw_page()
-			2.3.1.15.1	PROCEDURE display_page():
-			2.3.1.15.3		self.Background.display_Image()
-			2.3.1.15.4		self.Title.display_text()
-			2.3.1.15.5		self.Sub_Title.display_text()
-			2.3.1.15.6		self.mother_ship_img.display_Image()
-			2.3.1.15.7		self.mother_text.display_text()
-			2.3.1.15.8		self.thirty_img.display_Image()
-			2.3.1.15.9		self.thirty_text.display_text()
-			2.3.1.15.10		self.twenty_img.display_Image()
-			2.3.1.15.11		self.twenty_text.display_text()
-			2.3.1.15.12		self.ten_img.display_Image()
-			2.3.1.15.13		self.ten_text.display_text()
-			2.3.1.15.14		self.I_button.display_Button()
-			2.3.1.15.15		self.G_button.display_Button()
-			2.3.1.15.16		self.S_button.display_Button()
-			2.3.1.15.17		UPDATE SCREEN
+		2.3.1.16	DEFINE draw_page()
+			2.3.1.16.1	PROCEDURE display_page():
+			2.3.1.16.3		Background.display_Image()
+			2.3.1.16.4		Title.display_text()
+			2.3.1.16.5		Sub_Title.display_text()
+			2.3.1.16.6		mother_ship_img.display_Image()
+			2.3.1.16.7		mother_text.display_text()
+			2.3.1.16.8		thirty_img.display_Image()
+			2.3.1.16.9		thirty_text.display_text()
+			2.3.1.16.10		twenty_img.display_Image()
+			2.3.1.16.11		twenty_text.display_text()
+			2.3.1.16.12		ten_img.display_Image()
+			2.3.1.16.13		ten_text.display_text()
+			2.3.1.16.14		I_button.display_Button()
+			2.3.1.16.15		G_button.display_Button()
+			2.3.1.16.16		S_button.display_Button()
+			2.3.1.16.17		UPDATE SCREEN
 
-		2.3.1.16	run_page()
-			2.3.1.16.1	PROCEDURE run_page()
-			2.3.1.16.2		DECLARE done AS BOOLEAN INITIALLY FALSE
-			2.3.1.16.3		WHILE NOT done DO
-			2.3.1.16.3			IF EXIT = TRUE THEN
-			2.3.1.16.4				SET done TO TRUE
-			2.3.1.16.5			END IF
-			2.3.1.16.6			self.I_button.hover_Check(draw_page)
-			2.3.1.16.7			self.G_button.hover_Check(draw_page)
-			2.3.1.16.9			self.S_button.hover_Check(draw_page)
-			2.3.1.16.10		END WHILE
+		2.3.1.17	DEFINE run_page()
+			2.3.1.17.1	PROCEDURE run_page()
+			2.3.1.17.2		DECLARE done AS BOOLEAN INITIALLY FALSE
+			2.3.1.17.3		WHILE NOT done DO
+			2.3.1.17.3			IF EXIT = TRUE THEN
+			2.3.1.17.4				SET done TO TRUE
+			2.3.1.17.5			END IF
+			2.3.1.17.6			I_button.hover_Check(draw_page)
+			2.3.1.17.7			G_button.hover_Check(draw_page)
+			2.3.1.17.9			S_button.hover_Check(draw_page)
+			2.3.1.17.10		END WHILE

@@ -2,6 +2,7 @@ import pygame
 import os
 import time
 
+
 pygame.init()
 
 White = (255, 255, 255)
