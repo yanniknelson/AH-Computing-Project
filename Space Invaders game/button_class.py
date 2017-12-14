@@ -65,39 +65,3 @@ class Button(pygame.sprite.Sprite):
         pygame.draw.rect(self.surface, White, self.face)
         #draws the text
         self.text.display_text()
-
-class Back_Button(Button):
-    def __init__(self, xpos, ypos):
-        Button.__init__(self, "Back", xpos, ypos)
-
-    def hover_Check(self, drawmethod):
-        #if the mouse is over the button
-        if self.face.collidepoint(pygame.mouse.get_pos()):
-            #and the button is not large
-            if not self.large:
-                #make the button larger
-                self.large = True
-                self.face = self.face.inflate(20, 16)
-                print(self.caption + " is large")
-                drawmethod()
-            #if already large
-            else:
-                #run the click check
-                return self.click_Check()
-        #if the mouse is not over the button and the button is large
-        elif not self.face.collidepoint(pygame.mouse.get_pos()) and self.large:
-            #make the button small
-            self.large = False
-            self.face = self.face.inflate((-20, -16))
-            print(self.caption + " is small")
-            drawmethod()
-
-    #procedure to detect being clicked
-    def click_Check(self):
-        #checks if mouse button 1 is pressed
-        if pygame.mouse.get_pressed()[0] == 1:
-            #runs the passed in method
-            print("back clicked")
-            time.sleep(.1)
-            hp.run_page()
-            return True
