@@ -54,6 +54,35 @@ class Settings():
         settings.write(str(self.graphics))
         settings.close
 
+class Highscores():
+    def __init__(self):
+        self.path = "highscores.txt"
+
+    def get_highscores(self):
+        #checks the settings file exists
+        if not os.path.isfile(self.path):
+            #if the file doesn't exist create the file
+            print("file not there")
+            self.write_file(False)
+        else:
+            #if it does exist open the file and split the string
+            #by commas into an array
+            highscoresfile = open(self.path, "r")
+            highscores = highscoresfile.read().split(",")
+            highscoresfile.close()
+            print(highscores)
+            #highscores = map(int, highscores)
+            #print(highscores)
+
+    def write_file(self, remove):
+        #if the remove variable is true (will be the case if the file already exists)
+        if remove:
+            #delete the file
+            os.remove(self.path)
+        #create the file again
+        highscores = open(self.path, "w")
+        highscores.close()
+
 #Image Class
 class Image(pygame.sprite.Sprite):
     def __init__(self, path, xpos, ypos):
@@ -62,12 +91,10 @@ class Image(pygame.sprite.Sprite):
         self.surface = pygame.display.get_surface()
         #loads the image from the path passed in
         self.image = pygame.image.load(path)
-        print((self.image.get_height() * 2))
-        print((self.image.get_height() * 2))
         #stores the given co-ords
         self.givenpos = (xpos, ypos)
         #creates an array to store the position for the image
-        self.position = (xpos - (self.image.get_width() // 2), ypos - (self.image.get_height() // 2))
+        self.position = [xpos - (self.image.get_width() // 2), ypos - (self.image.get_height() // 2)]
 
     #procedure to display the image
     def display_Image(self):

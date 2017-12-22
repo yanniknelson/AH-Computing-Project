@@ -1,6 +1,4 @@
 import pygame
-import os
-import time
 from button_class import *
 from basic_Resources import *
 import home_Page as hp

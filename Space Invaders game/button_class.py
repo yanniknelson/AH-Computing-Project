@@ -1,8 +1,6 @@
 import pygame
-import os
 import time
 from basic_Resources import *
-import home_Page as hp
 
 pygame.init()
 

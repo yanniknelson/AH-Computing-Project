@@ -1,17 +1,17 @@
 	Resources
 2	Class Library
-	2.1	Settings Class
-	2.2	Image Class
-	2.3	Text Class
-	2.4	Button Class
-	2.5	Player Class
-	2.6	Alien Class
+	2.1		Settings Class
+	2.2		Image Class
+	2.3		Text Class
+	2.4		Button Class
+	2.5		Player Class
+	2.6		Alien Class
 		2.6.1	Alien_10pts Class
 		2.6.2	Alien_20pts Class
 		2.6.3	Alien_30pts Class
-	2.7	Player Class
-	2.8	Bunker Class
-	2.9	Shot Class
+	2.7		Player Class
+	2.8		Bunker Class
+	2.9		Shot Class
 	2.10	Bolt Class
 	2.11	Arrow Class
 #these are stand alone files that are imported into each other where needed and whose functions are called when needed

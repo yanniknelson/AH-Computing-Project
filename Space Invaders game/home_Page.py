@@ -1,10 +1,9 @@
 import pygame
-import os
-import time
 from button_class import *
 from basic_Resources import *
 import settings_Page as sp
 import instructions_Page as ip
+import game_Page as gp
 
 pygame.init()
 
@@ -56,7 +55,7 @@ def run_page():
     draw_page()
     while True:
             I_button.hover_Check(draw_page, ip.run_page)
-            G_button.hover_Check(draw_page, test)
+            G_button.hover_Check(draw_page, gp.run_page)
             S_button.hover_Check(draw_page, sp.run_page)
             for event in pygame.event.get():
                     if event.type == pygame.QUIT:
