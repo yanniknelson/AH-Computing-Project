@@ -1,393 +1,589 @@
-	Resources
-2	Class Library
-	2.1		Settings Class
-	2.2		Image Class
-	2.3		Text Class
-	2.4		Button Class
-	2.5		Player Class
-	2.6		Alien Class
-		2.6.1	Alien_10pts Class
-		2.6.2	Alien_20pts Class
-		2.6.3	Alien_30pts Class
-	2.7		Player Class
-	2.8		Bunker Class
-	2.9		Shot Class
-	2.10	Bolt Class
-	2.11	Arrow Class
+1	Class Library
+	1.1		Settings Class
+	1.2		Image Class
+	1.3		Text Class
+	1.4		Button Class
+	1.5		Player Class
+	1.6		Alien Class
+		1.7	Alien_10pts Class
+		1.8	Alien_20pts Class
+		1.9	Alien_30pts Class
+	1.10	Shot Class
+	1.11	Bolt Class
+	1.12	Arrow Class
+	1.13	Highscore Class
 #these are stand alone files that are imported into each other where needed and whose functions are called when needed
-3	Pages
-	3.1	Home_Page
-	3.2	Setttings_Page
-	3.3	Instructions_Page
-	3.4	Game_Page
-	3.5	HSIn_Page
-	3.6	HSDis_page
+2	Pages
+	2.1	Home_Page
+	2.2	Setttings_Page
+	2.3	Instructions_Page
+	2.4	Game_Page
+	2.5	HSIn_Page
+	2.6	HSDis_page
 
 
-	2.1	Settings Class
-		2.1.1 class Settings:
-		2.1.2		CONSTRUCTOR():
-		2.1.3		DECLARE musicstate AS BOOLEAN INITIALLY = TRUE
-		2.1.4		DECLARE musictype AS INTEGER INTIALLY = 1
-		2.1.5		DECLARE soundeffects AS BOOLEAN INITIALLY = TRUE
-		2.1.6		DECLARE graphics AS BOOLEAN INITIALLY = FALSE
-		2.1.7
-		2.1.8		METODS:
-		2.1.9		get_settings()
-		2.1.10	write_file()
+	1.1	Settings Class
+		1.1.1 CLASS Settings:
+		1.1.2		CONSTRUCTOR():
+		1.1.3		DECLARE musicstate AS BOOLEAN INITIALLY = TRUE
+		1.1.4		DECLARE musictype AS INTEGER INTIALLY = 1
+		1.1.5		DECLARE soundeffects AS BOOLEAN INITIALLY = TRUE
+		1.1.6		DECLARE graphics AS BOOLEAN INITIALLY = FALSE
+		1.1.7
+		1.1.8		METHODS:
+		1.1.9		get_settings()
+		1.1.10	write_file()
 
-		2.1.9		get_settings()
-			2.1.9.1	PROCEDURE get_settings()
-			2.1.9.2		IF SETTINGS FILE DOES NOT EXISTS THEN
-			2.1.9.3			CALL self.write_file(FALSE)
-			2.1.9.4		ELSE:
-			2.1.9.5			OPEN SETTINGS FILE
-			2.1.9.6			DECLARE settings AS ARRAY OF string
-			2.1.9.7			FILL settings WITH CONTENTS OF SETTINGS FILE DELIMTED ON COMMA
-			2.1.9.8			CLOSE SETTINGS FILE
-			2.1.9.8			SET self.musicstate TO BOOLEAN(settings(0))
-			2.1.9.9			SET self.musictype TO INTEGER(settings(1))
-			2.1.9.10		SET self.soundeffects TO BOOLEAN(settings(2))
-			2.1.9.11		SET self.graphics TO BOOLEAN(settings(3))
-			2.1.9.12	END IF
+		1.1.9		get_settings()
+			1.1.9.1	PROCEDURE get_settings()
+			1.1.9.2		IF SETTINGS FILE DOES NOT EXISTS THEN
+			1.1.9.3			CALL self.write_file(FALSE)
+			1.1.9.4		ELSE:
+			1.1.9.5			OPEN SETTINGS FILE
+			1.1.9.6			DECLARE settings AS ARRAY OF string
+			1.1.9.7			FILL settings WITH CONTENTS OF SETTINGS FILE DELIMTED ON COMMA
+			1.1.9.8			CLOSE SETTINGS FILE
+			1.1.9.8			SET self.musicstate TO BOOLEAN(settings(0))
+			1.1.9.9			SET self.musictype TO INTEGER(settings(1))
+			1.1.9.10		SET self.soundeffects TO BOOLEAN(settings(2))
+			1.1.9.11		SET self.graphics TO BOOLEAN(settings(3))
+			1.1.9.12	END IF
 
-
-	2.2	Image Class
-		2.2.1	class Image:
-		2.2.2		CONSTRUCTOR(path, xpos, ypos):
-		2.2.3		DECLARE surface AS SURFACE INITIALLY = GET CURRENT SURFACE
-		2.2.4		DECLARE image AS IMAGE INITIALLY IMAGE FROM path
-		2.2.5		RESIZE image TO 2 TIMES ORIGINAL SIZE
-		2.2.6		DECLARE givenpos AS ARRAY OF INTEGER INITIALLY = (xpos, ypos)
-		2.2.7		DECLARE position AS ARRAY OF INTEGER INITIALLY = (xpos - (self.image.width / 2), ypos - (self.image.height / 2)
-		2.2.8
-		2.2.9		MEHTODS:
-		2.2.10	display_Image()
-		2.2.11	resize_Image()
-
-		2.2.10		display_Image()
-			2.2.10.1	PROCEDURE display_Image():
-			2.2.10.2		COPY self.image ONTO self.surface AT self.position
-			2.2.10.3	END PROCEDURE
-
-		2.2.11	resize_Image()
-			2.2.11.1	PROCEDURE resize_Image(scale)
-			2.2.11.2		SET self.image TO self.image SCALED BY scale
-			2.2.11.3		SET self.position  TO (self.givenpos(0) - (self.image.width / 2), self.givenpos(1) - (self.image.height / 2)
-			2.2.11.4	END PROCEDURE
-
-	2.3	Text Class
-		2.3.1	class Text:
-		2.3.2	CONSTRUCTOR(content, fontsize, xpos, ypos, colour(defaults to White if no input)):
-		2.3.3		DECLARE surface AS SURFACE INITIALLY = GET CURRENT SURFACE
-		2.3.4		DECLARE font AS FONT INITIALLY =  GET FONT FROM "resources/font/ca.ttf" WITH SIZE fontsize
-		2.3.5		DECLARE text AS RENDERED colour font WITH VALUE content
-		2.3.6		DECLARE colour AS ARRAY OF INTEGER INTIALLY = colour
-		2.3.7		DECLARE givenpos AS ARRAY OF INTEGER INTIALLY = (xpos, ypos)
-		2.3.8		DECLARE position AS ARRAY OF INTEGER INITIALLY = (xpos - (self.text.width / 2), ypos - (self.text.height / 2))
-		2.3.9
-		2.3.10	METHODS:
-		2.3.11	display_Text()
-		2.3.12	change_text()
-
-		2.3.11		display_Text()
-			2.3.11.1	PROCEDURE display_Text():
-			2.3.11.2		COPY self.text ONTO self.surface AT self.position
-			2.3.11.3	END PROCEDURE
-
-		2.3.12	change_text()
-			2.3.12.1	PROCEDURE change_text(newtext, drawmethod)
-			2.3.12.2		SET text TO RENDERED slef.colour self.font WITH VALUE newtext
-			2.3.12.3		SET position TO (self.givenpos(0) - (self.text.width / 2), self.givenpos(1) - (self.text.height / 2))
-			2.3.12.3		CALL drawmethod()
-			2.3.12.4	END PROCEDURE
-
-	2.4 Button Class:
-		2.4.1	class Button:
-		2.4.2		CONSTRUCTOR(caption, xpos, ypos, method, width(defaults to 113 if no input), height(defaults to 42 if no input)):
-		2.4.3		DECLARE position AS ARRAY OF INTEGER INTIALLY = (xpos, ypos)
-		2.4.4		DECLARE surface AS SURFACE INITIALLY = GET CURRENT SURFACE
-		2.4.5		DECLARE face AS RECTANGLE INITIALLY = RECTANGLE ON surface WITH SIZE (width, height)
-		2.4.6		SET self.face.center TO self.position
-		2.4.7		DECLARE large AS BOOLEAN INITIALLY = FALSE
-		2.4.8		DECLARE text AS NEW TEXT(caption, 16, xpos, ypos, Black)
-		2.4.9		DECLARE method AS method (THIS ALLOWS A METHOD TO BE PASSED IN, HAS NO TYPE)
-		2.4.10
-		2.4.11		MEHTODS:
-		2.4.12	hover_Check()
-		2.4.13	display_Button()
-		2.4.14	click_Check()
-
-		2.4.12	hover_Check(drawmethod, clickmethod)
-			2.4.12.1	PROCEDURE hover_Check():
-			2.4.12.2		IF (MOUSEPOSITION IS IN self.face) THEN
-			2.4.12.3			IF NOT self.large THEN
-			2.4.12.4				SET self.large TO TRUE
-			2.4.12.5				SET self.face TO self.face INFLATED BY (20,16)
-			2.4.12.6				CALL drawmethod()
-			2.4.12.7			ELSE
-			2.4.12.8				RETURN CALL self.click_Check(clickmethod)
-			2.4.12.9		ELSE IF NOT (MOUSEPOSITION IS IN self.face) AND self.large THEN
-			2.4.12.10			SET large TO FALSE
-			2.4.12.11			SET self.face TO self.face INFLATED BY (-20, -16)
-			2.4.12.12			CALL drawmethod()
-			2.4.12.13		END IF
-			2.4.12.14	END PROCEDURE
-
-		2.4.13	display_Button()
-			2.4.13.1	PROCEDURE display_Button():
-			2.4.13.2		DRAW WHITE self.face ON self.surface
-			2.4.13.3		CALL self.text.display_Text()
-			2.4.13.4	END PROCEDURE
-
-		2.4.14	click_Check(clickmethod)
-			2.4.14.1	PROCEDURE click_Check(method):
-			2.4.14.2		IF MOUSE BUTTON ONE CLICKED THEN
-			2.4.14.2			CALL clickmethod()
-			2.4.14.3			WAIT 0.1 SECONDS
-			2.4.14.4			RETURN TRUE
-			2.4.14.4		END IF
-			2.4.14.5	END PROCEDURE
+		1.1.10	write_file()
+			1.1.10.1	PROCEDURE write_file(remove AS BOOLEAN)
+			1.1.10.2		IF remove THEN
+			1.1.10.3			DELETE SETTINGS FILE
+			1.1.10.4		END IF
+			1.1.10.5		CREATE AND OPEN SETTINGS FILE
+			1.1.10.6		WRITE self.musicstate + "," TO SETTINGS FILE
+			1.1.10.7		WRITE self.musictype + "," TO SETTINGS FILE
+			1.1.10.8		WRITE self.soundeffects + "," TO SETTINGS FILE
+			1.1.10.9		WRITE self.graphics TO SETTINGS FILE
+			1.1.10.10		CLOSE SETTINGS FILE
+			1.1.10.11	END PROCEDURE
 
 
+	1.2	Image Class
+		1.2.1	CLASS Image:
+		1.2.2		CONSTRUCTOR(path AS STRING, xpos AS INTEGER, ypos AS INTEGER):
+		1.2.3		DECLARE surface AS SURFACE INITIALLY = GET CURRENT SURFACE
+		1.2.4		DECLARE image AS IMAGE INITIALLY IMAGE FROM path
+		1.2.5		RESIZE image TO 2 TIMES ORIGINAL SIZE
+		1.2.6		DECLARE givenpos AS ARRAY OF INTEGER INITIALLY = (xpos, ypos)
+		1.2.7		DECLARE position AS ARRAY OF INTEGER INITIALLY = (xpos - (self.image.width / 2), ypos - (self.image.height / 2)
+		1.2.8
+		1.2.9		MEHTODS:
+		1.2.10	display_Image()
+		1.2.11	resize_Image()
+
+		1.2.10		display_Image()
+			1.2.10.1	PROCEDURE display_Image():
+			1.2.10.2		COPY self.image ONTO self.surface AT self.position
+			1.2.10.3	END PROCEDURE
+
+		1.2.11	resize_Image()
+			1.2.11.1	PROCEDURE resize_Image(scale AS INTEGER)
+			1.2.11.2		SET self.image TO self.image SCALED BY scale
+			1.2.11.3		SET self.position TO (self.givenpos(0) - (self.image.width / 2), self.givenpos(1) - (self.image.height / 2)
+			1.2.11.4	END PROCEDURE
+
+	1.3	Text Class
+		1.3.1	CLASS Text:
+		1.3.2	CONSTRUCTOR(content AS STRING, fontsize AS INTEGER, xpos AS INTEGER, ypos AS INTEGER, colour(defaults to White if no input) AS COLOUR):
+		1.3.3		DECLARE surface AS SURFACE INITIALLY = GET CURRENT SURFACE
+		1.3.4		DECLARE font AS FONT INITIALLY =  GET FONT FROM "resources/font/ca.ttf" WITH SIZE fontsize
+		1.3.5		DECLARE text AS RENDERED colour font WITH VALUE content
+		1.3.6		DECLARE colour AS ARRAY OF INTEGER INTIALLY = colour
+		1.3.7		DECLARE givenpos AS ARRAY OF INTEGER INTIALLY = (xpos, ypos)
+		1.3.8		DECLARE position AS ARRAY OF INTEGER INITIALLY = (xpos - (self.text.width / 2), ypos - (self.text.height / 2))
+		1.3.9
+		1.3.10	METHODS:
+		1.3.11	display_Text()
+		1.3.12	change_text()
+
+		1.3.11		display_Text()
+			1.3.11.1	PROCEDURE display_Text():
+			1.3.11.2		COPY self.text ONTO self.surface AT self.position
+			1.3.11.3	END PROCEDURE
+
+		1.3.12	change_text()
+			1.3.12.1	PROCEDURE change_text(newtext AS STRING, drawmethod AS METHOD)
+			1.3.12.2		SET text TO RENDERED slef.colour self.font WITH VALUE newtext
+			1.3.12.3		SET position TO (self.givenpos(0) - (self.text.width / 2), self.givenpos(1) - (self.text.height / 2))
+			1.3.12.3		CALL drawmethod()
+			1.3.12.4	END PROCEDURE
+
+	1.4 Button Class:
+		1.4.1	CLASS Button:
+		1.4.2		CONSTRUCTOR(caption AS STRING, xpos AS INTEGER, ypos AS INTEGER, method AS METHOD, width(defaults to 113 if no input) AS INTEGER, height(defaults to 42 if no input) AS INTEGER):
+		1.4.3		DECLARE position AS ARRAY OF INTEGER INTIALLY = (xpos, ypos)
+		1.4.4		DECLARE surface AS SURFACE INITIALLY = GET CURRENT SURFACE
+		1.4.5		DECLARE face AS RECTANGLE INITIALLY = RECTANGLE ON surface WITH SIZE (width, height)
+		1.4.6		SET self.face.center TO self.position
+		1.4.7		DECLARE large AS BOOLEAN INITIALLY = FALSE
+		1.4.8		DECLARE text AS NEW TEXT(caption, 16, xpos, ypos, Black)
+		1.4.9		DECLARE caption AS STRING INITIALLY = caption
+		1.4.10
+		1.4.11	METHODS:
+		1.4.12	hover_Check()
+		1.4.13	display_Button()
+		1.4.14	click_Check()
+
+		1.4.12	hover_Check(drawmethod AS METHOD, clickmethod AS METHOD)
+			1.4.12.1	PROCEDURE hover_Check():
+			1.4.12.2		IF (MOUSEPOSITION IS IN self.face) THEN
+			1.4.12.3			IF NOT self.large THEN
+			1.4.12.4				SET self.large TO TRUE
+			1.4.12.5				SET self.face TO self.face INFLATED BY (20,16)
+			1.4.12.6				CALL drawmethod()
+			1.4.12.7			ELSE
+			1.4.12.8				RETURN CALL self.click_Check(clickmethod)
+			1.4.12.9		ELSE IF NOT (MOUSEPOSITION IS IN self.face) AND self.large THEN
+			1.4.12.10			SET large TO FALSE
+			1.4.12.11			SET self.face TO self.face INFLATED BY (-20, -16)
+			1.4.12.12			CALL drawmethod()
+			1.4.12.13		END IF
+			1.4.12.14	END PROCEDURE
+
+		1.4.13	display_Button()
+			1.4.13.1	PROCEDURE display_Button():
+			1.4.13.2		DRAW WHITE self.face ON self.surface
+			1.4.13.3		CALL self.text.display_Text()
+			1.4.13.4	END PROCEDURE
+
+		1.4.14	click_Check(clickmethod AS METHOD)
+			1.4.14.1	PROCEDURE click_Check(method):
+			1.4.14.2		IF MOUSE BUTTON ONE CLICKED THEN
+			1.4.14.3			CALL clickmethod()
+			1.4.14.4			WAIT 0.1 SECONDS
+			1.4.14.5			RETURN TRUE
+			1.4.14.6		END IF
+			1.4.14.7	END PROCEDURE
+
+	1.5	Player Class
+		1.5.1	CLASS Player:
+		1.5.2		CONSTRUCTOR(xpos AS INTEGER)
+		1.5.3		DECLARE position AS ARRAY OF INTEGER INTIALLY = (xpos, 633)
+		1.5.4		DECLARE dead AS BOOLEAN INITIALLY = FLASE
+		1.5.5		DECLARE lives AS INTEGER INTIALLY = 3
+		1.5.6		DECLARE image AS NEW Image('resources/sprite_Images/ship/ship.png', xpos, 633)
+		1.5.7		self.image.resize_Image(2)
+		1.5.8
+		1.5.9		METHODS:
+		1.5.10	kill_player()
+		1.5.11	move()
+		1.5.12	display_player()
+
+		1.5.10 kill_player()
+			1.5.10.1 	PROCEDURE kill_player(drawmethod AS METHOD)
+			1.5.10.2		SET self.lives TO self.lives - 1
+			1.5.10.3		DECLARE count AS INTEGER INTIALLY = 0
+			1.5.10.4		FOR count FROM 0 TO 5
+			1.5.10.5			SET self.image TO NEW Image('resources/sprite_Images/ship/ship_explode_one.png', self.position[0], self.position[1] - 4)
+			1.5.10.6			CALL self.display_player()
+			1.5.10.7			CALL drawmethod()
+			1.5.10.8			WAIT 0.05 SECONDS
+			1.5.10.9			SET self.image TO NEW Image('resources/sprite_Images/ship/ship_explode_two.png', self.position[0], self.position[1] - 4)
+			1.5.10.10			CALL self.display_player()
+			1.5.10.11			CALL drawmethod()
+			1.5.10.12			WAIT 0.05 SECONDS
+			1.5.10.13		END FOR
+			1.5.10.14		WAIT 0.3 SECONDS
+			1.5.10.15		SET self.position TO (480,633)
+			1.5.10.16		SET self.image TO Image('resources/sprite_Images/ship/ship.png', self.position[0], self.position[1])
+	    1.5.10.17   CALL self.image.resize_Image(2)
+	    1.5.10.18		CALL self.display_player()
+	    1.5.10.19		CALL drawmethod()
+			1.5.10.20		WAIT 0.5 SECONDS
+			1.5.10.21	END PROCEDURE
+
+		1.5.11 move()
+			1.5.11.1	PROCEDURE move(xdist AS INTEGER)
+			1.5.11.2		IF NOT self.dead THEN
+			1.5.11.3			SET self.position[0] TO self.position[0] + xdist
+			1.5.11.4			SET self.image TO NEW Image('resources/sprite_Images/ship/ship.png', self.position[0], self.position[1])
+    	1.5.11.5			CALL self.image.resize_Image(2)
+			1.5.11.6		END IF
+			1.5.11.7	END PROCEDURE
+
+		1.5.12 display_player()
+			1.5.12.1	PROCEDURE display_player()
+			1.5.12.2		CALL self.image.display_Image()
+			1.5.12.3		IF self.lives == 0 THEN
+			1.5.12.4			SET self.dead TO True
+			1.5.12.4		END IF
+			1.5.12.5	END PROCEDURE
+
+	1.6	Alien Class
+		1.6.1	CLASS Alien:
+		1.6.2		CONSTRUCTOR(openpath AS STRING, closepath AS STRING, xpos AS INTEGER, ypos AS INTEGER)
+		1.6.3		DECLARE position AS ARRAY OF INTEGER INTIALLY = (xpos, ypos)
+		1.6.4		DECLARE open_image AS STRING INTIALLY = openpath
+		1.6.5		DECLARE close_image AS STRING INTIALLY = closepath
+		1.6.6		DECLARE which_image AS BOOLEAN INTIALLY = TRUE
+		1.6.7		DECLARE dead AS BOOLEAN INITIALLY = FALSE
+		1.6.8		DECLARE image AS NEW Image(self.open_image, xpos, ypos)
+		1.6.9		CALL self.image.resize_Image(2)
+    1.6.10	DECLARE points AS INTEGER INITIALLY = 0
+		1.6.11	DECLARE rect AS RECTANGLE INITIALLY = self.image.image.get_rect()
+		1.6.12	SET self.rect.center TO self.position
+		1.6.13
+		1.6.12	METHODS:
+		1.6.13	kill_alien()
+		1.6.14	switch_image()
+		1.6.15	move()
+		1.6.16	display_alien()
+
+		1.6.13 kill_alien()
+			1.6.13.1	PROCEDURE kill_alien()
+			1.6.13.2		SET self.dead TO True
+			1.6.13.3		CALL self.switch_image()
+			1.6.13.4		RETURN self.points
+			1.6.13.5	END PROCEDURE
+
+		1.6.14	switch_image()
+			1.6.14.1	PROCEDURE switch_image()
+			1.6.14.2		IF self.dead THEN
+			1.6.14.3			SET self.image TO Image('resources/sprite_Images/aliens/alien_Blast.png', self.position[0], self.position[1])
+      1.6.14.4			CALL self.image.resize_Image(2)
+			1.6.14.5		ELSE IF self.which_image THEN
+			1.6.14.6			SET self.image TO Image(self.close_image, self.position[0], self.position[1])
+     	1.6.14.7			CALL self.image.resize_Image(2)
+      1.6.14.8			SET self.rect TO self.image.image.get_rect()
+      1.6.14.9			SET self.rect.center TO self.position
+      1.6.14.10			SET self.which_image TO False
+			1.6.14.11		ELSE
+			1.6.14.12			SET self.image TO Image(self.open_image, self.position[0], self.position[1])
+     	1.6.14.13			CALL self.image.resize_Image(2)
+      1.6.14.14			SET self.rect TO self.image.image.get_rect()
+      1.6.14.15			SET self.rect.center TO self.position
+      1.6.14.16			SET self.which_image TO False
+			1.6.14.17		END IF
+			1.6.14.18	END PROCEDURE
+
+		1.6.15	move()
+			1.6.15.1 	PROCEDURE move(xdist AS INTEGER, ydist AS INTEGER)
+			1.6.15.2		IF NOT self.dead THEN
+			1.6.15.3			SET self.position[0] TO self.position[0] xdist
+      1.6.15.4			SET self.position[1] TO self.position[1] ydist
+      1.6.15.5			CALL self.switch_image()
+			1.6.15.6		ELSE
+			1.6.15.7			CALL self.kill #this is an inbuilt pygame function
+			1.6.15.8		END IF
+			1.6.15.9	END PROCEDURE
+
+		1.6.16	display_alien()
+			1.6.16.1	PROCEDURE display_alien()
+			1.6.17.2		CALL self.image.display_Image()
+			1.6.18.3	END PROCEDURE
+
+	1.7	Alien_10pts Class
+			1.7.1 CLASS Alien_10pts IS SUBCLASS OF Alien:
+			1.7.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER)
+			1.7.3		Alien('resources/sprite_Images/aliens/10pts_Open.png', 'resources/sprite_Images/aliens/10pts_Closed.png', xpos, ypos)
+			1.7.4		SET self.points TO 10
+
+	1.8	Alien_20pts Class
+			1.8.1 CLASS Alien_20pts IS SUBCLASS OF Alien:
+			1.8.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER)
+			1.8.3		Alien('resources/sprite_Images/aliens/20pts_Open.png', 'resources/sprite_Images/aliens/20pts_Closed.png', xpos, ypos)
+			1.8.4		SET self.points TO 20
+
+	1.9	Alien_30pts Class
+			1.9.1 CLASS Alien_30pts IS SUBCLASS OF Alien:
+			1.9.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER)
+			1.9.3		Alien('resources/sprite_Images/aliens/30pts_Open.png', 'resources/sprite_Images/aliens/30pts_Closed.png', xpos, ypos)
+			1.9.4		SET self.points TO 30
+
+	1.10	Shot Class
+		1.10.1 CLASS shot:
+		1.10.2		CONSTRUCTOR(xpos AS INTEGER)
+		1.10.3		DECLARE position AS ARRAY OF INTEGER INITIALLY = (xpos, 633)
+		1.10.4		DECLARE image AS NEW Image('resources/sprite_Images/shot/player_Shot_Green.png', self.position[0], self.position[1])
+		1.10.5		CALL self.image.resize_Image(2)
+		1.10.6		DECLARE moving AS BOOLEAN INITIALLY = TRUE
+		1.10.7		DECLARE rect AS RECTANGLE INITIALLY = self.image.image.get_rect()
+		1.10.8		SET self.rect.center TO self.position
+		1.10.9
+		1.10.10		METHODS:
+		1.10.11		blow()
+		1.10.12		move()
+		1.10.13		blowup()
+		1.10.14		display_shot()
+
+		1.10.11		blow()
+			1.10.11.1	PROCEDURE blow()
+			1.10.11.2		SET self.moving TO FALSE
+			1.10.11.3		CALL self.kill() #this is an inbuilt pygame function
+			1.10.11.4	END PROCEDURE
+
+		1.10.12		move()
+			1.10.12.1		PROCEDURE move()
+			1.10.12.2			IF self.moving THEN
+			1.10.12.3				SET self.position[1] TO self.position[1] - 10
+			1.10.12.4				IF self.position[1] > 525 THEN
+			1.10.12.5					SET self.image TO NEW Image('resources/sprite_Images/shot/player_Shot_Green.png', self.position[0], self.position[1])
+			1.10.12.6				ELSE
+			1.10.12.7					SET self.image TO NEW Image('resources/sprite_Images/shot/player_Shot.png', self.position[0], self.position[1])
+			1.10.12.8				END IF
+			1.10.12.9				CALL self.image.resize_Image(2)
+      1.10.12.10			SET self.rect TO self.image.image.get_rect()
+      1.10.12.11			SET self.rect.center TO self.position
+			1.10.12.12		END IF
+			1.10.12.13	END PROCEDURE
+
+		1.10.13		blowup()
+			1.10.13.1	PROCEDURE blowup()
+			1.10.13.2		SET self.image TO NEW Image('resources/sprite_Images/shot/player_Shot_Black_Mask.png', self.position[0], self.position[1])
+	    1.10.13.3		SET self.moving TO False
+			1.10.13.4	END PROCEDURE
+
+		1.10.14		display_shot()
+			1.10.14.1	PROCEDURE display_shot()
+			1.10.15.2		CALL self.image.display_Image()
+			1.10.15.3	END PROCEDURE
 
 
 
 
-	3.1	Home_Page
-		3.1.1		DECLARE Background AS NEW Image('PATH TO IMAGE', 480, 360)
-		3.1.2		DECLARE Title AS NEW Text("SPACE INVADERS", 72, 480, 106)
-		3.1.3		DECLARE Sub_Title AS NEW Text("These are the aliens you'll encounter:", 32, 480, 228)
-		3.1.4		DECLARE mother_ship_img AS NEW Image('resources/sprite_Images/aliens/mother_Ship.png', 250, 318)
-		3.1.5		DECLARE mother_text AS NEW Text("This can be worth 50, 100, 150 or 300 points", 16, 560, 318)
-		3.1.6		DECLARE thirty_img AS NEW Image('PATH TO IMAGE', 250, 368)
-		3.1.7		DECLARE thirty_text AS NEW Text("This alien is worth 30 points", 16, 472, 368)
-		3.1.8		DECLARE twenty_img AS NEW Image('PATH TO IMAGE', 250, 418)
-		3.1.9		DECLARE twenty_text AS NEW Text("This alien is worth 20 points", 16, 472, 418)
-		3.1.10	DECLARE ten_img AS NEW Image('PATH TO IMAGE', 250, 468)
-		3.1.11	DECLARE ten_text AS NEW Text("This alien is worth 10 points", 16, 472, 468)
-		3.1.12	DECLARE I_button AS NEW Button("Instructions", 156, 645, LOAD INSTRUCTIONS PAGE, 164, 62)
-		3.1.13	DECLARE G_button AS NEW Button("New Game", 480, 645, LOAD GAME PAGE, 164, 62)
-		3.1.14	DECLARE S_button AS NEW Button("Settings", 821, 645, LOAD SETTINGS PAGE, 164, 62)
-		3.1.15	#METODS
-		3.1.16	DEFINE draw_page()
-		3.1.17	DEFINE run_page()
-
-		3.1.16	DEFINE draw_page()
-			3.1.16.1	PROCEDURE display_page():
-			3.1.16.3		Background.display_Image()
-			3.1.16.4		Title.display_text()
-			3.1.16.5		Sub_Title.display_text()
-			3.1.16.6		mother_ship_img.display_Image()
-			3.1.16.7		mother_text.display_text()
-			3.1.16.8		thirty_img.display_Image()
-			3.1.16.9		thirty_text.display_text()
-			3.1.16.10		twenty_img.display_Image()
-			3.1.16.11		twenty_text.display_text()
-			3.1.16.12		ten_img.display_Image()
-			3.1.16.13		ten_text.display_text()
-			3.1.16.14		I_button.display_Button()
-			3.1.16.15		G_button.display_Button()
-			3.1.16.16		S_button.display_Button()
-			3.1.16.17		UPDATE SCREEN
-			3.1.16.18	END PROCEDURE
-
-		3.1.17	DEFINE run_page()
-			3.1.17.1	PROCEDURE run_page()
-			3.1.17.2		draw_page()
-			3.1.17.3		WHILE TRUE DO
-			3.1.17.4			I_button.hover_Check(draw_page, Instructions_Page.run_page)
-			3.1.17.5			G_button.hover_Check(draw_page, Game_Page.run_page)
-			3.1.17.6			S_button.hover_Check(draw_page, Settings_Page.run_page)
-			3.1.17.7			IF EXIT = TRUE THEN
-			3.1.17.8				EXIT PROGRAM
-			3.1.17.9			END IF
-			3.1.17.10		END WHILE
-			3.1.17.11	END PROCEDURE
+			
 
 
 
+	2.1	Home_Page
+		2.1.1		DECLARE Background AS NEW Image('PATH TO IMAGE', 480, 360)
+		2.1.2		DECLARE Title AS NEW Text("SPACE INVADERS", 72, 480, 106)
+		2.1.3		DECLARE Sub_Title AS NEW Text("These are the aliens you'll encounter:", 32, 480, 228)
+		2.1.4		DECLARE mother_ship_img AS NEW Image('resources/sprite_Images/aliens/mother_Ship.png', 250, 318)
+		2.1.5		DECLARE mother_text AS NEW Text("This can be worth 50, 100, 150 or 300 points", 16, 560, 318)
+		2.1.6		DECLARE thirty_img AS NEW Image('PATH TO IMAGE', 250, 368)
+		2.1.7		DECLARE thirty_text AS NEW Text("This alien is worth 30 points", 16, 472, 368)
+		2.1.8		DECLARE twenty_img AS NEW Image('PATH TO IMAGE', 250, 418)
+		2.1.9		DECLARE twenty_text AS NEW Text("This alien is worth 20 points", 16, 472, 418)
+		2.1.10	DECLARE ten_img AS NEW Image('PATH TO IMAGE', 250, 468)
+		2.1.11	DECLARE ten_text AS NEW Text("This alien is worth 10 points", 16, 472, 468)
+		2.1.12	DECLARE I_button AS NEW Button("Instructions", 156, 645, LOAD INSTRUCTIONS PAGE, 164, 62)
+		2.1.13	DECLARE G_button AS NEW Button("New Game", 480, 645, LOAD GAME PAGE, 164, 62)
+		2.1.14	DECLARE S_button AS NEW Button("Settings", 821, 645, LOAD SETTINGS PAGE, 164, 62)
+		2.1.15	#METHODS
+		2.1.16	DEFINE draw_page()
+		2.1.17	DEFINE run_page()
 
+		2.1.16	DEFINE draw_page()
+			2.1.16.1	PROCEDURE display_page():
+			2.1.16.3		Background.display_Image()
+			2.1.16.4		Title.display_text()
+			2.1.16.5		Sub_Title.display_text()
+			2.1.16.6		mother_ship_img.display_Image()
+			2.1.16.7		mother_text.display_text()
+			2.1.16.8		thirty_img.display_Image()
+			2.1.16.9		thirty_text.display_text()
+			2.1.16.10		twenty_img.display_Image()
+			2.1.16.11		twenty_text.display_text()
+			2.1.16.12		ten_img.display_Image()
+			2.1.16.13		ten_text.display_text()
+			2.1.16.14		I_button.display_Button()
+			2.1.16.15		G_button.display_Button()
+			2.1.16.16		S_button.display_Button()
+			2.1.16.17		UPDATE SCREEN
+			2.1.16.18	END PROCEDURE
 
-
-	3.2	Settings_Page
-		3.2.1		DECLARE Background AS NEW Image('PATH TO IMAGE', 480, 360)
-		3.2.2		DECLARE Title AS NEW Text("SETTINGS", 72, 480, 106)
-		3.2.3		DECLARE back_button AS NEW Button("Back", 80, 40)
-		3.2.4		DECLARE music_Text AS NEW Text("Music:", 32, 200, 225)
-		3.2.5		DECLARE music_button AS NEW Button("", 372, 225, 160)
-		3.2.6		DECLARE musictype_Text AS NEW Text("Music Type:", 32, 365, 285)
-		3.2.7		DECLARE musictype_button AS NEW Button("", 600, 285, 160)
-		3.2.8		DECLARE effects_Text AS NEW Text("Sound Effects:", 32, 296, 375)
-		3.2.9		DECLARE effects_button AS NEW Button("", 564, 375, 160)
-		3.2.10	DECLARE graphics_Text AS NEW Text("Graphics:", 32, 236, 465)
-		3.2.11	DECLARE graphics_button AS NEW Button("", 444, 465, 160)
-		3.2.12	DECLARE settingsvar AS NEW Settings()
-		3.2.13	#METHODS
-		3.2.14	DEFINE musicstate_text()
-		3.2.15	DEFINE musictype_text()
-		3.2.16	DEFINE effects_text()
-		3.2.17	DEFINE graphics_text()
-		3.2.18	DEFINE switch_music()
-		3.2.19	DEFINE change_music()
-		3.2.20	DEFINE switch_effects()
-		3.2.21	DEFINE switch_graphics()
-		3.2.22	DEFINE draw_page()
-		3.2.23	DEFINE exit_page()
-		3.2.24	DEFINE run_page()
-
-		3.2.14	DEFINE musicstate_text()
-			3.2.14.1	PROCEDURE musicstate_text()
-			3.2.14.2		IF settingsvar.musicstate THEN
-		  3.2.14.3			music_button.text.change_text("On", draw_page)
-			3.2.14.4		ELSE:
-			3.2.14.5  		music_button.text.change_text("Off", draw_page)
-			3.2.14.6		END IF
-			3.2.14.7	END PROCEDURE
-
-		3.2.15	DEFINE musictype_text()
-			3.2.15.1	PROCEDURE musictype_text()
-			3.2.15.2		IF settingsvar.musictype  = 1 THEN
-			3.2.15.3			musictype_button.text.change_text("SciFi", draw_page)
-			3.2.15.4		ELSE:
-			3.2.15.5  		musictype_button.text.change_text("popDance", draw_page)
-			3.2.15.6		END IF
-			3.2.15.7	END PROCEDURE
-
-		3.2.16	DEFINE effects_text()
-			3.2.16.1	PROCEDURE effects_text()
-			3.2.16.2		IF settingsvar.soundeffects THEN
-			3.2.16.3			effects_button.text.change_text("On", draw_page)
-			3.2.16.4		ELSE:
-			3.2.16.5  		effects_button.text.change_text("Off", draw_page)
-			3.2.16.6		END IF
-			3.2.16.7	END PROCEDURE
-
-		3.2.17	DEFINE graphics_text()
-			3.2.17.1	PROCEDURE musicstate_text()
-			3.2.17.2		IF settingsvar.musicstate THEN
-			3.2.17.3			music_button.text.change_text("On", draw_page)
-			3.2.17.4		ELSE:
-			3.2.17.5  		music_button.text.change_text("Off", draw_page)
-			3.2.17.6		END IF
-			3.2.17.7	END PROCEDURE
-
-		3.2.18	DEFINE switch_music()
-			3.2.18.1	PROCEDURE switch_music()
-			3.2.18.2		SET settingsvar.musicstate TO NOT settingsvar.musicstate
-			3.2.18.3		CALL musicstate_text()
-			3.2.18.4	END PROCEDURE
-
-		3.2.19	DEFINE change_music()
-			3.2.19.1	PROCEDURE change_music()
-			3.2.18.2		SET settingsvar.musictype TO (settingsvar.musictype + 1) % 2
-			3.2.18.3		CALL musictype_text()
-			3.2.18.4	END PROCEDURE
-
-		3.2.20	DEFINE switch_effects()
-			3.2.20.1	PROCEDURE switch_effects()
-			3.2.20.2		SET settingsvar.soundeffects TO NOT settingsvar.soundeffects
-			3.2.20.3		CALL effects_text()
-			3.2.20.4	END PROCEDURE
-
-		3.2.21	DEFINE switch_graphics()
-			3.2.21.1	PROCEDURE switch_graphics()
-			3.2.21.2		SET settingsvar.graphics TO NOT settingsvar.graphics
-			3.2.21.3		CALL graphics_text()
-			3.2.21.4	END PROCEDURE
-
-		3.2.22	DEFINE draw_page()
-			3.2.22.1	PROCEDURE draw_page()
-			3.2.22.2		CALL Background.display_Image()
-			3.2.22.3		CALL Title.display_text()
-			3.2.22.4		CALL back_button.display_Button()
-			3.2.22.5		CALL music_Text.display_text()
-			3.2.22.6		CALL music_button.display_Button()
-			3.2.22.7		CALL musictype_Text.display_text()
-			3.2.22.8		CALL musictype_button.display_Button()
-			3.2.22.9		CALL effects_Text.display_text()
-			3.2.22.10		CALL effects_button.display_Button()
-			3.2.22.11		CALL graphics_Text.display_text()
-			3.2.22.12		CALL graphics_button.display_Button()
-			3.2.22.13		UPDATE SCREEN
-			3.2.22.14	END PROCEDURE
-
-		3.2.23	DEFINE exit_page()
-			3.2.23.1	PROCEDURE exit_page()
-			3.2.23.2		CALL settingsvar.write_file(TRUE)
-			3.2.23.3		CALL Homepage.run_page()
-			3.2.23.4	END PROCEDURE
-
-		3.2.24	DEFINE run_page()
-			3.2.24.1	PROCEDURE run_page()
-			3.2.24.2		CALL settingsvar.get_settings()
-			3.2.24.3		CALL musicstate_text()
-			3.2.24.4		CALL musictype_text()
-			3.2.24.5		CALL effects_text()
-			3.3.24.6		CALL graphics_text()
-			3.3.24.7		CALL draw_page()
-			3.3.24.8		WHILE TRUE DO:
-			3.3.24.9			back_button.hover_Check(draw_page, exit_page)
-	    3.3.24.10			music_button.hover_Check(draw_page, switch_music)
-	    3.3.24.11			musictype_button.hover_Check(draw_page, change_music)
-		  3.3.24.12			effects_button.hover_Check(draw_page, switch_effects)
-	   	3.3.24.13			graphics_button.hover_Check(draw_page, switch_graphics)
-			3.3.24.14			IF EXIT = TRUE THEN
-			3.3.24.15				EXIT PROGRAM
-			3.3.24.16			END IF
-			3.3.24.17		END WHILE
-			3.3.24.18	END PROCEDURE
+		2.1.17	DEFINE run_page()
+			2.1.17.1	PROCEDURE run_page()
+			2.1.17.2		draw_page()
+			2.1.17.3		WHILE TRUE DO
+			2.1.17.4			I_button.hover_Check(draw_page, Instructions_Page.run_page)
+			2.1.17.5			G_button.hover_Check(draw_page, Game_Page.run_page)
+			2.1.17.6			S_button.hover_Check(draw_page, Settings_Page.run_page)
+			2.1.17.7			IF EXIT = TRUE THEN
+			2.1.17.8				EXIT PROGRAM
+			2.1.17.9			END IF
+			2.1.17.10		END WHILE
+			2.1.17.11	END PROCEDURE
 
 
 
 
 
-	3.3	Instructions_Page
-		3.3.1		DECLARE Background AS Image('resources/sprite_Images/Background.png', 480, 360)
-		3.3.2		DECLARE back_button AS Button("Back", 80, 40)
-		3.3.3		DECLARE Title AS Text("INSTRUCTIONS", 72, 480, 106)
-		3.3.4		DECLARE C_SubTitle AS Text("CONTROLS:", 32, 144, 186)
-		3.3.5		DECLARE C_text_one AS Text("to move your character left and right use the a and d buttons", 16, 402, 226)
-		3.3.6		DECLARE C_text_two AS Text("or the left and right arrow keys. to shoot press spacebar.", 16, 384, 246)
-		3.3.7		DECLARE WW_SubTitle AS Text("WHAT'S WHAT:", 32, 180, 306)
-		3.3.8		DECLARE WW_text_one AS Text("The creatures at the top of the screen are ALIENS, there is also", 16, 420, 346)
-		3.3.9		DECLARE WW_text_two AS Text("a MOTHERSHIP that occasionally travels across the top of the screen.", 16, 444, 366)
-		3.3.10	DECLARE WW_text_three AS Text("The green arches are your BUNKERS. YOU are the WHITE PUCK that", 16, 408, 386)
-		3.3.11	DECLARE WW_text_four AS Text("moves side to side near the bottom of the screen.", 16, 330, 406)
-		3.3.12	DECLARE WD_SubTitle AS Text("WHAT TO DO:", 32, 168, 466)
-		3.3.13	DECLARE WD_text_one AS Text("The aim of the game is to KILL all of the ALIENS before they reach", 16, 432, 506)
-		3.3.14	DECLARE WD_text_two AS Text("your BUNKERS. There are 3 types of ALIENS, KILLING each one will reward", 16, 462, 526)
-		3.3.15	DECLARE WD_text_three AS Text("a different amount of points. You KILL the ALIENS by SHOOTING them ", 16, 438, 546)
-		3.3.16	DECLARE WD_text_four AS Text("BUT they can SHOOT YOU too. If YOU get HIT you DIE and lose a LIFE,", 16, 438, 566)
-		3.3.17	DECLARE WD_text_five AS Text("YOU have 3 LIVES in total, when you run out of LIVES where the game ENDS.", 16, 474, 586)
-		3.3.18	DECLARE WD_text_six AS Text("As the ALIENS get closer to your BUNKERS they will SPEED UP.", 16, 396, 606)
-		3.3.19	DECLARE WD_text_seven AS Text("Once you’ve KILLED all the ALIENS a new WAVE will begin", 16, 364, 626)
-		3.3.20	DECLARE WD_text_eight AS Text("the ALIENS’ STARTING SPEED is FASTER, this repeats until the game ends.", 16, 460, 646)
-		3.3.21	DECLARE Instructions AS ARRAY OF TEXT INITIALLY = (C_SubTitle, C_text_one, C_text_two,
-		3.3.22          WW_SubTitle, WW_text_one, WW_text_two, WW_text_three, WW_text_four,
-		3.3.23          WD_SubTitle, WD_text_one, WD_text_two, WD_text_three, WD_text_four, WD_text_five, WD_text_six, WD_text_seven, WD_text_eight)
-		3.3.24	#METHODS
-		3.3.25	DEFINE draw_page()
-		3.3.26	DEFINE run_page()
 
-		3.3.25	DEFINE draw_page()
-			3.3.25.1	PROCEDURE draw_page()
-			3.3.25.2		Background.display_Image()
-			3.3.25.2		back_button.display_text()
-			3.3.25.2		Title.display_text()
-			3.3.25.2		For count AS INTEGER FROM 0 TO INSTRUCTIONS.length DO
-			3.3.25.2			Instructions(count).display_text()
-			3.3.25.2		NEXT
-			3.3.25.2		UPDATE display
-			3.3.25.2	END PROCEDURE
+	2.2	Settings_Page
+		2.2.1		DECLARE Background AS NEW Image('PATH TO IMAGE', 480, 360)
+		2.2.2		DECLARE Title AS NEW Text("SETTINGS", 72, 480, 106)
+		2.2.3		DECLARE back_button AS NEW Button("Back", 80, 40)
+		2.2.4		DECLARE music_Text AS NEW Text("Music:", 32, 200, 225)
+		2.2.5		DECLARE music_button AS NEW Button("", 372, 225, 160)
+		2.2.6		DECLARE musictype_Text AS NEW Text("Music Type:", 32, 365, 285)
+		2.2.7		DECLARE musictype_button AS NEW Button("", 600, 285, 160)
+		2.2.8		DECLARE effects_Text AS NEW Text("Sound Effects:", 32, 296, 375)
+		2.2.9		DECLARE effects_button AS NEW Button("", 564, 375, 160)
+		2.2.10	DECLARE graphics_Text AS NEW Text("Graphics:", 32, 236, 465)
+		2.2.11	DECLARE graphics_button AS NEW Button("", 444, 465, 160)
+		2.2.12	DECLARE settingsvar AS NEW Settings()
+		2.2.13	#METHODS
+		2.2.14	DEFINE musicstate_text()
+		2.2.15	DEFINE musictype_text()
+		2.2.16	DEFINE effects_text()
+		2.2.17	DEFINE graphics_text()
+		2.2.18	DEFINE switch_music()
+		2.2.19	DEFINE change_music()
+		2.2.20	DEFINE switch_effects()
+		2.2.21	DEFINE switch_graphics()
+		2.2.22	DEFINE draw_page()
+		2.2.23	DEFINE exit_page()
+		2.2.24	DEFINE run_page()
 
-		3.3.26	DEFINE run_page()
-			3.3.26.1	PROCEDURE run_page()
-			3.3.26.2		draw_page()
-			3.3.26.3		While TRUE DO:
-			3.3.26.4			back_button.hover_Check(draw_page, Homepage.run_page)
-			3.3.26.5			IF EXIT = TRUE THEN
-			3.3.26.6				EXIT PROGRAM
-			3.3.26.7			END IF
-			3.3.26.8		END WHILE
-			3.3.26.9	END PROCEDURE
+		2.2.14	DEFINE musicstate_text()
+			2.2.14.1	PROCEDURE musicstate_text()
+			2.2.14.2		IF settingsvar.musicstate THEN
+		  2.2.14.3			music_button.text.change_text("On", draw_page)
+			2.2.14.4		ELSE:
+			2.2.14.5  		music_button.text.change_text("Off", draw_page)
+			2.2.14.6		END IF
+			2.2.14.7	END PROCEDURE
+
+		2.2.15	DEFINE musictype_text()
+			2.2.15.1	PROCEDURE musictype_text()
+			2.2.15.2		IF settingsvar.musictype  = 1 THEN
+			2.2.15.3			musictype_button.text.change_text("SciFi", draw_page)
+			2.2.15.4		ELSE:
+			2.2.15.5  		musictype_button.text.change_text("popDance", draw_page)
+			2.2.15.6		END IF
+			2.2.15.7	END PROCEDURE
+
+		2.2.16	DEFINE effects_text()
+			2.2.16.1	PROCEDURE effects_text()
+			2.2.16.2		IF settingsvar.soundeffects THEN
+			2.2.16.3			effects_button.text.change_text("On", draw_page)
+			2.2.16.4		ELSE:
+			2.2.16.5  		effects_button.text.change_text("Off", draw_page)
+			2.2.16.6		END IF
+			2.2.16.7	END PROCEDURE
+
+		2.2.17	DEFINE graphics_text()
+			2.2.17.1	PROCEDURE musicstate_text()
+			2.2.17.2		IF settingsvar.musicstate THEN
+			2.2.17.3			music_button.text.change_text("On", draw_page)
+			2.2.17.4		ELSE:
+			2.2.17.5  		music_button.text.change_text("Off", draw_page)
+			2.2.17.6		END IF
+			2.2.17.7	END PROCEDURE
+
+		2.2.18	DEFINE switch_music()
+			2.2.18.1	PROCEDURE switch_music()
+			2.2.18.2		SET settingsvar.musicstate TO NOT settingsvar.musicstate
+			2.2.18.3		CALL musicstate_text()
+			2.2.18.4	END PROCEDURE
+
+		2.2.19	DEFINE change_music()
+			2.2.19.1	PROCEDURE change_music()
+			2.2.18.2		SET settingsvar.musictype TO (settingsvar.musictype + 1) % 2
+			2.2.18.3		CALL musictype_text()
+			2.2.18.4	END PROCEDURE
+
+		2.2.20	DEFINE switch_effects()
+			2.2.20.1	PROCEDURE switch_effects()
+			2.2.20.2		SET settingsvar.soundeffects TO NOT settingsvar.soundeffects
+			2.2.20.3		CALL effects_text()
+			2.2.20.4	END PROCEDURE
+
+		2.2.21	DEFINE switch_graphics()
+			2.2.21.1	PROCEDURE switch_graphics()
+			2.2.21.2		SET settingsvar.graphics TO NOT settingsvar.graphics
+			2.2.21.3		CALL graphics_text()
+			2.2.21.4	END PROCEDURE
+
+		2.2.22	DEFINE draw_page()
+			2.2.22.1	PROCEDURE draw_page()
+			2.2.22.2		CALL Background.display_Image()
+			2.2.22.3		CALL Title.display_text()
+			2.2.22.4		CALL back_button.display_Button()
+			2.2.22.5		CALL music_Text.display_text()
+			2.2.22.6		CALL music_button.display_Button()
+			2.2.22.7		CALL musictype_Text.display_text()
+			2.2.22.8		CALL musictype_button.display_Button()
+			2.2.22.9		CALL effects_Text.display_text()
+			2.2.22.10		CALL effects_button.display_Button()
+			2.2.22.11		CALL graphics_Text.display_text()
+			2.2.22.12		CALL graphics_button.display_Button()
+			2.2.22.13		UPDATE SCREEN
+			2.2.22.14	END PROCEDURE
+
+		2.2.23	DEFINE exit_page()
+			2.2.23.1	PROCEDURE exit_page()
+			2.2.23.2		CALL settingsvar.write_file(TRUE)
+			2.2.23.3		CALL Homepage.run_page()
+			2.2.23.4	END PROCEDURE
+
+		2.2.24	DEFINE run_page()
+			2.2.24.1	PROCEDURE run_page()
+			2.2.24.2		CALL settingsvar.get_settings()
+			2.2.24.3		CALL musicstate_text()
+			2.2.24.4		CALL musictype_text()
+			2.2.24.5		CALL effects_text()
+			2.3.24.6		CALL graphics_text()
+			2.3.24.7		CALL draw_page()
+			2.3.24.8		WHILE TRUE DO:
+			2.3.24.9			back_button.hover_Check(draw_page, exit_page)
+	    2.3.24.10			music_button.hover_Check(draw_page, switch_music)
+	    2.3.24.11			musictype_button.hover_Check(draw_page, change_music)
+		  2.3.24.12			effects_button.hover_Check(draw_page, switch_effects)
+	   	2.3.24.13			graphics_button.hover_Check(draw_page, switch_graphics)
+			2.3.24.14			IF EXIT = TRUE THEN
+			2.3.24.15				EXIT PROGRAM
+			2.3.24.16			END IF
+			2.3.24.17		END WHILE
+			2.3.24.18	END PROCEDURE
+
+
+
+
+
+	2.3	Instructions_Page
+		2.3.1		DECLARE Background AS Image('resources/sprite_Images/Background.png', 480, 360)
+		2.3.2		DECLARE back_button AS Button("Back", 80, 40)
+		2.3.3		DECLARE Title AS Text("INSTRUCTIONS", 72, 480, 106)
+		2.3.4		DECLARE C_SubTitle AS Text("CONTROLS:", 32, 144, 186)
+		2.3.5		DECLARE C_text_one AS Text("to move your character left and right use the a and d buttons", 16, 402, 226)
+		2.3.6		DECLARE C_text_two AS Text("or the left and right arrow keys. to shoot press spacebar.", 16, 384, 246)
+		2.3.7		DECLARE WW_SubTitle AS Text("WHAT'S WHAT:", 32, 180, 306)
+		2.3.8		DECLARE WW_text_one AS Text("The creatures at the top of the screen are ALIENS, there is also", 16, 420, 346)
+		2.3.9		DECLARE WW_text_two AS Text("a MOTHERSHIP that occasionally travels across the top of the screen.", 16, 444, 366)
+		2.3.10	DECLARE WW_text_three AS Text("The green arches are your BUNKERS. YOU are the WHITE PUCK that", 16, 408, 386)
+		2.3.11	DECLARE WW_text_four AS Text("moves side to side near the bottom of the screen.", 16, 330, 406)
+		2.3.12	DECLARE WD_SubTitle AS Text("WHAT TO DO:", 32, 168, 466)
+		2.3.13	DECLARE WD_text_one AS Text("The aim of the game is to KILL all of the ALIENS before they reach", 16, 432, 506)
+		2.3.14	DECLARE WD_text_two AS Text("your BUNKERS. There are 3 types of ALIENS, KILLING each one will reward", 16, 462, 526)
+		2.3.15	DECLARE WD_text_three AS Text("a different amount of points. You KILL the ALIENS by SHOOTING them ", 16, 438, 546)
+		2.3.16	DECLARE WD_text_four AS Text("BUT they can SHOOT YOU too. If YOU get HIT you DIE and lose a LIFE,", 16, 438, 566)
+		2.3.17	DECLARE WD_text_five AS Text("YOU have 3 LIVES in total, when you run out of LIVES where the game ENDS.", 16, 474, 586)
+		2.3.18	DECLARE WD_text_six AS Text("As the ALIENS get closer to your BUNKERS they will SPEED UP.", 16, 396, 606)
+		2.3.19	DECLARE WD_text_seven AS Text("Once you’ve KILLED all the ALIENS a new WAVE will begin", 16, 364, 626)
+		2.3.20	DECLARE WD_text_eight AS Text("the ALIENS’ STARTING SPEED is FASTER, this repeats until the game ends.", 16, 460, 646)
+		2.3.21	DECLARE Instructions AS ARRAY OF TEXT INITIALLY = (C_SubTitle, C_text_one, C_text_two,
+		2.3.22          WW_SubTitle, WW_text_one, WW_text_two, WW_text_three, WW_text_four,
+		2.3.23          WD_SubTitle, WD_text_one, WD_text_two, WD_text_three, WD_text_four, WD_text_five, WD_text_six, WD_text_seven, WD_text_eight)
+		2.3.24	#METHODS
+		2.3.25	DEFINE draw_page()
+		2.3.26	DEFINE run_page()
+
+		2.3.25	DEFINE draw_page()
+			2.3.25.1	PROCEDURE draw_page()
+			2.3.25.2		Background.display_Image()
+			2.3.25.2		back_button.display_text()
+			2.3.25.2		Title.display_text()
+			2.3.25.2		For count AS INTEGER FROM 0 TO INSTRUCTIONS.length DO
+			2.3.25.2			Instructions(count).display_text()
+			2.3.25.2		NEXT
+			2.3.25.2		UPDATE display
+			2.3.25.2	END PROCEDURE
+
+		2.3.26	DEFINE run_page()
+			2.3.26.1	PROCEDURE run_page()
+			2.3.26.2		draw_page()
+			2.3.26.3		While TRUE DO:
+			2.3.26.4			back_button.hover_Check(draw_page, Homepage.run_page)
+			2.3.26.5			IF EXIT = TRUE THEN
+			2.3.26.6				EXIT PROGRAM
+			2.3.26.7			END IF
+			2.3.26.8		END WHILE
+			2.3.26.9	END PROCEDURE

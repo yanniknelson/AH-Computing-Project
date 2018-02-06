@@ -54,34 +54,57 @@ class Settings():
         settings.write(str(self.graphics))
         settings.close
 
+class Highscore():
+    def __init__(self):
+        self.name = ""
+        self.value = 0
+
 class Highscores():
     def __init__(self):
-        self.path = "highscores.txt"
+        self.scores = []
+        self.current_score = 0
 
     def get_highscores(self):
         #checks the settings file exists
-        if not os.path.isfile(self.path):
+        if not os.path.isfile("highscores.txt"):
             #if the file doesn't exist create the file
             print("file not there")
-            self.write_file(False)
+            self.write_file(False, False)
         else:
             #if it does exist open the file and split the string
             #by commas into an array
-            highscoresfile = open(self.path, "r")
+            highscoresfile = open("highscores.txt", "r")
             highscores = highscoresfile.read().split(",")
             highscoresfile.close()
             print(highscores)
             #highscores = map(int, highscores)
             #print(highscores)
 
-    def write_file(self, remove):
+    def check_new_score(self, newhigh, nothigh):
+        for score in self.scores:
+            if score.value < self.current_score:
+                newhigh()
+                break
+        nothigh()
+
+
+    def write_file(self, remove, fill):
         #if the remove variable is true (will be the case if the file already exists)
         if remove:
             #delete the file
-            os.remove(self.path)
+            os.remove("highscores.txt")
         #create the file again
-        highscores = open(self.path, "w")
-        highscores.close()
+        highscoresfile = open("highscores.txt", "w")
+        if fill:
+            highscoresfile.write(str(self.current_score))
+            #count = 0
+            #for score in self.scores:
+            #    if count == len(self.scores) - 1:
+            #        highscoresfile.write(str(score))
+            #    else:
+            #        highscoresfile.write(str(score) + ',')
+            #    count += 1
+        highscoresfile.close()
 
 #Image Class
 class Image(pygame.sprite.Sprite):

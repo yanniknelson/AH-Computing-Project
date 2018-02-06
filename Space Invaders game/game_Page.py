@@ -11,33 +11,38 @@ current_Score_Display = Text("0", 30, 55, 25)
 player = Player(480)
 aliens = pygame.sprite.Group()
 projectiles = pygame.sprite.Group()
-#highscores = Highscore()
-#highscores.get_highscores()
+columns = []
+highscoresvar = Highscores()
+highscoresvar.get_highscores()
 
 #populates the group with aliens
 #also correctly positions the aliens
 sep = 70
+
 def setup_aliens():
-    ypos = 360
-    for outer in range(0,2):
-        xpos = 60
-        for inner in range(0, 11):
-            alien10 = Alien10(xpos, ypos)
-            aliens.add(alien10)
-            xpos += sep
-        ypos -= sep
-    for outer in range(0,2):
-        xpos = 60
-        for inner in range(0, 11):
-            alien20 = Alien20(xpos, ypos)
-            aliens.add(alien20)
-            xpos += sep
-        ypos -= sep
     xpos = 60
-    for inner in range(0, 11):
-        alien30 = Alien30(xpos, ypos)
-        aliens.add(alien30)
+    colstore = []
+    for col in range(0, 11):
+        aliensort = pygame.sprite.Group()
+        alien101 = Alien10(xpos, 360)
+        alien102 = Alien10(xpos, 290)
+        alien201 = Alien20(xpos, 220)
+        alien202 = Alien20(xpos, 150)
+        alien30 = Alien30(xpos, 80)
         xpos += sep
+        aliens.add(alien101)
+        aliens.add(alien102)
+        aliens.add(alien201)
+        aliens.add(alien202)
+        aliens.add(alien30)
+        aliensort.add(alien101)
+        aliensort.add(alien102)
+        aliensort.add(alien201)
+        aliensort.add(alien202)
+        aliensort.add(alien30)
+
+        colstore.append(aliensort)
+    columns = colstore
 
 
 def draw_page():
@@ -85,13 +90,12 @@ def run_page():
     #flag variable for if the player can
     can_shoot = True
     setup_aliens()
-    #stores the score
-    current_Score = 0
     while True:
         #resets the aliens once they've all been killed
         #with the starting and minimum speed slightly faster
         if len(aliens) == 0:
-            time.sleep(0.3)
+            draw_page()
+            time.sleep(3)
             xmovespeed = 10
             movingspeed = xmovespeed
             ymovespeed = 0
@@ -130,9 +134,9 @@ def run_page():
         #checks for key presses and moves the player in the appropriate check_direction
         #but only betweeen a specific range
         if (pygame.key.get_pressed()[pygame.K_a] == 1 or pygame.key.get_pressed()[pygame.K_LEFT] == 1) and player.position[0] > 40:
-            player.move(-2, 0)
+            player.move(-2)
         elif (pygame.key.get_pressed()[pygame.K_d] == 1  or pygame.key.get_pressed()[pygame.K_RIGHT] == 1) and player.position[0] < 920:
-            player.move(2, 0)
+            player.move(2)
 
         #when the space bar is pressed
         if pygame.key.get_pressed()[pygame.K_SPACE]:
@@ -170,10 +174,10 @@ def run_page():
                         if shot.rect.colliderect(alien.rect):
                             #if touching kill the alien and remove the shot
                             print('hit')
-                            current_Score += alien.kill_alien()
-                            current_Score_Display.change_text(str(current_Score), draw_page)
+                            highscoresvar.current_score += alien.kill_alien()
+                            current_Score_Display.change_text(str(highscoresvar.current_score ), draw_page)
                             shot.blow()
-                            print(current_Score)
+                            print(highscoresvar.current_score )
 
                     shot.move()
                 else:
@@ -182,14 +186,15 @@ def run_page():
         #exits if the x button or escape button is pressed
         if pygame.key.get_pressed()[pygame.K_ESCAPE] == 1:
             player.kill_player(draw_page)
+            #highscoresvar.write_file(True, True)
             #pygame.display.quit()
             #pygame.quit()
             #sys.exit()
 
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                        pygame.display.quit()
-                        pygame.quit()
-                        sys.exit()
+                    pygame.display.quit()
+                    pygame.quit()
+                    sys.exit()
         #update the elpased time
         alien_Timer_Elapsed = time.time() - alien_Timer_Start

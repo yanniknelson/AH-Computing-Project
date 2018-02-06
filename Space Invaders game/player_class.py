@@ -10,10 +10,8 @@ class Player(pygame.sprite.Sprite):
         self.position = [xpos, 633]
         self.dead = False
         self.lives = 3
-        self.alive_image = 'resources/sprite_Images/ship/ship.png'
-        self.image = Image(self.alive_image, xpos, 633)
+        self.image = Image('resources/sprite_Images/ship/ship.png', xpos, 633)
         self.image.resize_Image(2)
-        self.score = 0
 
     def kill_player(self, drawmethod):
         self.lives -= 1
@@ -30,24 +28,25 @@ class Player(pygame.sprite.Sprite):
             time.sleep(0.05)
         time.sleep(0.3)
         self.position = [480, 633]
-        self.image = Image(self.alive_image, self.position[0], self.position[1])
+        self.image = Image('resources/sprite_Images/ship/ship.png', self.position[0], self.position[1])
         self.image.resize_Image(2)
         self.display_player()
         drawmethod()
         time.sleep(0.5)
 
-    def move(self, xdist, ydist):
+    def move(self, xdist):
         if not self.dead:
             self.position[0] += xdist
-            self.position[1] += ydist
-            self.image = Image(self.alive_image, self.position[0], self.position[1])
+            self.image = Image('resources/sprite_Images/ship/ship.png', self.position[0], self.position[1])
             self.image.resize_Image(2)
             print(self.image.image.get_height())
-        else:
-            print(dead)
+
 
     def display_player(self):
         self.image.display_Image()
+        if self.lives == 0:
+            self.dead = TRUE
+
 
 class Shot(pygame.sprite.Sprite):
     def __init__(self, xpos):
