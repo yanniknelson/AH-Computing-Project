@@ -12,8 +12,11 @@ class Player(pygame.sprite.Sprite):
         self.lives = 3
         self.image = Image('resources/sprite_Images/ship/ship.png', xpos, 633)
         self.image.resize_Image(2)
+        self.rect = self.image.image.get_rect()
+        self.rect.center = self.position
 
     def kill_player(self, drawmethod):
+        drawmethod()
         self.lives -= 1
         for count in range(0, 5):
             self.image = Image('resources/sprite_Images/ship/ship_explode_one.png', self.position[0], self.position[1] - 4)
@@ -39,6 +42,8 @@ class Player(pygame.sprite.Sprite):
             self.position[0] += xdist
             self.image = Image('resources/sprite_Images/ship/ship.png', self.position[0], self.position[1])
             self.image.resize_Image(2)
+            self.rect = self.image.image.get_rect()
+            self.rect.center = self.position
             print(self.image.image.get_height())
 
 

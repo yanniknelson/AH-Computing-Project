@@ -75,3 +75,37 @@ class Alien30(Alien):
     def __init__(self, xpos, ypos):
         Alien.__init__(self, 'resources/sprite_Images/aliens/30pts_Open.png', 'resources/sprite_Images/aliens/30pts_Closed.png', xpos, ypos)
         self.points = 30
+
+class Bolt(pygame.sprite.Sprite):
+    def __init__(self, xpos, ypos):
+        pygame.sprite.Sprite.__init__(self)
+        self.position = [xpos, ypos]
+        self.distance_moved = 0
+        self.moving = True
+        self.blownUp = False
+        self.left_image = 'resources/sprite_Images/bolt/bolt_Left.png'
+        self.right_image = 'resources/sprite_Images/bolt/bolt_Right.png'
+        self.image = Image(self.left_image, self.position[0], self.position[1])
+        self.rect = self.image.image.get_rect()
+        self.rect.center = self.position
+
+    def move(self):
+        if self.moving:
+            self.position[1] += 7
+            self.distance_moved += 7
+            if self.distance_moved % 2 == 1:
+                self.image = Image(self.right_image, self.position[0], self.position[1])
+            else:
+                self.image = Image(self.left_image, self.position[0], self.position[1])
+                self.rect = self.image.image.get_rect()
+                self.rect.center = self.position
+
+    def blow(self):
+        self.kill()
+
+    def blow_up(self):
+        self.image = Image('resources/sprite_Images/bolt/bolt_Mask.png', self.position[0], self.position[1])
+        self.moving = False
+
+    def display_shot(self):
+        self.image.display_Image()

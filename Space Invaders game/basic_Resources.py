@@ -124,9 +124,9 @@ class Image(pygame.sprite.Sprite):
         self.surface.blit(self.image, self.position)
 
     #procedure to scale the image
-    def resize_Image(self, scale):
+    def resize_Image(self, scalefactor):
         #changes the size of the image
-        self.image = pygame.transform.scale(self.image, ((self.image.get_width() * scale), (self.image.get_height() * scale)))
+        self.image = pygame.transform.scale(self.image, ((self.image.get_width() * scalefactor), (self.image.get_height() * scalefactor)))
         #moves the image to maintain the center
         self.position = (self.givenpos[0] - (self.image.get_width() // 2), self.givenpos[1] - (self.image.get_height() // 2))
 
