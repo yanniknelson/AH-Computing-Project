@@ -50,7 +50,7 @@ class Player(pygame.sprite.Sprite):
     def display_player(self):
         self.image.display_Image()
         if self.lives == 0:
-            self.dead = TRUE
+            self.dead = True
 
 
 class Shot(pygame.sprite.Sprite):

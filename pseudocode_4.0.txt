@@ -346,7 +346,7 @@
 
 
 
-			
+
 
 
 
@@ -371,30 +371,30 @@
 
 		2.1.16	DEFINE draw_page()
 			2.1.16.1	PROCEDURE display_page():
-			2.1.16.3		Background.display_Image()
-			2.1.16.4		Title.display_text()
-			2.1.16.5		Sub_Title.display_text()
-			2.1.16.6		mother_ship_img.display_Image()
-			2.1.16.7		mother_text.display_text()
-			2.1.16.8		thirty_img.display_Image()
-			2.1.16.9		thirty_text.display_text()
-			2.1.16.10		twenty_img.display_Image()
-			2.1.16.11		twenty_text.display_text()
-			2.1.16.12		ten_img.display_Image()
-			2.1.16.13		ten_text.display_text()
-			2.1.16.14		I_button.display_Button()
-			2.1.16.15		G_button.display_Button()
-			2.1.16.16		S_button.display_Button()
+			2.1.16.3		CALL Background.display_Image()
+			2.1.16.4		CALL Title.display_text()
+			2.1.16.5		CALL Sub_Title.display_text()
+			2.1.16.6		CALL mother_ship_img.display_Image()
+			2.1.16.7		CALL mother_text.display_text()
+			2.1.16.8		CALL thirty_img.display_Image()
+			2.1.16.9		CALL thirty_text.display_text()
+			2.1.16.10		CALL twenty_img.display_Image()
+			2.1.16.11		CALL twenty_text.display_text()
+			2.1.16.12		CALL ten_img.display_Image()
+			2.1.16.13		CALL ten_text.display_text()
+			2.1.16.14		CALL I_button.display_Button()
+			2.1.16.15		CALL G_button.display_Button()
+			2.1.16.16		CALL S_button.display_Button()
 			2.1.16.17		UPDATE SCREEN
 			2.1.16.18	END PROCEDURE
 
 		2.1.17	DEFINE run_page()
 			2.1.17.1	PROCEDURE run_page()
-			2.1.17.2		draw_page()
+			2.1.17.2		CALL draw_page()
 			2.1.17.3		WHILE TRUE DO
-			2.1.17.4			I_button.hover_Check(draw_page, Instructions_Page.run_page)
-			2.1.17.5			G_button.hover_Check(draw_page, Game_Page.run_page)
-			2.1.17.6			S_button.hover_Check(draw_page, Settings_Page.run_page)
+			2.1.17.4			CALL I_button.hover_Check(draw_page, Instructions_Page.run_page)
+			2.1.17.5			CALL G_button.hover_Check(draw_page, Game_Page.run_page)
+			2.1.17.6			CALL S_button.hover_Check(draw_page, Settings_Page.run_page)
 			2.1.17.7			IF EXIT = TRUE THEN
 			2.1.17.8				EXIT PROGRAM
 			2.1.17.9			END IF
@@ -435,36 +435,36 @@
 		2.2.14	DEFINE musicstate_text()
 			2.2.14.1	PROCEDURE musicstate_text()
 			2.2.14.2		IF settingsvar.musicstate THEN
-		  2.2.14.3			music_button.text.change_text("On", draw_page)
+		  2.2.14.3			CALL music_button.text.change_text("On", draw_page)
 			2.2.14.4		ELSE:
-			2.2.14.5  		music_button.text.change_text("Off", draw_page)
+			2.2.14.5  		CALL music_button.text.change_text("Off", draw_page)
 			2.2.14.6		END IF
 			2.2.14.7	END PROCEDURE
 
 		2.2.15	DEFINE musictype_text()
 			2.2.15.1	PROCEDURE musictype_text()
 			2.2.15.2		IF settingsvar.musictype  = 1 THEN
-			2.2.15.3			musictype_button.text.change_text("SciFi", draw_page)
+			2.2.15.3			CALL musictype_button.text.change_text("SciFi", draw_page)
 			2.2.15.4		ELSE:
-			2.2.15.5  		musictype_button.text.change_text("popDance", draw_page)
+			2.2.15.5  		CALL musictype_button.text.change_text("popDance", draw_page)
 			2.2.15.6		END IF
 			2.2.15.7	END PROCEDURE
 
 		2.2.16	DEFINE effects_text()
 			2.2.16.1	PROCEDURE effects_text()
 			2.2.16.2		IF settingsvar.soundeffects THEN
-			2.2.16.3			effects_button.text.change_text("On", draw_page)
+			2.2.16.3			CALL effects_button.text.change_text("On", draw_page)
 			2.2.16.4		ELSE:
-			2.2.16.5  		effects_button.text.change_text("Off", draw_page)
+			2.2.16.5  		CALL effects_button.text.change_text("Off", draw_page)
 			2.2.16.6		END IF
 			2.2.16.7	END PROCEDURE
 
 		2.2.17	DEFINE graphics_text()
 			2.2.17.1	PROCEDURE musicstate_text()
 			2.2.17.2		IF settingsvar.musicstate THEN
-			2.2.17.3			music_button.text.change_text("On", draw_page)
+			2.2.17.3			CALL music_button.text.change_text("On", draw_page)
 			2.2.17.4		ELSE:
-			2.2.17.5  		music_button.text.change_text("Off", draw_page)
+			2.2.17.5  		CALL music_button.text.change_text("Off", draw_page)
 			2.2.17.6		END IF
 			2.2.17.7	END PROCEDURE
 
@@ -523,11 +523,11 @@
 			2.3.24.6		CALL graphics_text()
 			2.3.24.7		CALL draw_page()
 			2.3.24.8		WHILE TRUE DO:
-			2.3.24.9			back_button.hover_Check(draw_page, exit_page)
-	    2.3.24.10			music_button.hover_Check(draw_page, switch_music)
-	    2.3.24.11			musictype_button.hover_Check(draw_page, change_music)
-		  2.3.24.12			effects_button.hover_Check(draw_page, switch_effects)
-	   	2.3.24.13			graphics_button.hover_Check(draw_page, switch_graphics)
+			2.3.24.9			CALL back_button.hover_Check(draw_page, exit_page)
+	    2.3.24.10			CALL music_button.hover_Check(draw_page, switch_music)
+	    2.3.24.11			CALL musictype_button.hover_Check(draw_page, change_music)
+		  2.3.24.12			CALL effects_button.hover_Check(draw_page, switch_effects)
+	   	2.3.24.13			CALL graphics_button.hover_Check(draw_page, switch_graphics)
 			2.3.24.14			IF EXIT = TRUE THEN
 			2.3.24.15				EXIT PROGRAM
 			2.3.24.16			END IF
@@ -568,20 +568,20 @@
 
 		2.3.25	DEFINE draw_page()
 			2.3.25.1	PROCEDURE draw_page()
-			2.3.25.2		Background.display_Image()
-			2.3.25.2		back_button.display_text()
-			2.3.25.2		Title.display_text()
+			2.3.25.2		CALL Background.display_Image()
+			2.3.25.2		CALL back_button.display_text()
+			2.3.25.2		CALL Title.display_text()
 			2.3.25.2		For count AS INTEGER FROM 0 TO INSTRUCTIONS.length DO
-			2.3.25.2			Instructions(count).display_text()
+			2.3.25.2			CALL Instructions(count).display_text()
 			2.3.25.2		NEXT
 			2.3.25.2		UPDATE display
 			2.3.25.2	END PROCEDURE
 
 		2.3.26	DEFINE run_page()
 			2.3.26.1	PROCEDURE run_page()
-			2.3.26.2		draw_page()
+			2.3.26.2		CALL draw_page()
 			2.3.26.3		While TRUE DO:
-			2.3.26.4			back_button.hover_Check(draw_page, Homepage.run_page)
+			2.3.26.4			CALL back_button.hover_Check(draw_page, Homepage.run_page)
 			2.3.26.5			IF EXIT = TRUE THEN
 			2.3.26.6				EXIT PROGRAM
 			2.3.26.7			END IF

@@ -76,23 +76,49 @@ class Alien30(Alien):
         Alien.__init__(self, 'resources/sprite_Images/aliens/30pts_Open.png', 'resources/sprite_Images/aliens/30pts_Closed.png', xpos, ypos)
         self.points = 30
 
-class Bolt(pygame.sprite.Sprite):
-    def __init__(self, xpos, ypos):
+class Mother_Ship(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.position = [1000, 40]
+        self.image = Image('resources/sprite_Images/aliens/mother_Ship.png', self.position[0], self.position[1])
+        self.image.resize_Image(2)
+        self.rect = self.image.image.get_rect()
+        self.rect.center = self.position
+
+    def move(self):
+        self.position[0] -= 4
+        self.image = Image('resources/sprite_Images/aliens/mother_Ship.png', self.position[0], self.position[1])
+        self.image.resize_Image(2)
+        self.rect = self.image.image.get_rect()
+        self.rect.center = self.position
+
+    def blow(self):
+        self.kill()
+
+    def display_ship(self):
+        self.image.display_Image()
+
+
+class Alien_Shot(pygame.sprite.Sprite):
+    def __init__(self, xpos, ypos, left, right, mask, speed):
         pygame.sprite.Sprite.__init__(self)
         self.position = [xpos, ypos]
         self.distance_moved = 0
         self.moving = True
         self.blownUp = False
-        self.left_image = 'resources/sprite_Images/bolt/bolt_Left.png'
-        self.right_image = 'resources/sprite_Images/bolt/bolt_Right.png'
+        self.left_image = left
+        self.right_image = right
+        self.colour_changed = False
+        self.mask = mask
+        self.movement_speed = speed
         self.image = Image(self.left_image, self.position[0], self.position[1])
         self.rect = self.image.image.get_rect()
         self.rect.center = self.position
 
     def move(self):
         if self.moving:
-            self.position[1] += 7
-            self.distance_moved += 7
+            self.position[1] += self.movement_speed
+            self.distance_moved += self.movement_speed
             if self.distance_moved % 2 == 1:
                 self.image = Image(self.right_image, self.position[0], self.position[1])
             else:
@@ -100,12 +126,28 @@ class Bolt(pygame.sprite.Sprite):
                 self.rect = self.image.image.get_rect()
                 self.rect.center = self.position
 
+    def change_colour(self):
+        self.colour_changed = True
+        index = self.right_image.find('.png')
+        self.right_image = self.right_image[:index] + '_Green'+ self.right_image[index:]
+        index = self.left_image.find('.png')
+        self.left_image = self.left_image[:index] + '_Green'+ self.left_image[index:]
+        print('colour_changed')
+
     def blow(self):
         self.kill()
 
     def blow_up(self):
-        self.image = Image('resources/sprite_Images/bolt/bolt_Mask.png', self.position[0], self.position[1])
+        self.image = Image(self.mask, self.position[0], self.position[1])
         self.moving = False
 
     def display_shot(self):
         self.image.display_Image()
+
+class Bolt(Alien_Shot):
+    def __init__(self, xpos, ypos):
+        Alien_Shot.__init__(self, xpos, ypos, 'resources/sprite_Images/bolt/bolt_Left.png', 'resources/sprite_Images/bolt/bolt_Right.png', 'resources/sprite_Images/bolt/bolt_Mask.png', 7)
+
+class Arrow(Alien_Shot):
+    def __init__(self, xpos, ypos):
+        Alien_Shot.__init__(self, xpos, ypos, 'resources/sprite_Images/arrow/arrow.png', 'resources/sprite_Images/arrow/arrow_Second.png', 'resources/sprite_Images/arrow/arrow_Black_Mask.png', 5)
