@@ -9,9 +9,11 @@
 		1.8	Alien_20pts Class
 		1.9	Alien_30pts Class
 	1.10	Shot Class
-	1.11	Bolt Class
-	1.12	Arrow Class
-	1.13	Highscore Class
+	1.11	Alien_Shot Class
+		1.12	Bolt Class
+		1.13	Arrow Class
+	1.14	Highscore Class
+	1.15	ScoreBoard Class
 #these are stand alone files that are imported into each other where needed and whose functions are called when needed
 2	Pages
 	2.1	Home_Page
@@ -21,7 +23,7 @@
 	2.5	HSIn_Page
 	2.6	HSDis_page
 
-
+	<OLD THE GRAPHICS DID NOT WORK CORRECTLY>
 	1.1	Settings Class
 		1.1.1 CLASS Settings:
 		1.1.2		CONSTRUCTOR():
@@ -62,6 +64,43 @@
 			1.1.10.10		CLOSE SETTINGS FILE
 			1.1.10.11	END PROCEDURE
 
+	<NEW VERSION, without graphics option>
+	1.1	Settings Class
+		1.1.1 CLASS Settings:
+		1.1.2		CONSTRUCTOR():
+		1.1.3		DECLARE musicstate AS BOOLEAN INITIALLY = TRUE
+		1.1.4		DECLARE musictype AS INTEGER INTIALLY = 1
+		1.1.5		DECLARE soundeffects AS BOOLEAN INITIALLY = TRUE
+		1.1.6
+		1.1.7		METHODS:
+		1.1.8		get_settings()
+		1.1.9		write_file()
+
+		1.1.8		get_settings()
+			1.1.8.1	PROCEDURE get_settings()
+			1.1.8.2		IF SETTINGS FILE DOES NOT EXISTS THEN
+			1.1.8.3			CALL self.write_file(FALSE)
+			1.1.8.4		ELSE:
+			1.1.8.5			OPEN SETTINGS FILE
+			1.1.8.6			DECLARE settings AS ARRAY OF string
+			1.1.8.7			FILL settings WITH CONTENTS OF SETTINGS FILE DELIMTED ON COMMA
+			1.1.8.8			CLOSE SETTINGS FILE
+			1.1.8.8			SET self.musicstate TO BOOLEAN(settings(0))
+			1.1.8.9			SET self.musictype TO INTEGER(settings(1))
+			1.1.8.10		SET self.soundeffects TO BOOLEAN(settings(2))
+			1.1.8.11	END IF
+
+		1.1.9	write_file()
+			1.1.9.1		PROCEDURE write_file(remove AS BOOLEAN)
+			1.1.9.2			IF remove THEN
+			1.1.9.3				DELETE SETTINGS FILE
+			1.1.9.4			END IF
+			1.1.9.5			CREATE AND OPEN SETTINGS FILE
+			1.1.9.6				WRITE self.musicstate + "," TO SETTINGS FILE
+			1.1.9.7				WRITE self.musictype + "," TO SETTINGS FILE
+			1.1.9.8				WRITE self.soundeffects + "," TO SETTINGS FILE
+			1.1.9.9			CLOSE SETTINGS FILE
+			1.1.9.10	END PROCEDURE
 
 	1.2	Image Class
 		1.2.1	CLASS Image:
@@ -343,6 +382,18 @@
 			1.10.15.2		CALL self.image.display_Image()
 			1.10.15.3	END PROCEDURE
 
+	1.11 Alien_Shot Class
+		1.11.1	CLASS Alien_Shot:
+		1.11.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER, left AS STRING, right AS STRING, mask AS STRING, speed AS INTEGER)
+		1.11.3		DEFINE poisition AS ARRAY OF INTEGER INITIALLY = (xpos, ypos)
+		1.11.4		DEFINE distance_moved AS INTEGER INITIALLY = 0
+		1.11.5		DEFINE moving AS BOOLEAN INITIALLY = TRUE
+		1.11.6		DEFINE left_image AS STRING INITIALLY = left
+		1.11.7		DEFINE right_image AS STRING INITIALLY = right
+		1.11.8		DEFINE colour_changed AS BOOLEAN INITIALLY = FALSE
+		1.11.9		DEFINE mask AS STRING INITIALLY = mask
+
+
 
 
 
@@ -391,21 +442,22 @@
 		2.1.17	DEFINE run_page()
 			2.1.17.1	PROCEDURE run_page()
 			2.1.17.2		CALL draw_page()
-			2.1.17.3		WHILE TRUE DO
-			2.1.17.4			CALL I_button.hover_Check(draw_page, Instructions_Page.run_page)
-			2.1.17.5			CALL G_button.hover_Check(draw_page, Game_Page.run_page)
-			2.1.17.6			CALL S_button.hover_Check(draw_page, Settings_Page.run_page)
-			2.1.17.7			IF EXIT = TRUE THEN
-			2.1.17.8				EXIT PROGRAM
-			2.1.17.9			END IF
-			2.1.17.10		END WHILE
-			2.1.17.11	END PROCEDURE
+			2.1.17.3		WAIT 0.1 SECONDS
+			2.1.17.4		WHILE TRUE DO
+			2.1.17.5			CALL I_button.hover_Check(draw_page, Instructions_Page.run_page)
+			2.1.17.6			CALL G_button.hover_Check(draw_page, Game_Page.run_page)
+			2.1.17.7			CALL S_button.hover_Check(draw_page, Settings_Page.run_page)
+			2.1.17.8			IF EXIT = TRUE THEN
+			2.1.17.9				EXIT PROGRAM
+			2.1.17.10			END IF
+			2.1.17.11		END WHILE
+			2.1.17.12	END PROCEDURE
 
 
 
 
 
-
+	<OLD THE GRAPHICS DID NOT WORK CORRECTLY>
 	2.2	Settings_Page
 		2.2.1		DECLARE Background AS NEW Image('PATH TO IMAGE', 480, 360)
 		2.2.2		DECLARE Title AS NEW Text("SETTINGS", 72, 480, 106)
@@ -416,6 +468,7 @@
 		2.2.7		DECLARE musictype_button AS NEW Button("", 600, 285, 160)
 		2.2.8		DECLARE effects_Text AS NEW Text("Sound Effects:", 32, 296, 375)
 		2.2.9		DECLARE effects_button AS NEW Button("", 564, 375, 160)
+		<graphics text and button removed in new version>
 		2.2.10	DECLARE graphics_Text AS NEW Text("Graphics:", 32, 236, 465)
 		2.2.11	DECLARE graphics_button AS NEW Button("", 444, 465, 160)
 		2.2.12	DECLARE settingsvar AS NEW Settings()
@@ -423,10 +476,12 @@
 		2.2.14	DEFINE musicstate_text()
 		2.2.15	DEFINE musictype_text()
 		2.2.16	DEFINE effects_text()
+		<graphics_text method removed in new version>
 		2.2.17	DEFINE graphics_text()
 		2.2.18	DEFINE switch_music()
 		2.2.19	DEFINE change_music()
 		2.2.20	DEFINE switch_effects()
+		<switch_graphics method removed in new version>
 		2.2.21	DEFINE switch_graphics()
 		2.2.22	DEFINE draw_page()
 		2.2.23	DEFINE exit_page()
@@ -443,7 +498,7 @@
 
 		2.2.15	DEFINE musictype_text()
 			2.2.15.1	PROCEDURE musictype_text()
-			2.2.15.2		IF settingsvar.musictype  = 1 THEN
+			2.2.15.2		IF settingsvar.musictype THEN
 			2.2.15.3			CALL musictype_button.text.change_text("SciFi", draw_page)
 			2.2.15.4		ELSE:
 			2.2.15.5  		CALL musictype_button.text.change_text("popDance", draw_page)
@@ -459,6 +514,7 @@
 			2.2.16.6		END IF
 			2.2.16.7	END PROCEDURE
 
+		<removed>
 		2.2.17	DEFINE graphics_text()
 			2.2.17.1	PROCEDURE musicstate_text()
 			2.2.17.2		IF settingsvar.musicstate THEN
@@ -486,6 +542,7 @@
 			2.2.20.3		CALL effects_text()
 			2.2.20.4	END PROCEDURE
 
+		<removed>
 		2.2.21	DEFINE switch_graphics()
 			2.2.21.1	PROCEDURE switch_graphics()
 			2.2.21.2		SET settingsvar.graphics TO NOT settingsvar.graphics
@@ -503,6 +560,7 @@
 			2.2.22.8		CALL musictype_button.display_Button()
 			2.2.22.9		CALL effects_Text.display_text()
 			2.2.22.10		CALL effects_button.display_Button()
+			<2.2.22.11 and 2.2.22.12 removed>
 			2.2.22.11		CALL graphics_Text.display_text()
 			2.2.22.12		CALL graphics_button.display_Button()
 			2.2.22.13		UPDATE SCREEN
@@ -520,6 +578,7 @@
 			2.2.24.3		CALL musicstate_text()
 			2.2.24.4		CALL musictype_text()
 			2.2.24.5		CALL effects_text()
+			<2.3.24.6 removed>
 			2.3.24.6		CALL graphics_text()
 			2.3.24.7		CALL draw_page()
 			2.3.24.8		WHILE TRUE DO:
@@ -527,6 +586,7 @@
 	    2.3.24.10			CALL music_button.hover_Check(draw_page, switch_music)
 	    2.3.24.11			CALL musictype_button.hover_Check(draw_page, change_music)
 		  2.3.24.12			CALL effects_button.hover_Check(draw_page, switch_effects)
+			<2.3.24.12 removed>
 	   	2.3.24.13			CALL graphics_button.hover_Check(draw_page, switch_graphics)
 			2.3.24.14			IF EXIT = TRUE THEN
 			2.3.24.15				EXIT PROGRAM
