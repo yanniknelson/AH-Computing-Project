@@ -46,6 +46,9 @@ class Player(pygame.sprite.Sprite):
         #change the image back to normal
         self.image = Image('resources/sprite_Images/ship/ship.png', self.position[0], self.position[1])
         self.image.resize_Image(2)
+        #get and store the rectangel of the new image
+        self.rect = self.image.image.get_rect()
+        self.rect.center = self.position
         #draw the display
         drawmethod()
         #wait 0.5 seconds

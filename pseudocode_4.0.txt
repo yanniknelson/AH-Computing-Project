@@ -8,7 +8,7 @@
 		1.7	Alien_10pts Class
 		1.8	Alien_20pts Class
 		1.9	Alien_30pts Class
-	1.10	Shot Class
+	1.10	Player_Shot Class
 	1.11	Alien_Shot Class
 		1.12	Bolt Class
 		1.13	Arrow Class
@@ -30,6 +30,7 @@
 		1.1.3		DECLARE musicstate AS BOOLEAN INITIALLY = TRUE
 		1.1.4		DECLARE musictype AS INTEGER INTIALLY = 1
 		1.1.5		DECLARE soundeffects AS BOOLEAN INITIALLY = TRUE
+		<REMOVED>
 		1.1.6		DECLARE graphics AS BOOLEAN INITIALLY = FALSE
 		1.1.7
 		1.1.8		METHODS:
@@ -42,12 +43,13 @@
 			1.1.9.3			CALL self.write_file(FALSE)
 			1.1.9.4		ELSE:
 			1.1.9.5			OPEN SETTINGS FILE
-			1.1.9.6			DECLARE settings AS ARRAY OF string
+			1.1.9.6			DECLARE settings AS ARRAY OF STRING
 			1.1.9.7			FILL settings WITH CONTENTS OF SETTINGS FILE DELIMTED ON COMMA
 			1.1.9.8			CLOSE SETTINGS FILE
 			1.1.9.8			SET self.musicstate TO BOOLEAN(settings(0))
 			1.1.9.9			SET self.musictype TO INTEGER(settings(1))
 			1.1.9.10		SET self.soundeffects TO BOOLEAN(settings(2))
+			<REMOVED>
 			1.1.9.11		SET self.graphics TO BOOLEAN(settings(3))
 			1.1.9.12	END IF
 
@@ -59,48 +61,11 @@
 			1.1.10.5		CREATE AND OPEN SETTINGS FILE
 			1.1.10.6		WRITE self.musicstate + "," TO SETTINGS FILE
 			1.1.10.7		WRITE self.musictype + "," TO SETTINGS FILE
-			1.1.10.8		WRITE self.soundeffects + "," TO SETTINGS FILE
+			1.1.10.8		WRITE self.soundeffects TO SETTINGS FILE
+			<REMOVED>
 			1.1.10.9		WRITE self.graphics TO SETTINGS FILE
 			1.1.10.10		CLOSE SETTINGS FILE
 			1.1.10.11	END PROCEDURE
-
-	<NEW VERSION, without graphics option>
-	1.1	Settings Class
-		1.1.1 CLASS Settings:
-		1.1.2		CONSTRUCTOR():
-		1.1.3		DECLARE musicstate AS BOOLEAN INITIALLY = TRUE
-		1.1.4		DECLARE musictype AS INTEGER INTIALLY = 1
-		1.1.5		DECLARE soundeffects AS BOOLEAN INITIALLY = TRUE
-		1.1.6
-		1.1.7		METHODS:
-		1.1.8		get_settings()
-		1.1.9		write_file()
-
-		1.1.8		get_settings()
-			1.1.8.1	PROCEDURE get_settings()
-			1.1.8.2		IF SETTINGS FILE DOES NOT EXISTS THEN
-			1.1.8.3			CALL self.write_file(FALSE)
-			1.1.8.4		ELSE:
-			1.1.8.5			OPEN SETTINGS FILE
-			1.1.8.6			DECLARE settings AS ARRAY OF string
-			1.1.8.7			FILL settings WITH CONTENTS OF SETTINGS FILE DELIMTED ON COMMA
-			1.1.8.8			CLOSE SETTINGS FILE
-			1.1.8.8			SET self.musicstate TO BOOLEAN(settings(0))
-			1.1.8.9			SET self.musictype TO INTEGER(settings(1))
-			1.1.8.10		SET self.soundeffects TO BOOLEAN(settings(2))
-			1.1.8.11	END IF
-
-		1.1.9	write_file()
-			1.1.9.1		PROCEDURE write_file(remove AS BOOLEAN)
-			1.1.9.2			IF remove THEN
-			1.1.9.3				DELETE SETTINGS FILE
-			1.1.9.4			END IF
-			1.1.9.5			CREATE AND OPEN SETTINGS FILE
-			1.1.9.6				WRITE self.musicstate + "," TO SETTINGS FILE
-			1.1.9.7				WRITE self.musictype + "," TO SETTINGS FILE
-			1.1.9.8				WRITE self.soundeffects + "," TO SETTINGS FILE
-			1.1.9.9			CLOSE SETTINGS FILE
-			1.1.9.10	END PROCEDURE
 
 	1.2	Image Class
 		1.2.1	CLASS Image:
@@ -199,6 +164,7 @@
 			1.4.14.6		END IF
 			1.4.14.7	END PROCEDURE
 
+	<NEW ADDED RECTANGLES FOR COLLISION DETECTION>
 	1.5	Player Class
 		1.5.1	CLASS Player:
 		1.5.2		CONSTRUCTOR(xpos AS INTEGER)
@@ -207,52 +173,59 @@
 		1.5.5		DECLARE lives AS INTEGER INTIALLY = 3
 		1.5.6		DECLARE image AS NEW Image('resources/sprite_Images/ship/ship.png', xpos, 633)
 		1.5.7		self.image.resize_Image(2)
-		1.5.8
-		1.5.9		METHODS:
-		1.5.10	kill_player()
-		1.5.11	move()
-		1.5.12	display_player()
+		<ADDED>
+		1.5.8		DECLARE rect AS RECTANGLE INTIALLY RECTANGLE OF self.image
+		1.5.9
+		1.5.10		METHODS:
+		1.5.11	kill_player()
+		1.5.12	move()
+		1.5.13	display_player()
 
-		1.5.10 kill_player()
-			1.5.10.1 	PROCEDURE kill_player(drawmethod AS METHOD)
-			1.5.10.2		SET self.lives TO self.lives - 1
-			1.5.10.3		DECLARE count AS INTEGER INTIALLY = 0
-			1.5.10.4		FOR count FROM 0 TO 5
-			1.5.10.5			SET self.image TO NEW Image('resources/sprite_Images/ship/ship_explode_one.png', self.position[0], self.position[1] - 4)
-			1.5.10.6			CALL self.display_player()
-			1.5.10.7			CALL drawmethod()
-			1.5.10.8			WAIT 0.05 SECONDS
-			1.5.10.9			SET self.image TO NEW Image('resources/sprite_Images/ship/ship_explode_two.png', self.position[0], self.position[1] - 4)
-			1.5.10.10			CALL self.display_player()
-			1.5.10.11			CALL drawmethod()
-			1.5.10.12			WAIT 0.05 SECONDS
-			1.5.10.13		END FOR
-			1.5.10.14		WAIT 0.3 SECONDS
-			1.5.10.15		SET self.position TO (480,633)
-			1.5.10.16		SET self.image TO Image('resources/sprite_Images/ship/ship.png', self.position[0], self.position[1])
-	    1.5.10.17   CALL self.image.resize_Image(2)
-	    1.5.10.18		CALL self.display_player()
-	    1.5.10.19		CALL drawmethod()
-			1.5.10.20		WAIT 0.5 SECONDS
-			1.5.10.21	END PROCEDURE
+		1.5.11 kill_player()
+			1.5.11.1 	PROCEDURE kill_player(drawmethod AS METHOD)
+			1.5.11.2		SET self.lives TO self.lives - 1
+			1.5.11.3		DECLARE count AS INTEGER INTIALLY = 0
+			1.5.11.4		FOR count FROM 0 TO 5
+			1.5.11.5			SET self.image TO NEW Image('resources/sprite_Images/ship/ship_explode_one.png', self.position[0], self.position[1] - 4)
+			1.5.11.6			CALL self.display_player()
+			1.5.11.7			CALL drawmethod()
+			1.5.11.8			WAIT 0.05 SECONDS
+			1.5.11.9			SET self.image TO NEW Image('resources/sprite_Images/ship/ship_explode_two.png', self.position[0], self.position[1] - 4)
+			1.5.11.10			CALL self.display_player()
+			1.5.11.11			CALL drawmethod()
+			1.5.11.12			WAIT 0.05 SECONDS
+			1.5.11.13		END FOR
+			1.5.11.14		WAIT 0.3 SECONDS
+			1.5.11.15		SET self.position TO (480,633)
+			1.5.11.16		SET self.image TO Image('resources/sprite_Images/ship/ship.png', self.position[0], self.position[1])
+	    1.5.11.17   CALL self.image.resize_Image(2)
+			<ADDED>
+			1.5.11.18		SET self.rect TO RECATNGLE OF self.image
+	    1.5.11.19		CALL self.display_player()
+	    1.5.11.10		CALL drawmethod()
+			1.5.11.21		WAIT 0.5 SECONDS
+			1.5.11.22	END PROCEDURE
 
-		1.5.11 move()
-			1.5.11.1	PROCEDURE move(xdist AS INTEGER)
-			1.5.11.2		IF NOT self.dead THEN
-			1.5.11.3			SET self.position[0] TO self.position[0] + xdist
-			1.5.11.4			SET self.image TO NEW Image('resources/sprite_Images/ship/ship.png', self.position[0], self.position[1])
-    	1.5.11.5			CALL self.image.resize_Image(2)
-			1.5.11.6		END IF
-			1.5.11.7	END PROCEDURE
+		1.5.12 move()
+			1.5.12.1	PROCEDURE move(xdist AS INTEGER)
+			1.5.12.2		IF NOT self.dead THEN
+			1.5.12.3			SET self.position[0] TO self.position[0] + xdist
+			1.5.12.4			SET self.image TO NEW Image('resources/sprite_Images/ship/ship.png', self.position[0], self.position[1])
+    	1.5.12.5			CALL self.image.resize_Image(2)
+			<ADDED>
+			1.5.12.6			SET self.rect TO RECATNGLE OF self.image
+			1.5.12.7		END IF
+			1.5.12.8	END PROCEDURE
 
-		1.5.12 display_player()
-			1.5.12.1	PROCEDURE display_player()
-			1.5.12.2		CALL self.image.display_Image()
-			1.5.12.3		IF self.lives == 0 THEN
-			1.5.12.4			SET self.dead TO True
-			1.5.12.4		END IF
-			1.5.12.5	END PROCEDURE
+		1.5.13 display_player()
+			1.5.13.1	PROCEDURE display_player()
+			1.5.13.2		CALL self.image.display_Image()
+			1.5.13.3		IF self.lives == 0 THEN
+			1.5.13.4			SET self.dead TO True
+			1.5.13.4		END IF
+			1.5.13.5	END PROCEDURE
 
+	<NEW ADDED RECTANGLES FOR COLLISION DETECTION>
 	1.6	Alien Class
 		1.6.1	CLASS Alien:
 		1.6.2		CONSTRUCTOR(openpath AS STRING, closepath AS STRING, xpos AS INTEGER, ypos AS INTEGER)
@@ -264,57 +237,55 @@
 		1.6.8		DECLARE image AS NEW Image(self.open_image, xpos, ypos)
 		1.6.9		CALL self.image.resize_Image(2)
     1.6.10	DECLARE points AS INTEGER INITIALLY = 0
-		1.6.11	DECLARE rect AS RECTANGLE INITIALLY = self.image.image.get_rect()
-		1.6.12	SET self.rect.center TO self.position
-		1.6.13
-		1.6.12	METHODS:
-		1.6.13	kill_alien()
-		1.6.14	switch_image()
-		1.6.15	move()
-		1.6.16	display_alien()
+		<ADDED>
+		1.6.11	DECLARE rect AS RECTANGLE INITIALLY RECTANGLE OF self.image
+		1.6.12
+		1.6.13	METHODS:
+		1.6.14	kill_alien()
+		1.6.15	switch_image()
+		1.6.16	move()
+		1.6.17	display_alien()
 
-		1.6.13 kill_alien()
-			1.6.13.1	PROCEDURE kill_alien()
-			1.6.13.2		SET self.dead TO True
-			1.6.13.3		CALL self.switch_image()
-			1.6.13.4		RETURN self.points
-			1.6.13.5	END PROCEDURE
+		1.6.14 kill_alien()
+			1.6.14.1	PROCEDURE kill_alien()
+			1.6.14.2		SET self.dead TO True
+			1.6.14.3		CALL self.switch_image()
+			1.6.14.4		RETURN self.points
+			1.6.14.5	END PROCEDURE
 
-		1.6.14	switch_image()
-			1.6.14.1	PROCEDURE switch_image()
-			1.6.14.2		IF self.dead THEN
-			1.6.14.3			SET self.image TO Image('resources/sprite_Images/aliens/alien_Blast.png', self.position[0], self.position[1])
-      1.6.14.4			CALL self.image.resize_Image(2)
-			1.6.14.5		ELSE IF self.which_image THEN
-			1.6.14.6			SET self.image TO Image(self.close_image, self.position[0], self.position[1])
-     	1.6.14.7			CALL self.image.resize_Image(2)
-      1.6.14.8			SET self.rect TO self.image.image.get_rect()
-      1.6.14.9			SET self.rect.center TO self.position
-      1.6.14.10			SET self.which_image TO False
-			1.6.14.11		ELSE
-			1.6.14.12			SET self.image TO Image(self.open_image, self.position[0], self.position[1])
-     	1.6.14.13			CALL self.image.resize_Image(2)
-      1.6.14.14			SET self.rect TO self.image.image.get_rect()
-      1.6.14.15			SET self.rect.center TO self.position
-      1.6.14.16			SET self.which_image TO False
-			1.6.14.17		END IF
-			1.6.14.18	END PROCEDURE
+		1.6.15	switch_image()
+			1.6.15.1	PROCEDURE switch_image()
+			1.6.15.2		IF self.dead THEN
+			1.6.15.3			SET self.image TO Image('resources/sprite_Images/aliens/alien_Blast.png', self.position[0], self.position[1])
+      1.6.15.4			CALL self.image.resize_Image(2)
+			1.6.15.5		ELSE IF self.which_image THEN
+			1.6.15.6			SET self.image TO Image(self.close_image, self.position[0], self.position[1])
+     	1.6.15.7			CALL self.image.resize_Image(2)
+      1.6.15.8			SET self.which_image TO False
+			1.6.15.9		ELSE
+			1.6.15.10			SET self.image TO Image(self.open_image, self.position[0], self.position[1])
+     	1.6.15.11			CALL self.image.resize_Image(2)
+      1.6.15.12			SET self.which_image TO False
+			1.6.15.13		END IF
+			<ADDED>
+			1.6.15.14		SET self.rect TO RECATNGLE OF self.image
+			1.6.15.15	END PROCEDURE
 
-		1.6.15	move()
-			1.6.15.1 	PROCEDURE move(xdist AS INTEGER, ydist AS INTEGER)
-			1.6.15.2		IF NOT self.dead THEN
-			1.6.15.3			SET self.position[0] TO self.position[0] xdist
-      1.6.15.4			SET self.position[1] TO self.position[1] ydist
-      1.6.15.5			CALL self.switch_image()
-			1.6.15.6		ELSE
-			1.6.15.7			CALL self.kill #this is an inbuilt pygame function
-			1.6.15.8		END IF
-			1.6.15.9	END PROCEDURE
+		1.6.16	move()
+			1.6.16.1 	PROCEDURE move(xdist AS INTEGER, ydist AS INTEGER)
+			1.6.16.2		IF NOT self.dead THEN
+			1.6.16.3			SET self.position[0] TO self.position[0] xdist
+      1.6.16.4			SET self.position[1] TO self.position[1] ydist
+      1.6.16.5			CALL self.switch_image()
+			1.6.16.6		ELSE
+			1.6.16.7			CALL self.kill #this is an inbuilt pygame function
+			1.6.16.8		END IF
+			1.6.16.9	END PROCEDURE
 
-		1.6.16	display_alien()
-			1.6.16.1	PROCEDURE display_alien()
+		1.6.17	display_alien()
+			1.6.17.1	PROCEDURE display_alien()
 			1.6.17.2		CALL self.image.display_Image()
-			1.6.18.3	END PROCEDURE
+			1.6.17.3	END PROCEDURE
 
 	1.7	Alien_10pts Class
 			1.7.1 CLASS Alien_10pts IS SUBCLASS OF Alien:
@@ -334,53 +305,54 @@
 			1.9.3		Alien('resources/sprite_Images/aliens/30pts_Open.png', 'resources/sprite_Images/aliens/30pts_Closed.png', xpos, ypos)
 			1.9.4		SET self.points TO 30
 
-	1.10	Shot Class
-		1.10.1 CLASS shot:
+	<NEW ADDED RECTANGLES FOR COLLISION DETECTION>
+	1.10	Player_Shot Class
+		1.10.1 CLASS Player_Shot:
 		1.10.2		CONSTRUCTOR(xpos AS INTEGER)
 		1.10.3		DECLARE position AS ARRAY OF INTEGER INITIALLY = (xpos, 633)
 		1.10.4		DECLARE image AS NEW Image('resources/sprite_Images/shot/player_Shot_Green.png', self.position[0], self.position[1])
 		1.10.5		CALL self.image.resize_Image(2)
 		1.10.6		DECLARE moving AS BOOLEAN INITIALLY = TRUE
-		1.10.7		DECLARE rect AS RECTANGLE INITIALLY = self.image.image.get_rect()
-		1.10.8		SET self.rect.center TO self.position
-		1.10.9
-		1.10.10		METHODS:
-		1.10.11		blow()
-		1.10.12		move()
-		1.10.13		blowup()
-		1.10.14		display_shot()
+		<ADDED>
+		1.10.7		DECLARE rect AS RECTANGLE INITIALLY RECATNGLE OF self.image
+		1.10.8
+		1.10.9		METHODS:
+		1.10.10		blow()
+		1.10.11		move()
+		1.10.12		blowup()
+		1.10.13		display_shot()
 
-		1.10.11		blow()
-			1.10.11.1	PROCEDURE blow()
-			1.10.11.2		SET self.moving TO FALSE
-			1.10.11.3		CALL self.kill() #this is an inbuilt pygame function
-			1.10.11.4	END PROCEDURE
+		1.10.10		blow()
+			1.10.10.1	PROCEDURE blow()
+			1.10.10.2		SET self.moving TO FALSE
+			1.10.10.3		CALL self.kill() #this is an inbuilt pygame function
+			1.10.10.4	END PROCEDURE
 
-		1.10.12		move()
-			1.10.12.1		PROCEDURE move()
-			1.10.12.2			IF self.moving THEN
-			1.10.12.3				SET self.position[1] TO self.position[1] - 10
-			1.10.12.4				IF self.position[1] > 525 THEN
-			1.10.12.5					SET self.image TO NEW Image('resources/sprite_Images/shot/player_Shot_Green.png', self.position[0], self.position[1])
-			1.10.12.6				ELSE
-			1.10.12.7					SET self.image TO NEW Image('resources/sprite_Images/shot/player_Shot.png', self.position[0], self.position[1])
-			1.10.12.8				END IF
-			1.10.12.9				CALL self.image.resize_Image(2)
-      1.10.12.10			SET self.rect TO self.image.image.get_rect()
-      1.10.12.11			SET self.rect.center TO self.position
-			1.10.12.12		END IF
-			1.10.12.13	END PROCEDURE
+		1.10.11		move()
+			1.10.11.1		PROCEDURE move()
+			1.10.11.2			IF self.moving THEN
+			1.10.11.3				SET self.position[1] TO self.position[1] - 10
+			1.10.11.4				IF self.position[1] > 525 THEN
+			1.10.11.5					SET self.image TO NEW Image('resources/sprite_Images/shot/player_Shot_Green.png', self.position[0], self.position[1])
+			1.10.11.6				ELSE
+			1.10.11.7					SET self.image TO NEW Image('resources/sprite_Images/shot/player_Shot.png', self.position[0], self.position[1])
+			1.10.11.8				END IF
+			1.10.11.9				CALL self.image.resize_Image(2)
+			<ADDED>
+      1.10.11.10			SET self.rect TO self.image.image.get_rect()
+			1.10.11.11		END IF
+			1.10.11.12	END PROCEDURE
 
-		1.10.13		blowup()
-			1.10.13.1	PROCEDURE blowup()
-			1.10.13.2		SET self.image TO NEW Image('resources/sprite_Images/shot/player_Shot_Black_Mask.png', self.position[0], self.position[1])
-	    1.10.13.3		SET self.moving TO False
-			1.10.13.4	END PROCEDURE
+		1.10.12		blowup()
+			1.10.12.1	PROCEDURE blowup()
+			1.10.12.2		SET self.image TO NEW Image('resources/sprite_Images/shot/player_Shot_Black_Mask.png', self.position[0], self.position[1])
+	    1.10.12.3		SET self.moving TO False
+			1.10.12.4	END PROCEDURE
 
-		1.10.14		display_shot()
-			1.10.14.1	PROCEDURE display_shot()
-			1.10.15.2		CALL self.image.display_Image()
-			1.10.15.3	END PROCEDURE
+		1.10.13		display_shot()
+			1.10.13.1	PROCEDURE display_shot()
+			1.10.13.2		CALL self.image.display_Image()
+			1.10.13.3	END PROCEDURE
 
 	1.11 Alien_Shot Class
 		1.11.1	CLASS Alien_Shot:
@@ -392,6 +364,156 @@
 		1.11.7		DEFINE right_image AS STRING INITIALLY = right
 		1.11.8		DEFINE colour_changed AS BOOLEAN INITIALLY = FALSE
 		1.11.9		DEFINE mask AS STRING INITIALLY = mask
+		1.11.10		DEFINE movement_speed AS INTEGER INITIALLY = speed
+		1.11.11		DEFINE rect AS RECTANGLE INITIALLY RECTANGLE OF self.image
+		1.11.12
+		1.11.13		METHODS:
+		1.11.14		move()
+		1.11.15		change_colour()
+		1.11.16		blow_up()
+		1.11.17		display_shot()
+
+		1.11.14		move()
+			1.11.14.1		PROCEDURE move():
+			1.11.14.2			IF self.moving THEN
+			1.11.14.3				SET self.position[1] TO self.position[1] + self.movement_speed
+			1.11.14.4				SET self.distance_moved TO self.distance_moved + self.movement_speed
+			1.11.14.5				IF self.distance MOD 2 == 1 THEN
+			1.11.14.6					SET self.image TO Image(self.right_image, self.position[0], self.position[1])
+			1.11.14.7				ELSE
+			1.11.14.8					SET self.image TO Image(self.left_image, self.position[0], self.position[1])
+			1.11.14.9				END IF
+			1.11.14.10			SET rect TO RECTANGLE OF self.image
+			1.11.14.11		END IF
+			1.11.14.12	END PROCEDURE
+
+		1.11.15		change_colour()
+			1.11.15.1	PROCEDURE change_colour():
+			1.11.15.2		SET self.colour_changed TO TRUE
+			1.11.15.3		ADD '_Green' TO self.right_image BEFORE '.png'
+			1.11.15.4		ADD '_Green' TO self.left_image BEFORE '.png'
+			1.11.15.5	END PROCEDURE
+
+		1.11.16		blow_up()
+			1.11.16.1	PROCEDURE blow_up():
+			1.11.16.2		SET self.image TO Image(self.mask, self.position[0], self.position[1])
+			1.11.16.3		SET self.moving TO FALSE
+			1.11.16.4	END PROCEDURE
+
+		1.11.17		display_shot()
+			1.11.17.1	PROCEDURE display_shot():
+			1.11.17.2		CALL self.image.display_Image()
+			1.11.17.3	END PROCEDURE
+
+	1.12	Bolt Class
+		1.12.1	CLASS Bolt IS SUBCLASS OF Alien_Shot:
+		1.12.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER)
+		1.12.3		Alien_Shot(xpos, ypos, 'resources/sprite_Images/bolt/bolt_Left.png', 'resources/sprite_Images/bolt/bolt_Right.png', 'resources/sprite_Images/bolt/bolt_Mask.png', 7)
+
+	1.13	Arrow Class
+		1.13.1	CLASS Arrow IS SUBCLASS OF Alien_Shot:
+		1.13.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER)
+		1.13.3		Alien_Shot(xpos, ypos, 'resources/sprite_Images/arrow/arrow.png', 'resources/sprite_Images/arrow/arrow_Second.png', 'resources/sprite_Images/arrow/arrow_Black_Mask.png', 5)
+
+	1.14 Highscore Class
+		1.14.1	CLASS Highscore:
+		1.14.2		CONSTRUCTOR(name AS STRING, value AS INTEGER)
+		1.14.3		DECLARE name AS STRING INTIALLY = name
+		1.14.4		DECLARE value AS INTEGER INITIALLY = value
+
+	1.15	ScoreBoard Class
+		1.15.1	CLASS ScoreBoard:
+		1.15.2		CONSTRUCTOR()
+		1.15.3		DECLARE scores AS ARRAY OF Highscore INITIALLY = []
+		1.15.4		DECLARE current_score AS INTEGER INITIALLY = 0
+		1.15.5
+		1.15.6		METHODS:
+		1.15.7		check_score()
+		1.15.8		get_highscores()
+		1.15.9		bubble_sort_scores()
+		1.15.10		write_file()
+
+		1.15.7		check_score()
+			1.15.7.1	PROCEDURE check_score():
+			1.15.7.2		IF THERE ARE LESS THAN TEN ITEMS IN self.scores THEN
+			1.15.7.3			RETURN TRUE
+			1.15.7.4		ELSE
+			1.15.7.5			FOR EVERY Highscore IN self.scores
+			1.15.7.6				IF Highscore.value < self.current_score THEN
+			1.15.7.7					RETURN TRUE
+			1.15.7.8				END IF
+			1.15.7.9			END FOR
+			1.15.7.10		END IF
+			1.15.7.11	END PROCEDURE
+
+		1.15.8		get_highscores()
+			1.15.8.1	PROCEDURE get_highscores()
+			1.15.8.2		EMPTY THE self.scores ARRAY
+			1.15.8.3		IF HIGHSCORE FILE DOES NOT EXISTS THEN
+			1.15.8.4			CALL self.write_file(FALSE, FALSE)
+			1.15.8.5		ELSE:
+			1.15.8.6			OPEN HIGHSCORE FILE
+			1.15.8.7			DECLARE highscores AS ARRAY OF STRING
+			1.15.8.8			FILL settings WITH CONTENTS OF HIGHSCORE FILE DELIMTED ON COMMA
+			1.15.8.9			CLOSE HIGHSCORE FILE
+			1.15.8.10			DECLARE count AS INTEGER INITIALLY = 0
+			1.15.8.11			IF THE highscores ARRAY IS NOT EMPTY THEN
+			1.15.8.12				WHILE count < (THE LENGTH OF THE highscores ARRAY) - 1:
+			1.15.8.13					DECLARE new AS Highscore(STRING(highscores[count]), INTEGER(highscores[count + 1]))
+			1.15.8.14					APPEND new TO self.scores
+			1.15.8.15					SET count TO count + 2
+			1.15.8.16				END WHILE
+			1.15.8.17			END IF
+			1.15.8.18		END IF
+			1.15.8.19	END PROCEDURE
+
+		1.15.9		bubble_sort_scores()
+			1.15.9.1	PROCEDURE bubble_sort_scores():
+			1.15.9.2		IF self.scores MORE THAN ONE ELEMENT THEN
+			1.15.9.3			DECLARE outer AS INTEGER INTIALLY = 0
+			1.15.9.4			FOR outer FROM 0 TO (THE LENGTH OF self.scores) - 1
+			1.15.9.5				DECLARE inner AS INTEGER INITIALLY = 0
+			1.15.9.6				FOR inner FROM 0 TO (THE LENGTH OF self.scores) - outer - 1
+			1.15.9.7					IF self.scores[inner].value < self.scores[inner + 1].value THEN
+			1.15.9.8						SWAP self.scores[inner] AND self.scores[inner + 1]
+			1.15.9.9					END IF
+			1.15.9.10				END FOR
+			1.15.9.11			END FOR
+			1.15.9.12		END IF
+			1.15.9.13	END PROCEDURE
+
+			1.15.9.8	SWAP self.scores[inner] AND self.scores[inner + 1]
+				1.15.9.8.1	DECLARE temp AS Highscore INITIALLY = self.scores[inner]
+				1.15.9.8.2	SET self.scores[inner] TO self.scores[inner + 1]
+				1.15.9.8.3	SET self.scores[inner + 1] TO temp
+
+
+		1.15.10		write_file()
+			1.15.10.1		PROCEDURE write_file(remove AS BOOLEAN, fill AS BOOLEAN):
+			1.15.10.2			IF remove THEN
+			1.15.10.3				DELETE HIGHSCORE FILE
+			1.15.10.4			END IF
+			1.15.10.5			CREATE AND OPEN HIGHSCORE FILE
+			1.15.10.6			IF fill THEN
+			1.15.10.7				DECLARE count AS INTEGER INITIALLY = 0
+			1.15.10.8				IF self.scores IS NOT EMPTY THEN
+			1.15.10.9					FOR EVERY score IN self.score
+			1.15.10.10					WRITE score.name + "," TO HIGHSCORE FILE
+			1.15.10.11					IF count == len(self.scores) - 1 THEN
+			1.15.10.12						WRITE STRING(score.value) TO HIGHSCORE FILE
+			1.15.10.13					ELSE
+			1.15.10.14						WRITE STRING(score.value) + "," TO HIGHSCORE FILE
+			1.15.10.15					END IF
+			1.15.10.16					SET count TO count + 1
+			1.15.10.17				END FOR
+			1.15.10.18			END IF
+			1.15.10.19		END IF
+			1.15.10.10		CLOSE SETTINGS FILE
+			1.15.10.11	END PROCEDURE
+
+
+
+
 
 
 
@@ -468,20 +590,21 @@
 		2.2.7		DECLARE musictype_button AS NEW Button("", 600, 285, 160)
 		2.2.8		DECLARE effects_Text AS NEW Text("Sound Effects:", 32, 296, 375)
 		2.2.9		DECLARE effects_button AS NEW Button("", 564, 375, 160)
-		<graphics text and button removed in new version>
+		<REMOVED>
 		2.2.10	DECLARE graphics_Text AS NEW Text("Graphics:", 32, 236, 465)
+		<REMOVED>
 		2.2.11	DECLARE graphics_button AS NEW Button("", 444, 465, 160)
 		2.2.12	DECLARE settingsvar AS NEW Settings()
 		2.2.13	#METHODS
 		2.2.14	DEFINE musicstate_text()
 		2.2.15	DEFINE musictype_text()
 		2.2.16	DEFINE effects_text()
-		<graphics_text method removed in new version>
+		<REMOVED>
 		2.2.17	DEFINE graphics_text()
 		2.2.18	DEFINE switch_music()
 		2.2.19	DEFINE change_music()
 		2.2.20	DEFINE switch_effects()
-		<switch_graphics method removed in new version>
+		<REMOVED>
 		2.2.21	DEFINE switch_graphics()
 		2.2.22	DEFINE draw_page()
 		2.2.23	DEFINE exit_page()
@@ -514,7 +637,7 @@
 			2.2.16.6		END IF
 			2.2.16.7	END PROCEDURE
 
-		<removed>
+		<REMOVED>
 		2.2.17	DEFINE graphics_text()
 			2.2.17.1	PROCEDURE musicstate_text()
 			2.2.17.2		IF settingsvar.musicstate THEN
@@ -542,7 +665,7 @@
 			2.2.20.3		CALL effects_text()
 			2.2.20.4	END PROCEDURE
 
-		<removed>
+		<REMOVED>
 		2.2.21	DEFINE switch_graphics()
 			2.2.21.1	PROCEDURE switch_graphics()
 			2.2.21.2		SET settingsvar.graphics TO NOT settingsvar.graphics
@@ -560,8 +683,9 @@
 			2.2.22.8		CALL musictype_button.display_Button()
 			2.2.22.9		CALL effects_Text.display_text()
 			2.2.22.10		CALL effects_button.display_Button()
-			<2.2.22.11 and 2.2.22.12 removed>
+			<REMOVED>
 			2.2.22.11		CALL graphics_Text.display_text()
+			<REMOVED>
 			2.2.22.12		CALL graphics_button.display_Button()
 			2.2.22.13		UPDATE SCREEN
 			2.2.22.14	END PROCEDURE
@@ -578,7 +702,7 @@
 			2.2.24.3		CALL musicstate_text()
 			2.2.24.4		CALL musictype_text()
 			2.2.24.5		CALL effects_text()
-			<2.3.24.6 removed>
+			<REMOVED>
 			2.3.24.6		CALL graphics_text()
 			2.3.24.7		CALL draw_page()
 			2.3.24.8		WHILE TRUE DO:
@@ -586,7 +710,7 @@
 	    2.3.24.10			CALL music_button.hover_Check(draw_page, switch_music)
 	    2.3.24.11			CALL musictype_button.hover_Check(draw_page, change_music)
 		  2.3.24.12			CALL effects_button.hover_Check(draw_page, switch_effects)
-			<2.3.24.12 removed>
+			<REMOVED>
 	   	2.3.24.13			CALL graphics_button.hover_Check(draw_page, switch_graphics)
 			2.3.24.14			IF EXIT = TRUE THEN
 			2.3.24.15				EXIT PROGRAM
