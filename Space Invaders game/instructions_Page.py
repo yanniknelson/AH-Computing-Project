@@ -21,7 +21,7 @@ C_text_two = Text("or the left and right arrow keys. to shoot press spacebar.", 
 WW_SubTitle = Text("WHAT'S WHAT:", 32, 180, 306)
 WW_text_one = Text("The creatures at the top of the screen are ALIENS, there is also", 16, 420, 346)
 WW_text_two = Text("a MOTHERSHIP that occasionally travels across the top of the screen.", 16, 444, 366)
-WW_text_three = Text("The green arches are your BUNKERS. YOU are the WHITE PUCK that", 16, 408, 386)
+WW_text_three = Text("The green arches are your BUNKERS. YOU are the GREEN PUCK that", 16, 408, 386)
 WW_text_four = Text("moves side to side near the bottom of the screen.", 16, 330, 406)
 
 WD_SubTitle = Text("WHAT TO DO:", 32, 168, 466)

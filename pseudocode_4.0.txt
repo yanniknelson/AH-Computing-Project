@@ -1,4 +1,4 @@
-1	Class Library
+﻿1	Class Library
 	1.1		Settings Class
 	1.2		Image Class
 	1.3		Text Class
@@ -20,52 +20,66 @@
 	2.2	Setttings_Page
 	2.3	Instructions_Page
 	2.4	Game_Page
-	2.5	HSIn_Page
-	2.6	HSDis_page
+	2.5	Highscore_Input_Page
+	2.6	highscore_display_Page
+3 Run Game File
 
-	<OLD THE GRAPHICS DID NOT WORK CORRECTLY>
+
+
+
+	<THE GRAPHICS DID NOT WORK CORRECTLY>
 	1.1	Settings Class
 		1.1.1 CLASS Settings:
 		1.1.2		CONSTRUCTOR():
 		1.1.3		DECLARE musicstate AS BOOLEAN INITIALLY = TRUE
 		1.1.4		DECLARE musictype AS INTEGER INTIALLY = 1
 		1.1.5		DECLARE soundeffects AS BOOLEAN INITIALLY = TRUE
+
 		<REMOVED>
-		1.1.6		DECLARE graphics AS BOOLEAN INITIALLY = FALSE
-		1.1.7
-		1.1.8		METHODS:
-		1.1.9		get_settings()
-		1.1.10	write_file()
+		DECLARE graphics AS BOOLEAN INITIALLY = FALSE
 
-		1.1.9		get_settings()
-			1.1.9.1	PROCEDURE get_settings()
-			1.1.9.2		IF SETTINGS FILE DOES NOT EXISTS THEN
-			1.1.9.3			CALL self.write_file(FALSE)
-			1.1.9.4		ELSE:
-			1.1.9.5			OPEN SETTINGS FILE
-			1.1.9.6			DECLARE settings AS ARRAY OF STRING
-			1.1.9.7			FILL settings WITH CONTENTS OF SETTINGS FILE DELIMTED ON COMMA
-			1.1.9.8			CLOSE SETTINGS FILE
-			1.1.9.8			SET self.musicstate TO BOOLEAN(settings(0))
-			1.1.9.9			SET self.musictype TO INTEGER(settings(1))
-			1.1.9.10		SET self.soundeffects TO BOOLEAN(settings(2))
-			<REMOVED>
-			1.1.9.11		SET self.graphics TO BOOLEAN(settings(3))
-			1.1.9.12	END IF
+		1.1.6
+		1.1.7		METHODS:
+		1.1.8		get_settings()
+		1.1.9		write_file()
 
-		1.1.10	write_file()
-			1.1.10.1	PROCEDURE write_file(remove AS BOOLEAN)
-			1.1.10.2		IF remove THEN
-			1.1.10.3			DELETE SETTINGS FILE
-			1.1.10.4		END IF
-			1.1.10.5		CREATE AND OPEN SETTINGS FILE
-			1.1.10.6		WRITE self.musicstate + "," TO SETTINGS FILE
-			1.1.10.7		WRITE self.musictype + "," TO SETTINGS FILE
-			1.1.10.8		WRITE self.soundeffects TO SETTINGS FILE
+		1.1.8		get_settings()
+			1.1.8.1		PROCEDURE get_settings()
+			1.1.8.2			IF SETTINGS FILE DOES NOT EXISTS THEN
+			1.1.8.3				CALL self.write_file(FALSE)
+			1.1.8.4			ELSE:
+			1.1.8.5				OPEN SETTINGS FILE
+			1.1.8.6				DECLARE settings AS ARRAY OF STRING
+			1.1.8.7				FILL settings WITH CONTENTS OF SETTINGS FILE DELIMTED ON COMMA
+			1.1.8.8				CLOSE SETTINGS FILE
+			1.1.8.9				SET self.musicstate TO BOOLEAN(settings(0))
+			1.1.8.10			SET self.musictype TO INTEGER(settings(1))
+			1.1.8.11			SET self.soundeffects TO BOOLEAN(settings(2))
+
 			<REMOVED>
-			1.1.10.9		WRITE self.graphics TO SETTINGS FILE
-			1.1.10.10		CLOSE SETTINGS FILE
-			1.1.10.11	END PROCEDURE
+			SET self.graphics TO BOOLEAN(settings(3))
+
+			1.1.8.12		END IF
+			1.1.8.13	END PROCEDURE
+
+		1.1.9	write_file()
+			1.1.9.1	PROCEDURE write_file(remove AS BOOLEAN)
+			1.1.9.2		IF remove THEN
+			1.1.9.3			DELETE SETTINGS FILE
+			1.1.9.4		END IF
+			1.1.9.5		CREATE AND OPEN SETTINGS FILE
+			1.1.9.6		WRITE self.musicstate + "," TO SETTINGS FILE
+			1.1.9.7		WRITE self.musictype + "," TO SETTINGS FILE
+			1.1.9.8		WRITE self.soundeffects TO SETTINGS FILE
+
+			<REMOVED>
+			WRITE self.graphics TO SETTINGS FILE
+
+			1.1.9.9		CLOSE SETTINGS FILE
+			1.1.9.10	END PROCEDURE
+
+
+
 
 	1.2	Image Class
 		1.2.1	CLASS Image:
@@ -81,7 +95,7 @@
 		1.2.11	resize_Image()
 
 		1.2.10		display_Image()
-			1.2.10.1	PROCEDURE display_Image():
+			1.2.10.1	PROCEDURE display_Image()
 			1.2.10.2		COPY self.image ONTO self.surface AT self.position
 			1.2.10.3	END PROCEDURE
 
@@ -90,6 +104,9 @@
 			1.2.11.2		SET self.image TO self.image SCALED BY scale
 			1.2.11.3		SET self.position TO (self.givenpos(0) - (self.image.width / 2), self.givenpos(1) - (self.image.height / 2)
 			1.2.11.4	END PROCEDURE
+
+
+
 
 	1.3	Text Class
 		1.3.1	CLASS Text:
@@ -106,7 +123,7 @@
 		1.3.12	change_text()
 
 		1.3.11		display_Text()
-			1.3.11.1	PROCEDURE display_Text():
+			1.3.11.1	PROCEDURE display_Text()
 			1.3.11.2		COPY self.text ONTO self.surface AT self.position
 			1.3.11.3	END PROCEDURE
 
@@ -116,6 +133,10 @@
 			1.3.12.3		SET position TO (self.givenpos(0) - (self.text.width / 2), self.givenpos(1) - (self.text.height / 2))
 			1.3.12.3		CALL drawmethod()
 			1.3.12.4	END PROCEDURE
+
+
+
+
 
 	1.4 Button Class:
 		1.4.1	CLASS Button:
@@ -134,15 +155,15 @@
 		1.4.14	click_Check()
 
 		1.4.12	hover_Check(drawmethod AS METHOD, clickmethod AS METHOD)
-			1.4.12.1	PROCEDURE hover_Check():
-			1.4.12.2		IF (MOUSEPOSITION IS IN self.face) THEN
+			1.4.12.1	PROCEDURE hover_Check()
+			1.4.12.2		IF (MOUSE IS IN self.face) THEN
 			1.4.12.3			IF NOT self.large THEN
 			1.4.12.4				SET self.large TO TRUE
 			1.4.12.5				SET self.face TO self.face INFLATED BY (20,16)
 			1.4.12.6				CALL drawmethod()
 			1.4.12.7			ELSE
 			1.4.12.8				RETURN CALL self.click_Check(clickmethod)
-			1.4.12.9		ELSE IF NOT (MOUSEPOSITION IS IN self.face) AND self.large THEN
+			1.4.12.9		ELSE IF NOT (MOUSE IS IN self.face) AND self.large THEN
 			1.4.12.10			SET large TO FALSE
 			1.4.12.11			SET self.face TO self.face INFLATED BY (-20, -16)
 			1.4.12.12			CALL drawmethod()
@@ -150,19 +171,23 @@
 			1.4.12.14	END PROCEDURE
 
 		1.4.13	display_Button()
-			1.4.13.1	PROCEDURE display_Button():
+			1.4.13.1	PROCEDURE display_Button()
 			1.4.13.2		DRAW WHITE self.face ON self.surface
 			1.4.13.3		CALL self.text.display_Text()
 			1.4.13.4	END PROCEDURE
 
 		1.4.14	click_Check(clickmethod AS METHOD)
-			1.4.14.1	PROCEDURE click_Check(method):
+			1.4.14.1	PROCEDURE click_Check(method)
 			1.4.14.2		IF MOUSE BUTTON ONE CLICKED THEN
 			1.4.14.3			CALL clickmethod()
 			1.4.14.4			WAIT 0.1 SECONDS
 			1.4.14.5			RETURN TRUE
 			1.4.14.6		END IF
 			1.4.14.7	END PROCEDURE
+
+
+
+
 
 	<NEW ADDED RECTANGLES FOR COLLISION DETECTION>
 	1.5	Player Class
@@ -171,10 +196,25 @@
 		1.5.3		DECLARE position AS ARRAY OF INTEGER INTIALLY = (xpos, 633)
 		1.5.4		DECLARE dead AS BOOLEAN INITIALLY = FLASE
 		1.5.5		DECLARE lives AS INTEGER INTIALLY = 3
+
+		<REMOVED>
+		DECLARE settings AS Settings()
+		CALL settings.get_settings()
+		IF settings.graphics THEN
+			DECLARE source AS STRING INTIALLY = "resources/modern_sprite_Images"
+		ELSE
+			DECLARE source AS STRING INTIALLY = "resources/sprite_Images"
+		END IF
+
+		<REPLACED>
+		DECLARE image AS NEW Image(self.source + '/ship/ship.png', xpos, 633)
+
 		1.5.6		DECLARE image AS NEW Image('resources/sprite_Images/ship/ship.png', xpos, 633)
 		1.5.7		self.image.resize_Image(2)
+
 		<ADDED>
 		1.5.8		DECLARE rect AS RECTANGLE INTIALLY RECTANGLE OF self.image
+
 		1.5.9
 		1.5.10		METHODS:
 		1.5.11	kill_player()
@@ -186,10 +226,20 @@
 			1.5.11.2		SET self.lives TO self.lives - 1
 			1.5.11.3		DECLARE count AS INTEGER INTIALLY = 0
 			1.5.11.4		FOR count FROM 0 TO 5
+
+			<POSITION CORRECTED>
+			<REPLACED>
+			SET self.image TO NEW Image(self.source + '/ship/ship_explode_one.png', self.position[0], self.position[1] - 4)
+
 			1.5.11.5			SET self.image TO NEW Image('resources/sprite_Images/ship/ship_explode_one.png', self.position[0], self.position[1] - 4)
 			1.5.11.6			CALL self.display_player()
 			1.5.11.7			CALL drawmethod()
 			1.5.11.8			WAIT 0.05 SECONDS
+
+			<POSITION CORRECTED>
+			<REPLACED>
+			SET self.image TO NEW Image(self.source + '/ship/ship_explode_two.png', self.position[0], self.position[1] - 4)
+
 			1.5.11.9			SET self.image TO NEW Image('resources/sprite_Images/ship/ship_explode_two.png', self.position[0], self.position[1] - 4)
 			1.5.11.10			CALL self.display_player()
 			1.5.11.11			CALL drawmethod()
@@ -197,12 +247,18 @@
 			1.5.11.13		END FOR
 			1.5.11.14		WAIT 0.3 SECONDS
 			1.5.11.15		SET self.position TO (480,633)
+
+			<REPLACED>
+			SET self.image TO NEW Image(self.source + '/ship/ship.png', self.position[0], self.position[1])
+
 			1.5.11.16		SET self.image TO Image('resources/sprite_Images/ship/ship.png', self.position[0], self.position[1])
-	    1.5.11.17   CALL self.image.resize_Image(2)
+	    		1.5.11.17   CALL self.image.resize_Image(2)
+
 			<ADDED>
 			1.5.11.18		SET self.rect TO RECATNGLE OF self.image
-	    1.5.11.19		CALL self.display_player()
-	    1.5.11.10		CALL drawmethod()
+
+	    		1.5.11.19		CALL self.display_player()
+	    		1.5.11.10		CALL drawmethod()
 			1.5.11.21		WAIT 0.5 SECONDS
 			1.5.11.22	END PROCEDURE
 
@@ -210,10 +266,16 @@
 			1.5.12.1	PROCEDURE move(xdist AS INTEGER)
 			1.5.12.2		IF NOT self.dead THEN
 			1.5.12.3			SET self.position[0] TO self.position[0] + xdist
+
+			<REPLACED>
+			SET self.image TO NEW Image(self.source + '/ship/ship.png', self.position[0], self.position[1])
+
 			1.5.12.4			SET self.image TO NEW Image('resources/sprite_Images/ship/ship.png', self.position[0], self.position[1])
-    	1.5.12.5			CALL self.image.resize_Image(2)
+    			1.5.12.5			CALL self.image.resize_Image(2)
+
 			<ADDED>
 			1.5.12.6			SET self.rect TO RECATNGLE OF self.image
+
 			1.5.12.7		END IF
 			1.5.12.8	END PROCEDURE
 
@@ -225,20 +287,40 @@
 			1.5.13.4		END IF
 			1.5.13.5	END PROCEDURE
 
+
+
+
+
 	<NEW ADDED RECTANGLES FOR COLLISION DETECTION>
 	1.6	Alien Class
 		1.6.1	CLASS Alien:
 		1.6.2		CONSTRUCTOR(openpath AS STRING, closepath AS STRING, xpos AS INTEGER, ypos AS INTEGER)
 		1.6.3		DECLARE position AS ARRAY OF INTEGER INTIALLY = (xpos, ypos)
+
+		<REMOVED>
+		DECLARE settings AS Settings()
+		CALL settings.get_settings()
+		IF settings.graphics THEN
+			DECLARE source AS STRING INTIALLY = "resources/modern_sprite_Images"
+		ELSE
+			DECLARE source AS STRING INTIALLY = "resources/sprite_Images"
+		END IF
+
+		<REPLACED>
+		DECLARE open_image AS STRING INTIALLY = self.source + openpath
+		DECLARE close_image AS STRING INTIALLY = self.source + closepath
+
 		1.6.4		DECLARE open_image AS STRING INTIALLY = openpath
 		1.6.5		DECLARE close_image AS STRING INTIALLY = closepath
 		1.6.6		DECLARE which_image AS BOOLEAN INTIALLY = TRUE
 		1.6.7		DECLARE dead AS BOOLEAN INITIALLY = FALSE
 		1.6.8		DECLARE image AS NEW Image(self.open_image, xpos, ypos)
 		1.6.9		CALL self.image.resize_Image(2)
-    1.6.10	DECLARE points AS INTEGER INITIALLY = 0
+    		1.6.10	DECLARE points AS INTEGER INITIALLY = 0
+
 		<ADDED>
 		1.6.11	DECLARE rect AS RECTANGLE INITIALLY RECTANGLE OF self.image
+
 		1.6.12
 		1.6.13	METHODS:
 		1.6.14	kill_alien()
@@ -256,27 +338,33 @@
 		1.6.15	switch_image()
 			1.6.15.1	PROCEDURE switch_image()
 			1.6.15.2		IF self.dead THEN
+
+			<REPLACED>
+			SET self.image TO Image(self.source + '/aliens/alien_Blast.png', self.position[0], self.position[1])
+
 			1.6.15.3			SET self.image TO Image('resources/sprite_Images/aliens/alien_Blast.png', self.position[0], self.position[1])
-      1.6.15.4			CALL self.image.resize_Image(2)
+      			1.6.15.4			CALL self.image.resize_Image(2)
 			1.6.15.5		ELSE IF self.which_image THEN
 			1.6.15.6			SET self.image TO Image(self.close_image, self.position[0], self.position[1])
-     	1.6.15.7			CALL self.image.resize_Image(2)
-      1.6.15.8			SET self.which_image TO False
+     			1.6.15.7			CALL self.image.resize_Image(2)
+     			1.6.15.8			SET self.which_image TO False
 			1.6.15.9		ELSE
 			1.6.15.10			SET self.image TO Image(self.open_image, self.position[0], self.position[1])
-     	1.6.15.11			CALL self.image.resize_Image(2)
-      1.6.15.12			SET self.which_image TO False
+     			1.6.15.11			CALL self.image.resize_Image(2)
+      			1.6.15.12			SET self.which_image TO False
 			1.6.15.13		END IF
+
 			<ADDED>
 			1.6.15.14		SET self.rect TO RECATNGLE OF self.image
+
 			1.6.15.15	END PROCEDURE
 
 		1.6.16	move()
 			1.6.16.1 	PROCEDURE move(xdist AS INTEGER, ydist AS INTEGER)
 			1.6.16.2		IF NOT self.dead THEN
 			1.6.16.3			SET self.position[0] TO self.position[0] xdist
-      1.6.16.4			SET self.position[1] TO self.position[1] ydist
-      1.6.16.5			CALL self.switch_image()
+      			1.6.16.4			SET self.position[1] TO self.position[1] ydist
+      			1.6.16.5			CALL self.switch_image()
 			1.6.16.6		ELSE
 			1.6.16.7			CALL self.kill #this is an inbuilt pygame function
 			1.6.16.8		END IF
@@ -287,34 +375,76 @@
 			1.6.17.2		CALL self.image.display_Image()
 			1.6.17.3	END PROCEDURE
 
+
+
+
 	1.7	Alien_10pts Class
-			1.7.1 CLASS Alien_10pts IS SUBCLASS OF Alien:
-			1.7.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER)
-			1.7.3		Alien('resources/sprite_Images/aliens/10pts_Open.png', 'resources/sprite_Images/aliens/10pts_Closed.png', xpos, ypos)
-			1.7.4		SET self.points TO 10
+		1.7.1 CLASS Alien_10pts IS SUBCLASS OF Alien:
+		1.7.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER)
+
+		<REPLACED>
+		Alien('/aliens/10pts_Open.png', '/aliens/10pts_Closed.png', xpos, ypos)
+
+		1.7.3		Alien('resources/sprite_Images/aliens/10pts_Open.png', 'resources/sprite_Images/aliens/10pts_Closed.png', xpos, ypos)
+		1.7.4		SET self.points TO 10
+
+
+
+
 
 	1.8	Alien_20pts Class
-			1.8.1 CLASS Alien_20pts IS SUBCLASS OF Alien:
-			1.8.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER)
-			1.8.3		Alien('resources/sprite_Images/aliens/20pts_Open.png', 'resources/sprite_Images/aliens/20pts_Closed.png', xpos, ypos)
-			1.8.4		SET self.points TO 20
+		1.8.1 CLASS Alien_20pts IS SUBCLASS OF Alien:
+		1.8.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER)
+
+		<REPLACED>
+		Alien('/aliens/20pts_Open.png', '/aliens/20pts_Closed.png', xpos, ypos)
+
+		1.8.3		Alien('resources/sprite_Images/aliens/20pts_Open.png', 'resources/sprite_Images/aliens/20pts_Closed.png', xpos, ypos)
+		1.8.4		SET self.points TO 20
+
+
+
+
 
 	1.9	Alien_30pts Class
-			1.9.1 CLASS Alien_30pts IS SUBCLASS OF Alien:
-			1.9.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER)
-			1.9.3		Alien('resources/sprite_Images/aliens/30pts_Open.png', 'resources/sprite_Images/aliens/30pts_Closed.png', xpos, ypos)
-			1.9.4		SET self.points TO 30
+		1.9.1 CLASS Alien_30pts IS SUBCLASS OF Alien:
+		1.9.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER)
+
+		<REPLACED>
+		Alien('/aliens/20pts_Open.png', '/aliens/20pts_Closed.png', xpos, ypos)
+
+		1.9.3		Alien('resources/sprite_Images/aliens/30pts_Open.png', 'resources/sprite_Images/aliens/30pts_Closed.png', xpos, ypos)
+		1.9.4		SET self.points TO 30
+
+
+
+
 
 	<NEW ADDED RECTANGLES FOR COLLISION DETECTION>
 	1.10	Player_Shot Class
 		1.10.1 CLASS Player_Shot:
 		1.10.2		CONSTRUCTOR(xpos AS INTEGER)
 		1.10.3		DECLARE position AS ARRAY OF INTEGER INITIALLY = (xpos, 633)
+
+		<REMOVED>
+		DECLARE settings AS Settings()
+		CALL settings.get_settings()
+		IF settings.graphics THEN
+			DECLARE source AS STRING INTIALLY = "resources/modern_sprite_Images"
+		ELSE
+			DECLARE source AS STRING INTIALLY = "resources/sprite_Images"
+		END IF
+
+		<REPLACED>
+		DECLARE image AS NEW Image(self.source + '/shot/player_Shot_Green.png', self.position[0], self.position[1])
+
 		1.10.4		DECLARE image AS NEW Image('resources/sprite_Images/shot/player_Shot_Green.png', self.position[0], self.position[1])
 		1.10.5		CALL self.image.resize_Image(2)
 		1.10.6		DECLARE moving AS BOOLEAN INITIALLY = TRUE
+
 		<ADDED>
 		1.10.7		DECLARE rect AS RECTANGLE INITIALLY RECATNGLE OF self.image
+
 		1.10.8
 		1.10.9		METHODS:
 		1.10.10		blow()
@@ -333,20 +463,34 @@
 			1.10.11.2			IF self.moving THEN
 			1.10.11.3				SET self.position[1] TO self.position[1] - 10
 			1.10.11.4				IF self.position[1] > 525 THEN
+
+			<REPLACED>
+			SET self.image TO NEW Image(self.source + '/shot/player_Shot_Green.png', self.position[0], self.position[1])
+
 			1.10.11.5					SET self.image TO NEW Image('resources/sprite_Images/shot/player_Shot_Green.png', self.position[0], self.position[1])
 			1.10.11.6				ELSE
+
+			<REPLACED>
+			SET self.image TO NEW Image(self.source + '/shot/player_Shot.png', self.position[0], self.position[1])
+
 			1.10.11.7					SET self.image TO NEW Image('resources/sprite_Images/shot/player_Shot.png', self.position[0], self.position[1])
 			1.10.11.8				END IF
 			1.10.11.9				CALL self.image.resize_Image(2)
+
 			<ADDED>
-      1.10.11.10			SET self.rect TO self.image.image.get_rect()
+      			1.10.11.10			SET self.rect TO self.image.image.get_rect()
+
 			1.10.11.11		END IF
 			1.10.11.12	END PROCEDURE
 
 		1.10.12		blowup()
 			1.10.12.1	PROCEDURE blowup()
+
+			<REPLACED>
+			SET self.image TO NEW Image(self.source + '/shot/player_Shot_Black_Mask.png', self.position[0], self.position[1])
+
 			1.10.12.2		SET self.image TO NEW Image('resources/sprite_Images/shot/player_Shot_Black_Mask.png', self.position[0], self.position[1])
-	    1.10.12.3		SET self.moving TO False
+	    		1.10.12.3		SET self.moving TO False
 			1.10.12.4	END PROCEDURE
 
 		1.10.13		display_shot()
@@ -354,15 +498,38 @@
 			1.10.13.2		CALL self.image.display_Image()
 			1.10.13.3	END PROCEDURE
 
+
+
+
+
 	1.11 Alien_Shot Class
 		1.11.1	CLASS Alien_Shot:
 		1.11.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER, left AS STRING, right AS STRING, mask AS STRING, speed AS INTEGER)
 		1.11.3		DEFINE poisition AS ARRAY OF INTEGER INITIALLY = (xpos, ypos)
 		1.11.4		DEFINE distance_moved AS INTEGER INITIALLY = 0
 		1.11.5		DEFINE moving AS BOOLEAN INITIALLY = TRUE
+
+		<REMOVED>
+		DECLARE settings AS Settings()
+		CALL settings.get_settings()
+		IF settings.graphics THEN
+			DECLARE source AS STRING INTIALLY = "resources/modern_sprite_Images"
+		ELSE
+			DECLARE source AS STRING INTIALLY = "resources/sprite_Images"
+		END IF
+
+		<REPLACED>
+		DEFINE right_image AS STRING INITIALLY = self.source + right
+		DEFINE left_image AS STRING INITIALLY = self.source + left
+
+		1.11.7		DEFINE right_image AS STRING INITIALLY = right
 		1.11.6		DEFINE left_image AS STRING INITIALLY = left
 		1.11.7		DEFINE right_image AS STRING INITIALLY = right
 		1.11.8		DEFINE colour_changed AS BOOLEAN INITIALLY = FALSE
+
+		<REPLACED>
+		DEFINE mask AS STRING INITIALLY = self.source + mask
+
 		1.11.9		DEFINE mask AS STRING INITIALLY = mask
 		1.11.10		DEFINE movement_speed AS INTEGER INITIALLY = speed
 		1.11.11		DEFINE rect AS RECTANGLE INITIALLY RECTANGLE OF self.image
@@ -374,7 +541,7 @@
 		1.11.17		display_shot()
 
 		1.11.14		move()
-			1.11.14.1		PROCEDURE move():
+			1.11.14.1		PROCEDURE move()
 			1.11.14.2			IF self.moving THEN
 			1.11.14.3				SET self.position[1] TO self.position[1] + self.movement_speed
 			1.11.14.4				SET self.distance_moved TO self.distance_moved + self.movement_speed
@@ -388,38 +555,62 @@
 			1.11.14.12	END PROCEDURE
 
 		1.11.15		change_colour()
-			1.11.15.1	PROCEDURE change_colour():
+			1.11.15.1	PROCEDURE change_colour()
 			1.11.15.2		SET self.colour_changed TO TRUE
 			1.11.15.3		ADD '_Green' TO self.right_image BEFORE '.png'
 			1.11.15.4		ADD '_Green' TO self.left_image BEFORE '.png'
 			1.11.15.5	END PROCEDURE
 
 		1.11.16		blow_up()
-			1.11.16.1	PROCEDURE blow_up():
+			1.11.16.1	PROCEDURE blow_up()
 			1.11.16.2		SET self.image TO Image(self.mask, self.position[0], self.position[1])
 			1.11.16.3		SET self.moving TO FALSE
 			1.11.16.4	END PROCEDURE
 
 		1.11.17		display_shot()
-			1.11.17.1	PROCEDURE display_shot():
+			1.11.17.1	PROCEDURE display_shot()
 			1.11.17.2		CALL self.image.display_Image()
 			1.11.17.3	END PROCEDURE
+
+
+
+
 
 	1.12	Bolt Class
 		1.12.1	CLASS Bolt IS SUBCLASS OF Alien_Shot:
 		1.12.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER)
+
+		<REPLACED>
+		Alien_Shot(xpos, ypos, '/bolt/bolt_Left.png', '/bolt/bolt_Right.png', '/bolt/bolt_Mask.png', 7)
+
 		1.12.3		Alien_Shot(xpos, ypos, 'resources/sprite_Images/bolt/bolt_Left.png', 'resources/sprite_Images/bolt/bolt_Right.png', 'resources/sprite_Images/bolt/bolt_Mask.png', 7)
+
+
+
+
 
 	1.13	Arrow Class
 		1.13.1	CLASS Arrow IS SUBCLASS OF Alien_Shot:
 		1.13.2		CONSTRUCTOR(xpos AS INTEGER, ypos AS INTEGER)
+
+		<REPLACED>
+		Alien_Shot(xpos, ypos, '/arrow/arrow.png', '/arrow/arrow_Second.png', '/arrow/arrow_Black_Mask.png', 5)
+
 		1.13.3		Alien_Shot(xpos, ypos, 'resources/sprite_Images/arrow/arrow.png', 'resources/sprite_Images/arrow/arrow_Second.png', 'resources/sprite_Images/arrow/arrow_Black_Mask.png', 5)
+
+
+
+
 
 	1.14 Highscore Class
 		1.14.1	CLASS Highscore:
 		1.14.2		CONSTRUCTOR(name AS STRING, value AS INTEGER)
 		1.14.3		DECLARE name AS STRING INTIALLY = name
 		1.14.4		DECLARE value AS INTEGER INITIALLY = value
+
+
+
+
 
 	1.15	ScoreBoard Class
 		1.15.1	CLASS ScoreBoard:
@@ -434,7 +625,7 @@
 		1.15.10		write_file()
 
 		1.15.7		check_score()
-			1.15.7.1	PROCEDURE check_score():
+			1.15.7.1	PROCEDURE check_score()
 			1.15.7.2		IF THERE ARE LESS THAN TEN ITEMS IN self.scores THEN
 			1.15.7.3			RETURN TRUE
 			1.15.7.4		ELSE
@@ -458,17 +649,17 @@
 			1.15.8.9			CLOSE HIGHSCORE FILE
 			1.15.8.10			DECLARE count AS INTEGER INITIALLY = 0
 			1.15.8.11			IF THE highscores ARRAY IS NOT EMPTY THEN
-			1.15.8.12				WHILE count < (THE LENGTH OF THE highscores ARRAY) - 1:
+			1.15.8.12				WHILE count < (THE LENGTH OF THE highscores ARRAY) - 1 DO
 			1.15.8.13					DECLARE new AS Highscore(STRING(highscores[count]), INTEGER(highscores[count + 1]))
 			1.15.8.14					APPEND new TO self.scores
-			1.15.8.15					SET count TO count + 2
+			1.15.8.15					INCREMENT count BY 2
 			1.15.8.16				END WHILE
 			1.15.8.17			END IF
 			1.15.8.18		END IF
 			1.15.8.19	END PROCEDURE
 
 		1.15.9		bubble_sort_scores()
-			1.15.9.1	PROCEDURE bubble_sort_scores():
+			1.15.9.1	PROCEDURE bubble_sort_scores()
 			1.15.9.2		IF self.scores MORE THAN ONE ELEMENT THEN
 			1.15.9.3			DECLARE outer AS INTEGER INTIALLY = 0
 			1.15.9.4			FOR outer FROM 0 TO (THE LENGTH OF self.scores) - 1
@@ -489,7 +680,7 @@
 
 
 		1.15.10		write_file()
-			1.15.10.1		PROCEDURE write_file(remove AS BOOLEAN, fill AS BOOLEAN):
+			1.15.10.1		PROCEDURE write_file(remove AS BOOLEAN, fill AS BOOLEAN)
 			1.15.10.2			IF remove THEN
 			1.15.10.3				DELETE HIGHSCORE FILE
 			1.15.10.4			END IF
@@ -504,7 +695,7 @@
 			1.15.10.13					ELSE
 			1.15.10.14						WRITE STRING(score.value) + "," TO HIGHSCORE FILE
 			1.15.10.15					END IF
-			1.15.10.16					SET count TO count + 1
+			1.15.10.16					INCREMENT count BY 1
 			1.15.10.17				END FOR
 			1.15.10.18			END IF
 			1.15.10.19		END IF
@@ -524,16 +715,47 @@
 
 
 	2.1	Home_Page
-		2.1.1		DECLARE Background AS NEW Image('PATH TO IMAGE', 480, 360)
-		2.1.2		DECLARE Title AS NEW Text("SPACE INVADERS", 72, 480, 106)
-		2.1.3		DECLARE Sub_Title AS NEW Text("These are the aliens you'll encounter:", 32, 480, 228)
-		2.1.4		DECLARE mother_ship_img AS NEW Image('resources/sprite_Images/aliens/mother_Ship.png', 250, 318)
-		2.1.5		DECLARE mother_text AS NEW Text("This can be worth 50, 100, 150 or 300 points", 16, 560, 318)
-		2.1.6		DECLARE thirty_img AS NEW Image('PATH TO IMAGE', 250, 368)
-		2.1.7		DECLARE thirty_text AS NEW Text("This alien is worth 30 points", 16, 472, 368)
-		2.1.8		DECLARE twenty_img AS NEW Image('PATH TO IMAGE', 250, 418)
-		2.1.9		DECLARE twenty_text AS NEW Text("This alien is worth 20 points", 16, 472, 418)
-		2.1.10	DECLARE ten_img AS NEW Image('PATH TO IMAGE', 250, 468)
+
+		<REMOVED>
+		DECLARE settings AS Settings()
+		CALL settings.get_settings()
+		IF settings.graphics THEN
+			DECLARE source AS STRING INTIALLY = "resources/modern_sprite_Images"
+		ELSE
+			DECLARE source AS STRING INTIALLY = "resources/sprite_Images"
+		END IF
+
+		<REPLACED>
+		DECLARE Background AS NEW Image(source + '/Background.png', 480, 360)
+
+		2.1.1	DECLARE Background AS NEW Image('resources/sprite_Images/Background.png', 480, 360)
+		2.1.2	DECLARE Title AS NEW Text("SPACE INVADERS", 72, 480, 106)
+
+		<REMOVED>
+		2.1.3	DECLARE Sub_Title AS NEW Text("These are the aliens you'll encounter:", 32, 480, 228)
+
+		<REPLACED>
+		DECLARE mother_ship_img AS NEW Image(source + '/aliens/mother_Ship.png', 250, 318)
+
+		2.1.4	DECLARE mother_ship_img AS NEW Image('resources/sprite_Images/aliens/mother_Ship.png', 250, 318)
+		2.1.5	DECLARE mother_text AS NEW Text("This can be worth 50, 100, 150 or 300 points", 16, 560, 318)
+
+		<REPLACED>
+		DECLARE thirty_img AS NEW Image(source + '/aliens/30pts_Open.png', 250, 368)
+
+		2.1.6	DECLARE thirty_img AS NEW Image('resources/sprite_Images/aliens/30pts_Open.png', 250, 368)
+		2.1.7	DECLARE thirty_text AS NEW Text("This alien is worth 30 points", 16, 472, 368)
+
+		<REPLACED>
+		DECLARE twenty_img AS NEW Image(source + '/aliens/20pts_Open.png', 250, 418)
+
+		2.1.8	DECLARE twenty_img AS NEW Image('resources/sprite_Images/aliens/20pts_Open.png', 250, 418)
+		2.1.9	DECLARE twenty_text AS NEW Text("This alien is worth 20 points", 16, 472, 418)
+
+		<REPLACED>
+		DECLARE ten_img AS NEW Image(source + '/sprite_Images/aliens/10pts_Open.png', 250, 468)
+
+		2.1.10	DECLARE ten_img AS NEW Image('resources/sprite_Images/aliens/10pts_Open.png', 250, 468)
 		2.1.11	DECLARE ten_text AS NEW Text("This alien is worth 10 points", 16, 472, 468)
 		2.1.12	DECLARE I_button AS NEW Button("Instructions", 156, 645, LOAD INSTRUCTIONS PAGE, 164, 62)
 		2.1.13	DECLARE G_button AS NEW Button("New Game", 480, 645, LOAD GAME PAGE, 164, 62)
@@ -543,7 +765,7 @@
 		2.1.17	DEFINE run_page()
 
 		2.1.16	DEFINE draw_page()
-			2.1.16.1	PROCEDURE display_page():
+			2.1.16.1	PROCEDURE display_page()
 			2.1.16.3		CALL Background.display_Image()
 			2.1.16.4		CALL Title.display_text()
 			2.1.16.5		CALL Sub_Title.display_text()
@@ -581,157 +803,170 @@
 
 	<OLD THE GRAPHICS DID NOT WORK CORRECTLY>
 	2.2	Settings_Page
-		2.2.1		DECLARE Background AS NEW Image('PATH TO IMAGE', 480, 360)
-		2.2.2		DECLARE Title AS NEW Text("SETTINGS", 72, 480, 106)
-		2.2.3		DECLARE back_button AS NEW Button("Back", 80, 40)
-		2.2.4		DECLARE music_Text AS NEW Text("Music:", 32, 200, 225)
-		2.2.5		DECLARE music_button AS NEW Button("", 372, 225, 160)
-		2.2.6		DECLARE musictype_Text AS NEW Text("Music Type:", 32, 365, 285)
-		2.2.7		DECLARE musictype_button AS NEW Button("", 600, 285, 160)
-		2.2.8		DECLARE effects_Text AS NEW Text("Sound Effects:", 32, 296, 375)
-		2.2.9		DECLARE effects_button AS NEW Button("", 564, 375, 160)
-		<REMOVED>
-		2.2.10	DECLARE graphics_Text AS NEW Text("Graphics:", 32, 236, 465)
-		<REMOVED>
-		2.2.11	DECLARE graphics_button AS NEW Button("", 444, 465, 160)
-		2.2.12	DECLARE settingsvar AS NEW Settings()
-		2.2.13	#METHODS
-		2.2.14	DEFINE musicstate_text()
-		2.2.15	DEFINE musictype_text()
-		2.2.16	DEFINE effects_text()
-		<REMOVED>
-		2.2.17	DEFINE graphics_text()
-		2.2.18	DEFINE switch_music()
-		2.2.19	DEFINE change_music()
-		2.2.20	DEFINE switch_effects()
-		<REMOVED>
-		2.2.21	DEFINE switch_graphics()
-		2.2.22	DEFINE draw_page()
-		2.2.23	DEFINE exit_page()
-		2.2.24	DEFINE run_page()
+		2.2.1	DECLARE Background AS NEW Image('resources/sprite_Images/Background.png', 480, 360)
+		2.2.2	DECLARE Title AS NEW Text("SETTINGS", 72, 480, 106)
+		2.2.3	DECLARE back_button AS NEW Button("Back", 80, 40)
+		2.2.4	DECLARE music_Text AS NEW Text("Music:", 32, 200, 225)
+		2.2.5	DECLARE music_button AS NEW Button("", 372, 225, 160)
+		2.2.6	DECLARE musictype_Text AS NEW Text("Music Type:", 32, 365, 285)
+		2.2.7	DECLARE musictype_button AS NEW Button("", 600, 285, 160)
+		2.2.8	DECLARE effects_Text AS NEW Text("Sound Effects:", 32, 296, 375)
+		2.2.9	DECLARE effects_button AS NEW Button("", 564, 375, 160)
 
-		2.2.14	DEFINE musicstate_text()
-			2.2.14.1	PROCEDURE musicstate_text()
-			2.2.14.2		IF settingsvar.musicstate THEN
-		  2.2.14.3			CALL music_button.text.change_text("On", draw_page)
+		<REMOVED>
+		DECLARE graphics_Text AS NEW Text("Graphics:", 32, 236, 465)
+		<REMOVED>
+		DECLARE graphics_button AS NEW Button("", 444, 465, 160)
+
+		2.2.10	DECLARE settingsvar AS NEW Settings()
+		2.2.11	#METHODS
+		2.2.12	DEFINE musicstate_text()
+		2.2.13	DEFINE musictype_text()
+		2.2.14	DEFINE effects_text()
+
+		<REMOVED>
+		DEFINE graphics_text()
+
+		2.2.15	DEFINE switch_music()
+		2.2.16	DEFINE change_music()
+		2.2.17	DEFINE switch_effects()
+
+		<REMOVED>
+		2.2.18	DEFINE switch_graphics()
+
+		2.2.19	DEFINE draw_page()
+		2.2.20	DEFINE exit_page()
+		2.2.21	DEFINE run_page()
+
+		2.2.12	DEFINE musicstate_text()
+			2.2.12.1	PROCEDURE musicstate_text()
+			2.2.12.2		IF settingsvar.musicstate THEN
+		  	2.2.12.3			CALL music_button.text.change_text("On", draw_page)
+			2.2.12.4		ELSE:
+			2.2.12.5  		CALL music_button.text.change_text("Off", draw_page)
+			2.2.12.6		END IF
+			2.2.12.7	END PROCEDURE
+
+		2.2.13	DEFINE musictype_text()
+			2.2.13.1	PROCEDURE musictype_text()
+			2.2.13.2		IF settingsvar.musictype THEN
+			2.2.13.3			CALL musictype_button.text.change_text("SciFi", draw_page)
+			2.2.13.4		ELSE:
+			2.2.13.5  		CALL musictype_button.text.change_text("popDance", draw_page)
+			2.2.13.6		END IF
+			2.2.13.7	END PROCEDURE
+
+		2.2.14	DEFINE effects_text()
+			2.2.14.1	PROCEDURE effects_text()
+			2.2.14.2		IF settingsvar.soundeffects THEN
+			2.2.14.3			CALL effects_button.text.change_text("On", draw_page)
 			2.2.14.4		ELSE:
-			2.2.14.5  		CALL music_button.text.change_text("Off", draw_page)
+			2.2.14.5  		CALL effects_button.text.change_text("Off", draw_page)
 			2.2.14.6		END IF
 			2.2.14.7	END PROCEDURE
 
-		2.2.15	DEFINE musictype_text()
-			2.2.15.1	PROCEDURE musictype_text()
-			2.2.15.2		IF settingsvar.musictype THEN
-			2.2.15.3			CALL musictype_button.text.change_text("SciFi", draw_page)
-			2.2.15.4		ELSE:
-			2.2.15.5  		CALL musictype_button.text.change_text("popDance", draw_page)
-			2.2.15.6		END IF
-			2.2.15.7	END PROCEDURE
+		<REMOVED>
+		DEFINE graphics_text()
+				PROCEDURE musicstate_text()
+					IF settingsvar.musicstate THEN
+						CALL music_button.text.change_text("On", draw_page)
+					ELSE:
+			  		CALL music_button.text.change_text("Off", draw_page)
+					END IF
+				END PROCEDURE
 
-		2.2.16	DEFINE effects_text()
-			2.2.16.1	PROCEDURE effects_text()
-			2.2.16.2		IF settingsvar.soundeffects THEN
-			2.2.16.3			CALL effects_button.text.change_text("On", draw_page)
-			2.2.16.4		ELSE:
-			2.2.16.5  		CALL effects_button.text.change_text("Off", draw_page)
-			2.2.16.6		END IF
-			2.2.16.7	END PROCEDURE
+		2.2.15	DEFINE switch_music()
+			2.2.15.1	PROCEDURE switch_music()
+			2.2.15.2		SET settingsvar.musicstate TO NOT settingsvar.musicstate
+			2.2.15.3		CALL musicstate_text()
+			2.2.15.4	END PROCEDURE
+
+		2.2.16	DEFINE change_music()
+			2.2.16.1	PROCEDURE change_music()
+			2.2.16.2		SET settingsvar.musictype TO (settingsvar.musictype + 1) % 2
+			2.2.16.3		CALL musictype_text()
+			2.2.16.4	END PROCEDURE
+
+		2.2.17	DEFINE switch_effects()
+			2.2.17.1	PROCEDURE switch_effects()
+			2.2.17.2		SET settingsvar.soundeffects TO NOT settingsvar.soundeffects
+			2.2.17.3		CALL effects_text()
+			2.2.17.4	END PROCEDURE
 
 		<REMOVED>
-		2.2.17	DEFINE graphics_text()
-			2.2.17.1	PROCEDURE musicstate_text()
-			2.2.17.2		IF settingsvar.musicstate THEN
-			2.2.17.3			CALL music_button.text.change_text("On", draw_page)
-			2.2.17.4		ELSE:
-			2.2.17.5  		CALL music_button.text.change_text("Off", draw_page)
-			2.2.17.6		END IF
-			2.2.17.7	END PROCEDURE
+			DEFINE switch_graphics()
+				PROCEDURE switch_graphics()
+					SET settingsvar.graphics TO NOT settingsvar.graphics
+					CALL graphics_text()
+				END PROCEDURE
 
-		2.2.18	DEFINE switch_music()
-			2.2.18.1	PROCEDURE switch_music()
-			2.2.18.2		SET settingsvar.musicstate TO NOT settingsvar.musicstate
-			2.2.18.3		CALL musicstate_text()
-			2.2.18.4	END PROCEDURE
+		2.2.18	DEFINE draw_page()
+			2.2.18.1	PROCEDURE draw_page()
+			2.2.18.2		CALL Background.display_Image()
+			2.2.18.3		CALL Title.display_text()
+			2.2.18.4		CALL back_button.display_Button()
+			2.2.18.5		CALL music_Text.display_text()
+			2.2.18.6		CALL music_button.display_Button()
+			2.2.18.7		CALL musictype_Text.display_text()
+			2.2.18.8		CALL musictype_button.display_Button()
+			2.2.18.9		CALL effects_Text.display_text()
+			2.2.18.10		CALL effects_button.display_Button()
 
-		2.2.19	DEFINE change_music()
-			2.2.19.1	PROCEDURE change_music()
-			2.2.18.2		SET settingsvar.musictype TO (settingsvar.musictype + 1) % 2
-			2.2.18.3		CALL musictype_text()
-			2.2.18.4	END PROCEDURE
-
-		2.2.20	DEFINE switch_effects()
-			2.2.20.1	PROCEDURE switch_effects()
-			2.2.20.2		SET settingsvar.soundeffects TO NOT settingsvar.soundeffects
-			2.2.20.3		CALL effects_text()
-			2.2.20.4	END PROCEDURE
-
-		<REMOVED>
-		2.2.21	DEFINE switch_graphics()
-			2.2.21.1	PROCEDURE switch_graphics()
-			2.2.21.2		SET settingsvar.graphics TO NOT settingsvar.graphics
-			2.2.21.3		CALL graphics_text()
-			2.2.21.4	END PROCEDURE
-
-		2.2.22	DEFINE draw_page()
-			2.2.22.1	PROCEDURE draw_page()
-			2.2.22.2		CALL Background.display_Image()
-			2.2.22.3		CALL Title.display_text()
-			2.2.22.4		CALL back_button.display_Button()
-			2.2.22.5		CALL music_Text.display_text()
-			2.2.22.6		CALL music_button.display_Button()
-			2.2.22.7		CALL musictype_Text.display_text()
-			2.2.22.8		CALL musictype_button.display_Button()
-			2.2.22.9		CALL effects_Text.display_text()
-			2.2.22.10		CALL effects_button.display_Button()
 			<REMOVED>
-			2.2.22.11		CALL graphics_Text.display_text()
-			<REMOVED>
-			2.2.22.12		CALL graphics_button.display_Button()
-			2.2.22.13		UPDATE SCREEN
-			2.2.22.14	END PROCEDURE
+			CALL graphics_Text.display_text()
 
-		2.2.23	DEFINE exit_page()
-			2.2.23.1	PROCEDURE exit_page()
-			2.2.23.2		CALL settingsvar.write_file(TRUE)
-			2.2.23.3		CALL Homepage.run_page()
-			2.2.23.4	END PROCEDURE
+			<REMOVED>
+			CALL graphics_button.display_Button()
 
-		2.2.24	DEFINE run_page()
-			2.2.24.1	PROCEDURE run_page()
-			2.2.24.2		CALL settingsvar.get_settings()
-			2.2.24.3		CALL musicstate_text()
-			2.2.24.4		CALL musictype_text()
-			2.2.24.5		CALL effects_text()
+			2.2.18.11		UPDATE SCREEN
+			2.2.18.12	END PROCEDURE
+
+		2.2.19	DEFINE exit_page()
+			2.2.19.1	PROCEDURE exit_page()
+			2.2.19.2		CALL settingsvar.write_file(TRUE)
+			2.2.19.3		CALL Homepage.run_page()
+			2.2.19.4	END PROCEDURE
+
+		2.2.20	DEFINE run_page()
+			2.2.20.1	PROCEDURE run_page()
+			2.2.20.2		CALL settingsvar.get_settings()
+			2.2.20.3		CALL musicstate_text()
+			2.2.20.4		CALL musictype_text()
+			2.2.20.5		CALL effects_text()
+
 			<REMOVED>
-			2.3.24.6		CALL graphics_text()
-			2.3.24.7		CALL draw_page()
-			2.3.24.8		WHILE TRUE DO:
-			2.3.24.9			CALL back_button.hover_Check(draw_page, exit_page)
-	    2.3.24.10			CALL music_button.hover_Check(draw_page, switch_music)
-	    2.3.24.11			CALL musictype_button.hover_Check(draw_page, change_music)
-		  2.3.24.12			CALL effects_button.hover_Check(draw_page, switch_effects)
+			CALL graphics_text()
+
+			2.3.20.6		CALL draw_page()
+			2.3.20.7		WHILE TRUE DO
+			2.3.20.8			CALL back_button.hover_Check(draw_page, exit_page)
+	    		2.3.20.9			CALL music_button.hover_Check(draw_page, switch_music)
+	    		2.3.20.10			CALL musictype_button.hover_Check(draw_page, change_music)
+		  	2.3.20.11			CALL effects_button.hover_Check(draw_page, switch_effects)
+
 			<REMOVED>
-	   	2.3.24.13			CALL graphics_button.hover_Check(draw_page, switch_graphics)
-			2.3.24.14			IF EXIT = TRUE THEN
-			2.3.24.15				EXIT PROGRAM
-			2.3.24.16			END IF
-			2.3.24.17		END WHILE
-			2.3.24.18	END PROCEDURE
+	   				CALL graphics_button.hover_Check(draw_page, switch_graphics)
+
+			2.3.20.12			IF EXIT = TRUE THEN
+			2.3.20.13				EXIT PROGRAM
+			2.3.20.14			END IF
+			2.3.20.15		END WHILE
+			2.3.20.16	END PROCEDURE
 
 
 
 
 
 	2.3	Instructions_Page
-		2.3.1		DECLARE Background AS Image('resources/sprite_Images/Background.png', 480, 360)
-		2.3.2		DECLARE back_button AS Button("Back", 80, 40)
-		2.3.3		DECLARE Title AS Text("INSTRUCTIONS", 72, 480, 106)
-		2.3.4		DECLARE C_SubTitle AS Text("CONTROLS:", 32, 144, 186)
-		2.3.5		DECLARE C_text_one AS Text("to move your character left and right use the a and d buttons", 16, 402, 226)
-		2.3.6		DECLARE C_text_two AS Text("or the left and right arrow keys. to shoot press spacebar.", 16, 384, 246)
-		2.3.7		DECLARE WW_SubTitle AS Text("WHAT'S WHAT:", 32, 180, 306)
-		2.3.8		DECLARE WW_text_one AS Text("The creatures at the top of the screen are ALIENS, there is also", 16, 420, 346)
-		2.3.9		DECLARE WW_text_two AS Text("a MOTHERSHIP that occasionally travels across the top of the screen.", 16, 444, 366)
+		2.3.1	DECLARE Background AS Image('resources/sprite_Images/Background.png', 480, 360)
+		2.3.2	DECLARE back_button AS Button("Back", 80, 40)
+		2.3.3	DECLARE Title AS Text("INSTRUCTIONS", 72, 480, 106)
+		2.3.4	DECLARE C_SubTitle AS Text("CONTROLS:", 32, 144, 186)
+		2.3.5	DECLARE C_text_one AS Text("to move your character left and right use the a and d buttons", 16, 402, 226)
+		2.3.6	DECLARE C_text_two AS Text("or the left and right arrow keys. to shoot press spacebar.", 16, 384, 246)
+		2.3.7	DECLARE WW_SubTitle AS Text("WHAT'S WHAT:", 32, 180, 306)
+		2.3.8	DECLARE WW_text_one AS Text("The creatures at the top of the screen are ALIENS, there is also", 16, 420, 346)
+		2.3.9	DECLARE WW_text_two AS Text("a MOTHERSHIP that occasionally travels across the top of the screen.", 16, 444, 366)
 		2.3.10	DECLARE WW_text_three AS Text("The green arches are your BUNKERS. YOU are the WHITE PUCK that", 16, 408, 386)
 		2.3.11	DECLARE WW_text_four AS Text("moves side to side near the bottom of the screen.", 16, 330, 406)
 		2.3.12	DECLARE WD_SubTitle AS Text("WHAT TO DO:", 32, 168, 466)
@@ -755,7 +990,7 @@
 			2.3.25.2		CALL Background.display_Image()
 			2.3.25.2		CALL back_button.display_text()
 			2.3.25.2		CALL Title.display_text()
-			2.3.25.2		For count AS INTEGER FROM 0 TO INSTRUCTIONS.length DO
+			2.3.25.2		FOR count AS INTEGER FROM 0 TO INSTRUCTIONS.length DO
 			2.3.25.2			CALL Instructions(count).display_text()
 			2.3.25.2		NEXT
 			2.3.25.2		UPDATE display
@@ -764,10 +999,601 @@
 		2.3.26	DEFINE run_page()
 			2.3.26.1	PROCEDURE run_page()
 			2.3.26.2		CALL draw_page()
-			2.3.26.3		While TRUE DO:
+			2.3.26.3		WHILE TRUE DO
 			2.3.26.4			CALL back_button.hover_Check(draw_page, Homepage.run_page)
 			2.3.26.5			IF EXIT = TRUE THEN
 			2.3.26.6				EXIT PROGRAM
 			2.3.26.7			END IF
 			2.3.26.8		END WHILE
 			2.3.26.9	END PROCEDURE
+
+
+
+
+
+
+			2.4	Game_Page
+				<SAME BACKGROUND NO MATTER WHAT>
+				2.4.1	DECLARE Background AS Image('resources/sprite_Images/Game_Background.png', 480, 360)
+				2.4.2	DECLARE current_Score_Display AS Text("0", 30, 55, 25)
+				2.4.3	DECLARE highest_Score_Display AS Text("", 30, 905 ,25)
+				2.4.4	DECLARE player AS Player(480)
+				2.4.5	DECLARE aliens AS GROUP OF SPRITES (CAN HOLD ANY MIX OF CLASSES OF SPRITE)
+				2.4.6	DECLARE columns AS ARRAY OF GROUPS OF SPRITES INTIALLY = []
+				2.4.7	DECLARE game_settings AS Settings()
+				2.4.8	DECLARE projectiles AS GROUP OF SPRITES (CAN HOLD ANY MIX OF CLASSES OF SPRITE)
+				2.4.9	DECLARE	alien_shots AS GROUP OF SPRITES (CAN HOLD ANY MIX OF CLASSES OF SPRITE)
+				2.4.10	DECLARE	highscoresvar AS ScoreBoard()
+				2.4.11	DECLARE	lives_display AS Text(str(player.lives), 30, 55, 700)
+				2.4.12	DECLARE	lives_image_display AS GROUP OF SPRITES (CAN HOLD ANY MIX OF CLASSES OF SPRITE)
+				2.4.13	DECLARE mother_ship AS GROUP OF SPRITES (CAN HOLD ANY MIX OF CLASSES OF SPRITE)
+				2.4.14  DECLARE alien_move_sound AS SOUND FROM 'resources/audio/sound_effects/aliens_move.wav'
+				2.4.15  DECLARE alien_die_sound AS SOUND FROM 'resources/audio/sound_effects/alien_death.wav'
+				2.4.16  DECLARE alien_bolt_sound AS SOUND FROM 'resources/audio/sound_effects/alien_bolt.wav'
+				2.4.17  DECLARE alien_arrow_sound AS SOUND FROM 'resources/audio/sound_effects/alien_arrow.wav'
+				2.4.18  DECLARE mother_ship_sound AS SOUND FROM 'resources/audio/sound_effects/mother_ship_move.wav'
+				2.4.19	DECLARE player_shoot_sound AS SOUND FROM 'resources/audio/sound_effects/player_shoot.wav'
+				2.4.20	DECLARE player_die_sound AS SOUND FROM 'resources/audio/sound_effects/player_death.wav'
+				2.4.21	#METHODS
+				2.4.22	setup_aliens()
+				2.4.23	draw_page()
+				2.4.24	move_aliens()
+				2.4.25	check_change()
+				2.4.26	end_game()
+				2.4.27	run_page()
+
+				2.4.22	setup_aliens()
+					2.4.22.1	PROCEDURE setup_aliens():
+					2.4.22.2		DECLARE xpos AS INTEGER INTIALLY = 60
+				  	2.4.22.3		EMPTY columns ARRAY
+				  	2.4.22.4		DECLARE col AS INTEGER INTIALLY = 0
+					2.4.22.5		FOR col FROM 0 TO 10
+				  	2.4.22.6			DECLARE aliensort AS GROUP OF SPRITES (CAN HOLD ANY MIX OF CLASSES OF SPRITE)
+				  	2.4.22.7			DECLARE alien101 AS Alien10(xpos, 360)
+				  	2.4.22.8			DECLARE alien102 AS Alien10(xpos, 290)
+				  	2.4.22.9			DECLARE alien201 AS Alien20(xpos, 220)
+				  	2.4.22.10			DECLARE alien202 AS Alien20(xpos, 150)
+				  	2.4.22.11			DECLARE alien30 AS Alien30(xpos, 80)
+				  	2.4.22.12			INCREMENT xpos BY 70
+				  	2.4.22.13			ADD alien101 TO aliens AND aliensort
+					2.4.22.14			ADD alien102 TO aliens AND aliensort
+					2.4.22.15			ADD alien201 TO aliens AND aliensort
+					2.4.22.16			ADD alien202 TO aliens AND aliensort
+					2.4.22.17			ADD alien30 TO aliens AND aliensort
+				  	2.4.22.18			ADD aliensort TO columns
+					2.4.22.19		END FOR
+					2.4.22.20	END PROCEDURE
+
+				2.4.23	draw_page()
+					2.4.23.1	PROCEDURE draw_page()
+					2.4.23.2		CALL Background.display_Image()
+				  	2.4.23.3		FOR EVERY alshot IN alien_shots
+				  	2.4.23.4			CALL alshot.display_shot()
+					2.4.23.5		END FOR
+					2.4.23.6		FOR EVERY shot IN projectiles:
+				 	2.4.23.7			CALL shot.display_shot()
+					2.4.23.8		END FOR
+				  	2.4.23.9		CALL player.display_player()
+				  	2.4.23.10		CALL current_Score_Display.display_text()
+				  	2.4.23.11		CALL highest_Score_Display.display_text()
+				  	2.4.23.12		CALL lives_display.display_text()
+					2.4.23.13		FOR EVERY life IN lives_image_display
+				  	2.4.23.14			CALL life.display_Image()
+					2.4.23.15		END FOR
+				  	2.4.23.16		FOR EVERY alien IN aliens
+				  	2.4.23.17			CALL alien.display_alien()
+					2.4.23.18		END FOR
+				  	2.4.23.19		IF THE LENGTH mother_ship ARRAY IS NOT EMPTY THEN
+				  	2.4.23.20			FOR EVERY mother IN mother_ship
+				  	2.4.23.21				CALL mother.display_ship()
+					2.4.23.22			END FOR
+					2.4.23.23		END IF
+					2.4.23.24		UPDATE DISPLAY
+					2.4.23.25	END PROCEDURE
+
+				2.4.24	move_aliens()
+					2.4.24.1	PROCEDURE move_aliens():
+					2.4.24.2		FOR EVERY alien IN aliens
+				  	2.4.24.3			CALL alien.move(xdist, ydist)
+					2.4.24.4		END FOR
+				  	2.4.24.5		IF game_settings.soundeffects THEN
+				  	2.4.24.6			CALL alien_move_sound.play()
+					2.4.24.7		END IF
+					2.4.24.8	END PROCEDURE
+
+				2.4.25	check_change(moved_down AS INTEGER)
+					2.4.25.1	PROCEDURE check_change()
+					2.4.25.2		FOR EVERY alien IN aliens
+			    		2.4.25.3			IF ALIEN IS TOUCHING EITHER EDGE OF SCREEN THEN
+			    		2.4.25.4				IF moved_down == 0 THEN
+			    		2.4.25.5					SET moved_down TO 1
+					2.4.25.6				END IF
+					2.4.25.7			END IF
+					2.4.25.8		END FOR
+			    		2.4.25.9		RETURN moved_down
+					2.4.25.10	END PROCEDURE
+
+				2.4.26	end_game()
+					2.4.26.1	PROCEDURE end_game():
+					2.4.26.2		MAKE MOUSE VISIBLE
+				  	2.4.26.3		STOP ANY BACKGROUND MUSIC
+				  	2.4.26.4		IF THE CALL OF highscoresvar.check_score() RETURNS TRUE THEN
+				  	2.4.26.5			CALL Highscore_Input_Page.run_page(highscoresvar)
+				  	2.4.26.6		ELSE
+				  	2.4.26.7			CALL Highscore_display_Page.run_page()
+					2.4.26.8		END IF
+					2.4.26.9	END PROCEDURE
+
+				2.4.27	run_page()
+					2.4.27.1	PROCEDURE run_page():
+					2.4.27.2		MAKE MOUSE INVISIBLE
+				  	2.4.27.3		EMPTY columns ARRAY
+				  	2.4.27.4		EMPTY alien_shots GROUP
+					2.4.27.5		EMPTY projectiles GROUP
+					2.4.27.6		EMPTY aliens GROUP
+				  	2.4.27.7		CALL highscoresvar.get_highscores()
+				  	2.4.27.8		SET highscoresvar.current_score TO 0
+				  	2.4.27.9		SET player.lives TO 3
+				  	2.4.27.10		SET player.dead TO False
+				  	2.4.27.11		SET player.position[0] TO 480
+				  	2.4.27.12		CALL lives_display.change_text(STRING(player.lives), draw_page)
+				  	2.4.27.13		CALL current_Score_Display.change_text(STRING(highscoresvar.current_score), draw_page)
+				  	2.4.27.14		CALL highest_Score_Display.change_text(STRING(highscoresvar.scores[0].value), draw_page)
+				 	2.4.27.15		EMPTY lives_image_display GROUP
+
+					<REMOVED>
+					DECLARE settings AS Settings()
+					CALL settings.get_settings()
+					IF settings.graphics THEN
+						DECLARE source AS STRING INTIALLY = "resources/modern_sprite_Images"
+					ELSE
+						DECLARE source AS STRING INTIALLY = "resources/sprite_Images"
+					END IF
+
+					<REPLACED>
+					ADD Image(source + '/ship/ship.png', 125, 700) TO lives_image_display
+				  	ADD Image(source + '/ship/ship.png', 85, 700) TO lives_image_display
+
+				  	2.4.27.16		ADD Image('resources/sprite_Images/ship/ship.png', 125, 700) TO lives_image_display
+				  	2.4.27.17		ADD Image('resources/sprite_Images/ship/ship.png', 85, 700) TO lives_image_display
+				  	2.4.27.18		CALL game_settings.get_settings()
+					2.4.27.19		IF game_settings.musictype THEN
+				 	2.4.27.20			GET BACKGOUND MUSIC FROM 'resources/audio/background_music/scifi.mp3'
+				  	2.4.27.21		ELSE
+				  	2.4.27.22			GET BACKGROUND MUSIC FROM 'resources/audio/background_music/popdance.mp3'
+					2.4.27.23		END IF
+				  	2.4.27.24		IF game_settings.musicstate THEN
+				  	2.4.27.25			PLAY BACKGROUND MUSIC ON A LOOP
+					2.4.27.26		END IF
+					2.4.27.27		DECLARE alien_Timer_Start AS TIME INITIALLY = CURRENT TIME
+				  	2.4.27.28		DECLARE alien_Timer_Elapsed AS TIME INITIALLY = CURRENT TIME - alien_Timer_Start
+				  	2.4.27.29		DECLARE move_down AS INTEGER INITIALLY = 0
+				  	2.4.27.30		DECLARE xmovespeed AS INTEGER INITIALLY = 10
+				  	2.4.27.31		DECLARE movingspeed AS INTEGER INITIALLY = xmovespeed
+				  	2.4.27.32		DECLARE ymovespeed AS INTGER INITIALLY = 0
+				  	2.4.27.33		DECLARE starting_speed AS REAL INITIALLY = 0.5
+				  	2.4.27.34		DECLARE gamespeed AS REAL INITIALLY = starting_speed
+				  	2.4.27.35		DECLARE minspeed AS REAL INITIALLY = 0.1
+				  	2.4.27.36		DECLARE can_shoot AS BOOLEAN INITIALLY = True
+				  	2.4.27.37		CALL setup_aliens()
+					2.4.27.38		DECLARE max_wait_time AS REAL INTIALLY = 3
+				  	2.4.27.39		DECLARE min_wait_time AS REAL INITIALLY = 0.3
+				  	2.4.27.40		DECLARE should_shoot AS RANDOM REAL BETWEEN min_wait_time AND max_wait_time
+				  	2.4.27.41		DECLARE alien_Shoot_Timer AS TIME INITIALLY = CURRENT TIME
+				  	2.4.27.42		DECLARE alien_Shoot_Timer_Elapsed AS TIME INITIALLY = CURRENT TIME - alien_Shoot_Timer
+					2.4.27.43		DECLARE mother_Ship_Time AS RANDOM REAL BETWEEN 5 AND 25
+				  	2.4.27.44		DECLARE mother_Ship_Timer AS TIME INITIALLY = CURRENT TIME
+				  	2.4.27.45		DECLARE mother_Ship_Timer_Elapsed AS TIME INITIALLY = CURRENT TIME - mother_Ship_Timer
+					2.4.27.46		WHILE TRUE DO
+					2.4.27.47			CALL draw_page()
+			    		2.4.27.48			IF ALL THE ALIENS ARE DEAD THEN
+					2.4.27.49				WAIT 3 SECONDS
+			    		2.4.27.50				RESET ALL VARIABLES
+					2.4.27.51			END IF
+					2.4.27.52			IF alien_Timer_Elapsed >= gamespeed THEN
+			    		2.4.27.53				MOVE DOWN OR CHANGE DIRECTION IF NEEDED
+			    		2.4.27.54				CALL move_aliens(movingspeed, ymovespeed)
+			    		2.4.27.55				SET alien_Timer_Start TO CURRENT TIME
+					2.4.27.56			END IF
+					2.4.27.57			IF alien_Shoot_Timer_Elapsed >= should_shoot THEN
+			    		2.4.27.58				DECLARE columns AS RANDOM INTEGER BETWEEN 0 AND 10
+			    		2.4.27.59				IF columns[column] IS NOT EMPTY THEN
+			    		2.4.27.60					FOR EVERY alien IN columns[column]
+			    		2.4.27.61						RANDOMLY PICK A TYPE OF SHOT TO SHOOT AND ADD IT TO alien_shots
+			    		2.4.27.62					SET should_shoot TO NEW RANDOM REAL BEWTEEN min_wait_time AND max_wait_time
+			    		2.4.27.63					SET alien_Shoot_Timer TO CURRENT TIME
+			    		2.4.27.64					EXIT FOR LOOP
+					2.4.27.65					END FOR
+					2.4.27.66				END IF
+					2.4.27.67			END IF
+					2.4.27.68			FOR EVERY column IN columns
+			    		2.4.27.89				FOR EVERY alien IN column:
+			    		2.4.27.70					IF alien.position[1] IS AT THE TOP OF THE BUNKERS THEN
+			    		2.4.27.71						CALL end_game()
+					2.4.27.72					END IF
+					2.4.27.73					EXIT FOR LOOP
+					2.4.27.74				END FOR
+					2.4.27.75			END FOR
+					2.4.27.76			FOR EVERY alshot IN alien_shots
+			    		2.4.27.77				IF alshot.moving then
+			    		2.4.27.78					CALL alshot.move()
+			    		2.4.27.79					IF alshot HAS REACHED THE BUNKERS THEN
+			    		2.4.27.80						IF NOT alshot.colour_changed THEN
+			    		2.4.27.81							CALL alshot.change_colour()
+					2.4.27.82						END IF
+			   	 	2.4.27.83						IF alshot HAS NOT PASSED THE BUNKERS THEN
+			    		2.4.27.84							IF alshot TOUCHES GREEN THEN
+			    		2.4.27.85								CALL alshot.blow_up()
+					2.4.27.86							END IF
+			    		2.4.27.87						ELSE IF alshot HAS REACHED THE BOTTOM OF THE PLAY AREA THEN
+			    		2.4.27.88							CALL alshot.kill()
+			    		2.4.27.89						ELSE
+			    		2.4.27.90							IF alshot.rect TOUCHING player.rect THEN
+			    		2.4.27.91								CALL alshot.kill()
+			    		2.4.27.92								IF game_settings.soundeffects THEN
+			    		2.4.27.93									PLAY SOUND player_die_sound
+			    		2.4.27.94								END IF
+					2.4.27.95								CALL player.kill_player(draw_page)
+			   	 	2.4.27.96								CALL lives_display.change_text(str(player.lives), draw_page)
+			    		2.4.27.97								FOR EVERY image IN lives_image_display
+			    		2.4.27.98									CALL img.kill()
+			    		2.4.27.99									EXIT FOR LOOP
+					2.4.27.100							END FOR
+					2.4.27.101						END IF
+					2.4.27.102					END IF
+					2.4.27.103				END IF
+					2.4.27.104				FOR EVERY shot IN projectiles
+	        			2.4.27.105					IF alshot.rect TOUGHING shot.rect THEN
+	        			2.4.27.106						IF shot.moving THEN
+	        			2.4.27.107							CALL shot.kill()
+	        			2.4.27.108							CALLalshot.kill()
+					2.4.27.109						END IF
+					2.4.27.110					END IF
+					2.4.27.111				END FOR
+					2.4.27.112			END IF
+					2.4.27.113		END FOR
+					2.4.27.114		IF THERE IS A MOHTER SHIP IN mother_ship THEN
+			    		2.4.27.115			FOR mother IN mother_ship THEN
+			    		2.4.27.116				CALL mother.move()
+			    		2.4.27.117				IF game_settings.soundeffects THEN
+			    		2.4.27.118					PLAY SOUND mother_ship_sound
+					2.4.27.119				END IF
+					2.4.27.120				IF MOTHER SHIP IS OFF THE LEFT OF THE PAGE THEN
+			    		2.4.27.121					CALL mother.kill()
+					2.4.27.122				END IF
+					2.4.27.123			END FOR
+					2.4.27.124		END IF
+					2.4.27.125		IF mother_Ship_Timer_Elapsed >= mother_Ship_Time THEN
+					2.4.27.126			DECLARE new_mother AS Mother_Ship()
+					2.4.27.127			ADD new_mother TO mother_ship
+					2.4.27.128			SET mother_Ship_Time TO NEW RANDOM REAL BETWEEN 10 AND 25
+					2.4.27.129			SET mother_Ship_Timer TO CURRENT TIME
+					2.4.27.130		END IF
+					2.4.27.131		IF a KEY OR LEFT ARROW KEY PRESSED AND PLAYER IS NOT AT THE LEFT EDGE OF THE SCREEN THEN
+			    		2.4.27.132			CALL player.move(-2)
+			    		2.4.27.133		ELSE IF d KEY OR RIGHT ARROW KEY PRESSED PLAYER IS NOT AT THE RIGHT EDGE OF THE SCREEN THEN
+			    		2.4.27.134			CALL player.move(2)
+					2.4.27.135		END IF
+					2.4.27.136		IF SPACE BAR PRESSED THEN
+					2.4.27.137			IF projectiles IS EMPTY THEN
+			    		2.4.27.138				SET can_shoot TO TRUE
+					2.4.27.139			END IF
+					2.4.27.140			FOR EVERY shot IN projectiles
+					2.4.27.141				IF shot.moving THEN
+					2.4.27.142					SET can_shoot TO FALSE
+					2.4.27.143					EXIT FOR LOOP
+					2.4.27.144				ELSE
+					2.4.27.145					SET can_shoot TO TRUE
+					2.4.27.146				END IF
+					2.4.27.147			END FOR
+					2.4.27.148			IF can_shoot THEN
+		      			2.4.27.149				DECLARE newshot AS Shot(player.position[0])
+		      			2.4.27.150				ADD newshot TO projectiles
+		      			2.4.27.151				IF game_settings.soundeffects THEN
+		      			2.4.27.152					PLAY SOUND player_shoot_sound
+					2.4.27.153				END IF
+					2.4.27.154			END IF
+					2.4.27.155		END IF
+					2.4.27.156		FOR EVERY shot IN projectiles
+			    		2.4.27.157			IF shot.moving:
+			    		2.4.27.158				IF THE SHOT IS BELLOW THE TOP OF THE PAGE:
+			    		2.4.27.159					IF THE SHOT IS ABOVE THE BOTTOM OF THE BUNKERS:
+			    		2.4.27.160						IF THE SHOT TOUCHES GREEN:
+			    		2.4.27.161							CALL shot.blowup()
+					2.4.27.162						END IF
+					2.4.27.163						FOR EVERY mother IN mother_ship
+			    		2.4.27.164							IF shot.rect TOUCHES mother.rect THEN
+			    		2.4.27.165								PICK 50, 100, 150 or 300 POINTS AND ADD TO highscoresvar.current_score
+			    		2.4.27.166								CALL current_Score_Display.change_text(STRING(highscoresvar.current_score), draw_page)
+			    		2.4.27.167								CALL mother.kill()
+			    		2.4.27.168								CALL shot.kill()
+					2.4.27.169							END IF
+					2.4.27.160						END FOR
+ 					2.4.27.171						FOR EVERY alien IN aliens
+			    		2.4.27.172							IF shot.rect TOUGHING alien.rect THEN
+			    		2.4.27.173								IF game_settings.soundeffects THEN
+			    		2.4.27.174									PLAY SOUND alien_die_sound
+			    		2.4.27.175								END IF
+					2.4.27.176								INCREMENT highscoresvar.current_score BY THE VALUE RETURNED BY CALLING alien.kill_alien()
+			    		2.4.27.177								CALL current_Score_Display.change_text(str(highscoresvar.current_score), draw_page)
+			    		2.4.27.178								CALL shot.kill()
+			    		2.4.27.179							END IF
+					2.4.27.180						END FOR
+			    		2.4.27.181						CALL shot.move()
+					2.4.27.182					END IF
+			   	 	2.4.27.183				ELSE
+					2.4.27.184					CALL shot.kill()
+					2.4.27.185				END IF
+					2.4.27.186			END IF
+					2.4.27.187		END FOR
+					2.4.27.188		IF player.dead THEN
+			    		2.4.27.189			CALL end_game()
+					2.4.27.190		END IF
+			    		2.4.27.191		IF ESCAPE IS PRESSED THEN
+			    		2.4.27.192			MAKE MOUSE VISIBLE
+			    		2.4.27.193			STOP ANY BACKGROUND MUSIC
+			    		2.4.27.194			CALL Home_Page.run_page()
+					2.4.27.195		END IF
+			    		2.4.27.196		IF THE QUIT BUTTON IS CLICKED THEN
+					2.4.27.197			QUIT GAME
+					2.4.27.198		END IF
+					2.4.27.199		SET alien_Timer_Elapsed TO CURRENT TIME - alien_Timer_Start
+			    		2.4.27.200		SET alien_Shoot_Timer_Elapsed TO CURRENT TIME - alien_Shoot_Timer
+			    		2.4.27.201		SET mother_Ship_Timer_Elapsed TO CURRENT TIME - mother_Ship_Timer
+					2.4.27.202	END WHILE
+					2.4.27.203 END PROCEDURE
+
+					2.4.27.49		RESET ALL VARIABLES
+			    			2.4.27.49.1				SET xmovespeed TO 10
+			    			2.4.27.49.2				SET movingspeed TO xmovespeed
+			    			2.4.27.49.3				SET ymovespeed TO 0
+			    			2.4.27.49.4				DECRIMENT starting_speed BY 0.02
+			    			2.4.27.49.5				SET gamespeed TO starting_speed
+			    			2.4.27.49.6				DECRIMENT minspeed BY 0.02
+			    			2.4.27.49.7				CALL setup_aliens()
+						2.4.27.49.8				SET max_wait_time TO 3
+			    			2.4.27.49.9			SET min_wait_time TO 0.3
+			    			2.4.27.49.10		SET should_shoot TO NEW RANDOM REAL BETWEEN min_wait_time AND  max_wait_time
+			    			2.4.27.49.11			SET alien_Shoot_Timer TO CURRENT TIME
+			    			2.4.27.49.12			SET alien_Shoot_Timer_Elapsed TO CURRENT TIME - alien_Shoot_Timer
+
+					2.4.27.53		MOVE DOWN OR CHANGE DIRECTION IF NEEDED
+						2.4.27.53.1		SET move_down TO THE RESULT FROM CALLING check_change(move_down)
+				   		2.4.27.53.2		IF move_down == 1 THEN
+				   		2.4.27.53.3			SET ymovespeed TO 10
+				   		2.4.27.53.4			SET movingspeed TO 0
+			    			2.4.27.53.5			SET move_down TO 2
+			    			2.4.27.53.6		ELSE IF move_down == 2 THEN
+			    			2.4.27.53.7			SET ymovespeed TO 0
+			    			2.4.27.53.8			IF gamespeed > minspeed THEN
+				   		2.4.27.53.9				SET gamespeed -= 0.02
+						2.4.27.53.10		END IF
+				   		2.4.27.53.11		DECRIMENT movingspeed BY -xmovespeed
+				   		2.4.27.53.12		SET xmovespeed TO movingspeed
+			    			2.4.27.53.13		IF max_wait_time - min_wait_time > 0.2 THEN
+			    			2.4.27.53.14			DECRIMENT max_wait_time BY 0.2
+			    			2.4.27.53.15			DECRIMENT min_wait_time BY 0.2
+			    			2.4.27.53.16			SET move_down TO 0
+						2.4.27.53.17		END IF
+						2.4.27.53.18	END IF
+
+					2.4.27.61		RANDOMLY PICK A TYPE OF SHOT TO SHOOT AND ADD IT TO alien_shots
+						2.4.27.61.1		DECLARE wich_shot AS RANDOM INTEGER BETWEEN 0 AND 3
+				   		2.4.27.61.2		IF wich_shot == 3 THEN
+					  	2.4.27.61.3			DECLARE new_alien_shot AS Bolt(alien.position[0], alien.position[1])
+			    			2.4.27.61.4			IF game_settings.soundeffects THEN
+				   		2.4.27.61.5				PLAY SOUND alien_bolt_sound
+					  	2.4.27.61.6			END IF
+						2.4.27.61.7		ELSE
+				    		2.4.27.61.8			DECLARE new_alien_shot AS Arrow(alien.position[0], alien.position[1])
+				    		2.4.27.61.9			IF game_settings.soundeffects THEN
+				    		2.4.27.61.10			PLAY SOUND alien_arrow_sound
+						2.4.27.61.11		END IF
+						2.4.27.61.12	END IF
+						2.4.27.61.13	ADD new_alien_shot TO alien_shots
+
+					2.4.27.165	PICK 50, 100, 150 or 300 POINTS AND ADD TO highscoresvar.current_score
+						2.4.27.165.1		DECLARE points_added AS RANDOM INTEGER BETWEEN 0 AND 3
+						2.4.27.165.2		IF points_added == 0 THEN
+						2.4.27.165.3			SET points_added TO 50
+						2.4.27.165.4		ELSE IF points_added == 1 THEN
+						2.4.27.165.5			SET points_added TO 100
+						2.4.27.165.6		ELSE IF points_added == 2 THEN
+						2.4.27.165.7			SET points_added TO 150
+						2.4.27.165.8		ELSE
+						2.4.27.165.9			SET points_added TO 300
+						2.4.27.165.10		END IF
+						2.4.27.165.11		INCREMENT highscoresvar.current_score BY points_added
+
+
+
+
+
+
+
+			2.5	Highscore_Input_Page
+				2.5.1	DELCARE Title AS Text("HIGHSCORE!", 72, 480, 106)
+				2.5.2	DECLARE left_initial AS Text("", 250, 270, 400)
+				2.5.3	DECLARE left_underline AS RECTANGLE INITIALLY = RECTANGEL ON surface AT (180, 520) WITH (WIDTH, HIGHT) = (150, 5)
+				2.5.4	DECLARE middle_initial AS Text("", 250, 495, 400)
+				2.5.5	DECLARE middle_underline AS RECTANGLE INITIALLY = RECTANGEL ON surface AT (405, 520) WITH (WIDTH, HIGHT) = (150, 5)
+				2.5.6	DECLARE right_initial AS Text("", 250, 720, 400)
+				2.5.7	DECLARE surface AS SURFACE INITIALLY = GET CURRENT SURFACE
+				2.5.8	DECLARE right_underline AS RECTANGLE INITIALLY = RECTANGEL ON surface AT (630, 520) WITH (WIDTH, HIGHT) = (150, 5)
+				2.5.9	DECLARE enter_Text AS Text("press enter to submit", 16, 480, 560)
+				2.5.10	DECLARE skip_button AS Button("skip", 830, 640)
+				2.5.11	DECLARE currently_selected AS INTEGER INITIALLY = 0
+				2.5.12	DECLARE flash_on AS BOOLEAN INTIALLY = True
+				2.5.13	#METHODS
+				2.5.14	draw_page()
+				2.5.15	run_page()
+
+				2.5.14	draw_page()
+					2.5.14.1	PROCEDURE draw_page()
+					2.5.14.2		MAKE BACKGROUND BLACK
+				  	2.5.14.3		CALL Title.display_text()
+				  	2.5.14.4		CALL left_initial.display_text()
+				  	2.5.14.5		CALL middle_initial.display_text()
+				  	2.5.14.6		CALL right_initial.display_text()
+				  	2.5.14.7		CALL enter_Text.display_text()
+				  	2.5.14.8		IF currently_selected == 0 THEN
+				  	2.5.14.9			IF flash_on THEN
+				  	2.5.14.10				DRAW WHITE left_underline ON surface
+					2.5.14.11			END IF
+					2.5.14.12			DRAW WHITE middle_underline ON surface
+					2.5.14.13			DRAW WHITE right_underline ON surface
+				  	2.5.14.14		ESLE IF currently_selected == 1 THEN
+				  	2.5.14.15			DRAW WHITE left_underline ON surface
+				  	2.5.14.16			IF flash_on THEN
+				  	2.5.14.17				DRAW WHITE middle_underline ON surface
+					2.5.14.18			END IF
+					2.5.14.19			DRAW WHITE right_underline ON surface
+				  	2.5.14.20		ELSE IF currently_selected == 2 THEN
+					2.5.14.21			DRAW WHITE left_underline ON surface
+					2.5.14.22			DRAW WHITE middle_underline ON surface
+				  	2.5.14.23			IF flash_on THEN
+				  	2.5.14.24				DRAW WHITE right_underline ON surface
+				  	2.5.14.25		ELSE
+					2.5.14.26			DRAW WHITE left_underline ON surface
+					2.5.14.27			DRAW WHITE middle_underline ON surface
+					2.5.14.28			DRAW WHITE right_underline ON surface
+					2.5.14.29		END IF
+				  	2.5.14.30		CALL skip_button.display_Button()
+					2.5.14.31		UPDATE DISPLAY
+					2.5.14.32	END PROCEDURE
+
+				2.5.15	run_page()
+					2.5.15.1	PROCEDURE run_page(highscores AS ScoreBoard)
+					2.5.15.2		CALL draw_page()
+					2.5.15.3		DECLARE initials AS STRING INTIALLY = ""
+				  	2.5.15.4		CALL left_initial.change_text("", draw_page)
+				  	2.5.15.5		CALL middle_initial.change_text("", draw_page)
+				  	2.5.15.6		CALL right_initial.change_text("", draw_page)
+				  	2.5.15.7		DECLARE flash_start AS TIME INTIALLY = CURRENT TIME
+				  	2.5.15.8		DECLARE flash_elapsed AS TIME INTIALLY = CURRENT - flash_start
+				  	2.5.15.9		DECLARE currently_selected AS INTEGER INTIALLY = 0
+				  	2.5.15.10		WHILE TRUE DO
+				  	2.5.15.11			CALL skip_button.hover_Check(draw_page, highscore_display_Page.run_page)
+				  	2.5.15.12			IF flash_elapsed >= 0.4 THEN
+				  	2.5.15.13				SET flash_on TO NOT flash_on
+					2.5.15.14				CALL draw_page()
+				  	2.5.15.15				SET flash_start TO CURENT TIME
+				  	2.5.15.16				IF EXIT BUTTON PRESSED THEN
+				  	2.5.15.17					EXIT THE GAME
+					2.5.15.18				END IF
+					2.5.15.19				IF A KEY IS PRESSED THEN
+				  	2.5.15.20					CALL enter_Text.change_text("press enter to submit", draw_page)
+				  	2.5.15.21					IF THE KEY PRESSED WAS AN ALPHA KEY:
+				  	2.5.15.22						IF currently_selected == 0 THEN
+				  	2.5.15.23							CALL left_initial.change_text(CHARACTER PRESSED, draw_page)
+				  	2.5.15.24						ELSE IF currently_selected == 1 THEN
+				  	2.5.15.25							CALL middle_initial.change_text(CHATACTER PRESSED, draw_page)
+				  	2.5.15.26						ELSE IF currently_selected == 2 THEN
+				  	2.5.15.27							CALL right_initial.change_text(CHARACTER PRESSED, draw_page)
+					2.5.15.28						END IF
+				  	2.5.15.29						IF currently_selected < 3 THEN
+				  	2.5.15.30							INCREMENT currently_selected BY 1
+				  	2.5.15.31							ADD CHARACTER PRESSED TO initials
+					2.5.15.32						END IF
+					2.5.15.33					END IF
+					2.5.15.34				ELSE IF BACK KEY PRESSED THEN
+				  	2.5.15.35					IF currently_selected == 1 THEN
+				  	2.5.15.36						CALL left_initial.change_text("", draw_page)
+				  	2.5.15.37					ELSE IF currently_selected == 2 THEN
+				  	2.5.15.38						CALL middle_initial.change_text("", draw_page)
+				  	2.5.15.39					ELSE IF currently_selected == 3 THEN
+				  	2.5.15.40						CALL right_initial.change_text("", draw_page)
+					2.5.15.41					END IF
+				  	2.5.15.42         IF currently_selected > 0 THEN
+				  	2.5.15.43						DECRIMENT currently_selected
+					2.5.15.44							REMOVE THE LAST CHARACTER OF initials
+				  	2.5.15.45				ELSE IF ENTER BUTTON PRESSED THEN
+				  	2.5.15.46					IF THERE ARE LESS THAN 3 CHARACTERS IN initials THEN
+				  	2.5.15.47						CALL enter_Text.change_text("Please input 3 Characters", draw_page)
+				  	2.5.15.48					ELSE
+				  	2.5.15.49						DECLARE new_score AS Highscore(initials.upper(), highscores.current_score)
+				  	2.5.15.50						IF THERE ARE LESS THAN 10 highscores.score THEN
+				  	2.5.15.51							ADD new_score TO highscores.scores
+				  	2.5.15.52						ELSE
+				  	2.5.15.53							highscores.scores[9] = new_score
+				  	2.5.15.54						END IF
+				  	2.5.15.55						CALL highscores.bubble_sort_scores()
+				  	2.5.15.56						CALL highscores.write_file(True, True)
+				  	2.5.15.57						CALL highscore_display_Page.run_page()
+				  	2.5.15.58					END IF
+					2.5.15.59				END IF
+					2.5.15.60			END IF
+					2.5.15.61			SET flash_elapsed TO CURRENT TIME - flash_start
+					2.5.15.62		END WHILE
+					2.5.15.63	END PROCEDURE
+
+
+
+
+
+
+			2.6	Highscore_display_Page
+				2.6.1	DECLARE Title AS Text("Score Table", 72, 480, 106)
+				2.6.2	DECLARE first AS Text("", 25, 480, 206)
+				2.6.3	DECLARE second AS Text("", 25, 480, 246)
+				2.6.4	DECLARE third AS Text("", 25, 480, 286)
+				2.6.5	DECLARE forth AS Text("", 25, 480, 326)
+				2.6.6	DECLARE fifth AS Text("", 25, 480, 366)
+				2.6.7	DECLARE sixth AS Text("", 25, 480, 406)
+				2.6.8	DECLARE seventh AS Text("", 25, 480, 446)
+				2.6.9	DECLARE eighth AS Text("", 25, 480, 486)
+				2.6.10	DECLARE nineth AS Text("", 25, 480, 526)
+				2.6.11	DECLARE thenth AS Text("", 25, 480, 566)
+				2.6.12	DECLARE text AS ARRAY OF Text INITIALLY = [first, second, third, forth, fifth, sixth, seventh, eighth, nineth, thenth]
+				2.6.13	DECLARE home_button AS Button("Home", 160, 650, 164, 62)
+				2.6.14	DECLARE new_game_button AS Button("New Game", 800, 650, 164, 62)
+				2.6.15	DECLARE highscores AS ScoreBoard()
+				2.6.16	#METHODS
+				2.6.17	decoy_draw()
+				2.6.18	draw_page()
+				2.6.19	run_page()
+
+				2.6.17	decoy_draw()
+					2.6.17.1	PROCEDURE decoy_draw()
+					2.6.17.2		DO NOTHING
+					2.6.17.3	END PROCEDURE
+
+				2.6.18	draw_page()
+					2.6.18.1 	PROCEDURE draw_page()
+					2.6.18.2		MAKE BACKGROUND BLACK
+					2.6.18.3  	CALL Title.display_text()
+				  	2.6.18.4		FOR EVERY score IN text
+				  	2.6.18.5			CALL score.display_text()
+				  	2.6.18.6		END FOR
+					2.6.18.7		CALL home_button.display_Button()
+				 	2.6.18.8		CALL new_game_button.display_Button()
+				  	2.6.18.9		UPDATE DISPLAY
+					2.6.18.10	END PROCEDURE
+
+				2.6.19	run_page()
+					2.6.19.1	PROCEDURE run_page()
+					2.6.19.2		CALL highscores.get_highscores()
+				  	2.6.19.3		DECLARE count AS INTEGER INITIALLY = 0
+					2.6.19.4		FOR count FROM 0 TO THE LENGTH OF highscores.scores
+				  	2.6.19.5			IF count < 10 THEN
+				  	2.6.19.6				CALL text[count].change_text(highscores.scores[count].name + " " + str(highscores.scores[count].value), decoy_draw)
+				  	2.6.19.7				SET text[count].position[0] TO 415
+				  	2.6.19.8			END IF
+					2.6.19.9		CALL draw_page()
+				  	2.6.19.10		WAIT 0.2 SECONDS
+				  	2.6.19.11		WHILE True DO
+					2.6.19.12			CALL home_button.hover_Check(draw_page, Home_Page.run_page)
+				  	2.6.19.13			CALL new_game_button.hover_Check(draw_page, Game_Page.run_page)
+				  	2.6.19.14			IF QUIT BUTTON CLICKED THEN
+					2.6.19.15				QUIT GAME
+					2.6.19.16			END IF
+					2.6.19.17		END WHILE
+					2.6.19.18	END PROCEDURE
+
+
+
+
+3 Run Game File
+	3.1 	CREATE DISPLAY OF WIDTH 960 AND HIGHT 720
+	3.2	SET DISPLAY CAPTION TO 'SPACE INVADERS'
+	3.2	CALL CALL Home_Page.run_page()

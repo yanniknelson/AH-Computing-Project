@@ -133,13 +133,13 @@ def move_aliens(xdist, ydist):
         alien_move_sound.play()
     #print(aliens.sprites())
 
-#checks if the aliens have moved down
+#checks if the aliens should moved down
 def check_change(moved_down):
     #run through the alien display
     for alien in aliens:
         #if any alien is near the edge of the screen
         if alien.position[0] > 900 or alien.position[0] < 60:
-            #if the aliens have moved down
+            #if the aliens haven't moved down
             if moved_down == 0:
                 #change the moved down idicator
                 moved_down = 1
@@ -181,6 +181,9 @@ def run_page():
     player.lives = 3
     #ensure the dead indicator is false when the game starts
     player.dead = False
+    #ensures the player starts in the middle of the page
+    player.position[0] = 480
+    player.move(0)
     #ensure all of the text is displaying the correct values
     lives_display.change_text(str(player.lives), draw_page)
     current_Score_Display.change_text(str(highscoresvar.current_score), draw_page)
@@ -252,10 +255,10 @@ def run_page():
 
     #loop to run the game
     while True:
+        #draws the page
+        draw_page()
         #if there are no aliens left
         if len(aliens) == 0:
-            #draw the page
-            draw_page()
             #wait 3 seconds
             time.sleep(3)
             #set xmovespeed store to 10 to ensure the aliens move to the right
@@ -283,8 +286,6 @@ def run_page():
             alien_Shoot_Timer_Elapsed = time.time() - alien_Shoot_Timer
 
             print("all dead")
-        #draws the page
-        draw_page()
         #if the elapsed time is greater than or equal to the gamespeed
         #move the aliens
         if alien_Timer_Elapsed >= gamespeed:
@@ -360,10 +361,11 @@ def run_page():
         for column in columns:
             #run through the aliens in the column
             for alien in column:
-            #if any of the aliens are below the bunkers
+            #if the lowest alien has reached the bunkers
                 if alien.position[1] > 490:
                     #call the end game method
                     end_game()
+                break
 
         #for every shot in the alien shot group
         for alshot in alien_shots:
